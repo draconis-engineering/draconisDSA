@@ -5,23 +5,28 @@
 
 #include "graph.h"
 
-struct Graph* create_graph(int num_nodes, int num_edges) {
+struct Graph* create_graph() {
     struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
-    graph->num_nodes = num_nodes;
-    graph->num_edges = num_edges;
-
+    graph->num_nodes = 0;
+    graph->num_edges = 0;
+    graph->nodes = NULL;
+    graph->edges = NULL;
     return graph;
 }
+
 void free_graph(struct Graph* graph) {
+    free(graph->nodes);
+    free(graph->edges);
     free(graph);
 }
 
-void add_node(struct Graph* graph, int data) {
+void add_node(struct Graph* graph, uint64_t data) {
     graph->nodes = (struct Node**)realloc(graph->nodes, (graph->num_nodes + 1) * sizeof(struct Node*));
     graph->nodes[graph->num_nodes] = (struct Node*)malloc(sizeof(struct Node));
     graph->nodes[graph->num_nodes]->data = data;
     graph->num_nodes++;
 }
+
 void add_edge(struct Graph* graph, struct Node* src, struct Node* dest, int weight) {
     graph->edges = (struct Edge**)realloc(graph->edges, (graph->num_edges + 1) * sizeof(struct Edge*));
     graph->edges[graph->num_edges] = (struct Edge*)malloc(sizeof(struct Edge));
@@ -30,14 +35,12 @@ void add_edge(struct Graph* graph, struct Node* src, struct Node* dest, int weig
     graph->edges[graph->num_edges]->weight = weight;
     graph->num_edges++;
 }
+
 void print_graph(struct Graph* graph) {
     for (int i = 0; i < graph->num_nodes; i++) {
-        printf("%d ", graph->nodes[i]->data);
+        printf("%lu ", graph->nodes[i]->data);
     }
     printf("\n");
-    for (int i = 0; i < graph->num_edges; i++) {
-        printf("%d -> %d (weight: %d)\n", graph->edges[i]->src->data, graph->edges[i]->dest->data, graph->edges[i]->weight);
-    }
 }
 
 bool has_node(struct Graph* graph, struct Node* node) {

@@ -1,7 +1,9 @@
 /* Draconis DSA Graph Library */
 
+#include <stdint.h>
+
 struct Node {
-    int data;
+    uint64_t data;
     struct Node* next;
 };
 
@@ -18,9 +20,9 @@ struct Graph {
     int num_edges;
 };
 
-struct Graph* create_graph(int num_nodes, int num_edges);
+struct Graph* create_graph();
 
-void add_node(struct Graph* graph, int data);
+void add_node(struct Graph* graph, uint64_t data);
 void add_edge(struct Graph* graph, struct Node* src, struct Node* dest, int weight);
 
 void remove_node(struct Graph* graph, struct Node* node);
