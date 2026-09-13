@@ -4,138 +4,151 @@
 #include <stdlib.h>
 #include "dllist.h"
 
+// Initializes the list.
 void init_list(List *l) {
     l->head = NULL;
     l->tail = NULL;
     l->size = 0;
 }
 
+// Returns whether the list is empty.
 int is_empty(List *l) {
     return (l->head == NULL);
 }
 
-int get_idx(List *l, int value) {
-    Node* CurrentNode = l->head;
+// Returns the index of the first occurrence of the given value in the list.
+int get_idx(List *l, int val) {
+    Node* curr_node = l->head;
     int index = 0;
 
-    while (CurrentNode != NULL) {
-        if (CurrentNode->data == value) {
+    while (curr_node != NULL) {
+        if (curr_node->data == val) {
             return index;
         }
 
-        CurrentNode = CurrentNode->next;
+        curr_node = curr_node->next;
         index++;
     }
 
     return -1;
 }
 
+// Returns the size of the list.
 int list_size(List *l) {
     return l->size;
 }
 
-void insert_at_front(List *l, int value) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    if (newNode == NULL) {
+// Inserts a value at the front of the list.
+void insert_at_front(List *l, int val) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    if (new_node == NULL) {
         printf("Error: malloc failed\n");
         return;
     }
 
-    newNode->data = value;
-    newNode->prev = NULL;
-    newNode->next = l->head;
+    new_node->data = val;
+    new_node->prev = NULL;
+    new_node->next = l->head;
 
     if (l->head != NULL) {
-        l->head->prev = newNode;
+        l->head->prev = new_node;
 
     } else {
-        l->tail = newNode;
+        l->tail = new_node;
     }
 
-    l->head = newNode;
+    l->head = new_node;
     l->size++;
 }
-void insert_at_back(List *l, int value) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    if (newNode == NULL) {
+
+// Inserts a value at the back of the list.
+void insert_at_back(List *l, int val) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    if (new_node == NULL) {
         printf("Error: malloc failed\n");
         return;
     }
 
-    newNode->data = value;
-    newNode->prev = l->tail;
-    newNode->next = NULL;
+    new_node->data = val;
+    new_node->prev = l->tail;
+    new_node->next = NULL;
 
     if (l->tail != NULL) {
-        l->tail->next = newNode;
+        l->tail->next = new_node;
     } else {
-        l->head = newNode;
+        l->head = new_node;
     }
 
-    l->tail = newNode;
+    l->tail = new_node;
     l->size++;
 
 }
+
+// Prints the list to the console.
 void print_list(List *l) {
     printf("[");
-    Node* CurrentNode = l->head;
-    while (CurrentNode != NULL) {
-        printf("%d", CurrentNode->data);
-        if (CurrentNode->next != NULL) {
+    Node* curr_node = l->head;
+    while (curr_node != NULL) {
+        printf("%d", curr_node->data);
+        if (curr_node->next != NULL) {
             printf(", ");
         }
-        CurrentNode = CurrentNode->next;
+        curr_node = curr_node->next;
     }
 
     printf("]\n");
 }
-void insert(List *l, int value, int Idx) {
-    if ((Idx + 1) > list_size(l)) {
+
+// Inserts a value at the given index in the list.
+void insert(List *l, int val, int idx) {
+    if ((idx + 1) > list_size(l)) {
         printf("List Index out of range!");
         return;
     }
 
-    Node* CurrentNode = l->head;
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    Node* curr_node = l->head;
+    Node* new_node = (Node*)malloc(sizeof(Node));
 
-    if (newNode == NULL) { printf("Error: malloc failed\n"); return; }
+    if (new_node == NULL) { printf("Error: malloc failed\n"); return; }
 
-    newNode->data = value;
+    new_node->data = val;
 
-    int CurrentIdx = 0;
+    int curr_idx = 0;
 
-    if (Idx == 0) {
-        insert_at_front(l, value);
+    if (idx == 0) {
+        insert_at_front(l, val);
         return;
-    } else if (Idx == list_size(l) - 1) {
-        insert_at_back(l, value);
+    } else if (idx == list_size(l) - 1) {
+        insert_at_back(l, val);
         return;
     }
 
-    while (CurrentNode->next != NULL) {
-        if (CurrentIdx == Idx) {
-            newNode->prev = CurrentNode->prev;
-            newNode->next = CurrentNode;
-            CurrentNode->prev->next = newNode;
-            CurrentNode->prev = newNode;
+    while (curr_node->next != NULL) {
+        if (curr_idx == idx) {
+            new_node->prev = curr_node->prev;
+            new_node->next = curr_node;
+            curr_node->prev->next = new_node;
+            curr_node->prev = new_node;
             l->size++;
             return;
         }
 
-        CurrentNode = CurrentNode->next;
-        CurrentIdx++;
+        curr_node = curr_node->next;
+        curr_idx++;
     }
 }
-void list_remove(List *l, int Idx) {
-    if ((Idx + 1) > list_size(l)) {
+
+// Removes the node at the given index from the list.
+void list_remove(List *l, int idx) {
+    if ((idx + 1) > list_size(l)) {
         printf("List Index out of range!");
         return;
     }
 
-    Node* CurrentNode = l->head;
-    int CurrentIdx = 0;
+    Node* curr_node = l->head;
+    int curr_idx = 0;
 
-    if (Idx == 0) {
+    if (idx == 0) {
         Node* temp = l->head;
         l->head = l->head->next;
         if (l->head != NULL) {l->head->prev = NULL;} else {l->tail = NULL;}
@@ -143,7 +156,7 @@ void list_remove(List *l, int Idx) {
         l->size--;
         return;
 
-    } else if (Idx == list_size(l) - 1) {
+    } else if (idx == list_size(l) - 1) {
         Node* temp = l->tail;
         l->tail = l->tail->prev;
         if (l->tail != NULL) {l->tail->next = NULL;} else {l->head = NULL;}
@@ -152,26 +165,28 @@ void list_remove(List *l, int Idx) {
         return;
     }
 
-    while (CurrentNode != NULL) {
-        if (CurrentIdx == Idx) {
-            CurrentNode->next->prev = CurrentNode->prev;
-            CurrentNode->prev->next = CurrentNode->next;
-            free(CurrentNode);
+    while (curr_node != NULL) {
+        if (curr_idx == idx) {
+            curr_node->next->prev = curr_node->prev;
+            curr_node->prev->next = curr_node->next;
+            free(curr_node);
             l->size--;
             return;
         }
 
-        CurrentNode = CurrentNode->next;
-        CurrentIdx++;
+        curr_node = curr_node->next;
+        curr_idx++;
     }
 }
-void free_list(List *l) {
-    Node* CurrentNode = l->head;
 
-    while (CurrentNode != NULL) {
-        Node* NextToRemove = CurrentNode->next;
-        free(CurrentNode);
-        CurrentNode = NextToRemove;
+// Frees the memory used by the list.
+void free_list(List *l) {
+    Node* curr_node = l->head;
+
+    while (curr_node != NULL) {
+        Node* to_rem = curr_node->next;
+        free(curr_node);
+        curr_node = to_rem;
     }
 
     l->head = NULL;

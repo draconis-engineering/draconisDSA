@@ -5,6 +5,7 @@
 
 #include "graph.h"
 
+// Initializes the graph.
 struct Graph* create_graph() {
     struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
     graph->num_nodes = 0;
@@ -14,12 +15,14 @@ struct Graph* create_graph() {
     return graph;
 }
 
+// Frees the memory used by the graph.
 void free_graph(struct Graph* graph) {
     free(graph->nodes);
     free(graph->edges);
     free(graph);
 }
 
+// Adds a node to the graph.
 void add_node(struct Graph* graph, uint64_t data) {
     graph->nodes = (struct Node**)realloc(graph->nodes, (graph->num_nodes + 1) * sizeof(struct Node*));
     graph->nodes[graph->num_nodes] = (struct Node*)malloc(sizeof(struct Node));
@@ -27,6 +30,7 @@ void add_node(struct Graph* graph, uint64_t data) {
     graph->num_nodes++;
 }
 
+// Adds an edge to the graph.
 void add_edge(struct Graph* graph, struct Node* src, struct Node* dest, int weight) {
     graph->edges = (struct Edge**)realloc(graph->edges, (graph->num_edges + 1) * sizeof(struct Edge*));
     graph->edges[graph->num_edges] = (struct Edge*)malloc(sizeof(struct Edge));
@@ -36,13 +40,15 @@ void add_edge(struct Graph* graph, struct Node* src, struct Node* dest, int weig
     graph->num_edges++;
 }
 
+// Prints the graph.
 void print_graph(struct Graph* graph) {
     for (int i = 0; i < graph->num_nodes; i++) {
-        printf("%lu ", graph->nodes[i]->data);
+        printf("%llu ", graph->nodes[i]->data);
     }
     printf("\n");
 }
 
+// Checks if the graph has a node.
 bool has_node(struct Graph* graph, struct Node* node) {
     for (int i = 0; i < graph->num_nodes; i++) {
         if (graph->nodes[i] == node) {
@@ -52,6 +58,7 @@ bool has_node(struct Graph* graph, struct Node* node) {
     return false;
 }
 
+// Checks if the graph has an edge.
 bool has_edge(struct Graph* graph, struct Node* src, struct Node* dest) {
     for (int i = 0; i < graph->num_edges; i++) {
         if (graph->edges[i]->src == src && graph->edges[i]->dest == dest) {
@@ -61,6 +68,7 @@ bool has_edge(struct Graph* graph, struct Node* src, struct Node* dest) {
     return false;
 }
 
+// Checks if a path exists between two nodes.
 bool path_exists(struct Graph* graph, struct Node* src, struct Node* dest) {
     if (!has_node(graph, src) || !has_node(graph, dest)) {
         return false;
@@ -71,6 +79,7 @@ bool path_exists(struct Graph* graph, struct Node* src, struct Node* dest) {
     return true;
 }
 
+// Checks if the graph is connected.
 bool connected(struct Graph* graph) {
     for (int i = 0; i < graph->num_nodes; i++) {
         for (int j = 0; j < graph->num_nodes; j++) {
