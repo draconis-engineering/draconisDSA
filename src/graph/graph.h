@@ -34,3 +34,4 @@ void free_graph(struct Graph* graph);
 bool has_node(struct Graph* graph, struct Node* node);
 bool has_edge(struct Graph* graph, struct Node* src, struct Node* dest);
 bool path_exists(struct Graph* graph, struct Node* src, struct Node* dest);
+bool connected(struct Graph* graph);
