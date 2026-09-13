@@ -1,5 +1,5 @@
 /*
-* Doubly Linked List Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+* HashMap Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
 * Copyright (C) 2026 Simon Stordal Amundgård
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,31 +16,27 @@
 * along with this program.  If not, see http://www.gnu.org/licenses.
 */
 
+#ifndef HASHMAP_H
+#define HASHMAP_H
 
-#ifndef DLLIST_H
-#define DLLIST_H
+#define BUCKETS 16
 
+// A node in the linked list chain
 typedef struct Node {
-    int data;
+    char* key;
+    int value;
     struct Node* next;
-    struct Node* prev;
 } Node;
 
-typedef struct DLList {
-    int size;
-    Node* head;
-    Node* tail;
-} List;
+// The main hashmap structure
+typedef struct {
+    Node* buckets[BUCKETS];
+} HashMap;
 
-void init_list(List *l);
-int is_empty(List *l);
-int get_idx(List *l, int val);
-int list_size(List *l);
-void list_remove(List *l, int idx);
-void insert(List *l, int val, int idx);
-void insert_at_front(List *l, int val);
-void insert_at_back(List *l, int val);
-void print_list(List *l);
-void free_list(List *l);
+unsigned int hash(const char* key);
+HashMap* create_map();
+void map_insert(HashMap* map, const char* key, int value);
+int map_get(HashMap* map, const char* key, int* found);
+void map_remove(HashMap* map, const char* key);
 
-#endif
+#endif // HASHMAP_H
