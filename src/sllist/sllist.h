@@ -1,5 +1,5 @@
 /*
-* Doubly Linked List Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+* Singly Linked List Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
 * Copyright (C) 2026 Simon Stordal Amundgård
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,24 +23,23 @@
 struct Node {
     int data;
     struct Node* next;
-    struct Node* prev;
 };
 
-struct DLList {
+struct SLList {
     int size;
     struct Node* head;
     struct Node* tail;
 };
 
-struct DLList* init_list();
-int is_empty(struct DLList *l);
-int get_idx(struct DLList *l, int val);
-int list_size(struct DLList *l);
-void list_remove(struct DLList *l, int idx);
-void insert(struct DLList *l, int val, int idx);
-void insert_at_front(struct DLList *l, int val);
-void insert_at_back(struct DLList *l, int val);
-void print_list(struct DLList *l);
-void free_list(struct DLList *l);
+struct SLList* init_list();
+int is_empty(struct SLList *l);
+int get_idx(struct SLList *l, int val);
+int list_size(struct SLList *l);
+void list_remove(struct SLList *l, int idx);
+void insert(struct SLList *l, int val, int idx);
+void insert_at_front(struct SLList *l, int val);
+void insert_at_back(struct SLList *l, int val);
+void print_list(struct SLList *l);
+void free_list(struct SLList *l);
 
 #endif

@@ -1,5 +1,5 @@
 /*
-* HashMap Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+* Queue Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
 * Copyright (C) 2026 Simon Stordal Amundgård
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,27 +16,21 @@
 * along with this program. If not, see http://www.gnu.org/licenses.
 */
 
-#ifndef HASHMAP_H
-#define HASHMAP_H
+#include <stdlib.h>
+#include "queue.h"
 
-#define BUCKETS 16
+struct Queue* queue_init() {
+    struct Queue *queue = malloc(sizeof(struct Queue));
+    if (queue == NULL) {
+        return NULL;
+    }
+    queue->entries = NULL;
+    queue->size = 0;
+    queue->capacity = 0;
+    return queue;
+}
 
-// A node in the linked list chain
-struct Node {
-    char* key;
-    int value;
-    struct Node* next;
-};
-
-// The main hashmap structure
-struct HashMap {
-    struct Node* buckets[BUCKETS];
-};
-
-unsigned int hash(const char* key);
-struct HashMap* create_map();
-void map_insert(struct HashMap* map, const char* key, int value);
-int map_get(struct HashMap* map, const char* key, int* found);
-void map_remove(struct HashMap* map, const char* key);
-
-#endif // HASHMAP_H
+void queue_add(struct Queue *queue, void *data) {}
+void queue_get(struct Queue *queue, void **data) {}
+void queue_peek(struct Queue *queue, void **data) {}
+void queue_remove(struct Queue *queue) {}

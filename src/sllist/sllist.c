@@ -1,5 +1,5 @@
 /*
-* Doubly Linked List Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+* Singly Linked List Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
 * Copyright (C) 2026 Simon Stordal Amundgård
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "dllist.h"
+#include "sllist.h"
 
 // Initializes the list.
-struct DLList* init_list() {
-    struct DLList *l = malloc(sizeof(struct DLList));
+struct SLList* init_list() {
+    struct SLList* l = (struct SLList*)malloc(sizeof(struct SLList));
     if (l == NULL) {
         return NULL;
     }
@@ -34,12 +34,12 @@ struct DLList* init_list() {
 }
 
 // Returns whether the list is empty.
-int is_empty(struct DLList *l) {
+int is_empty(struct SLList *l) {
     return (l->head == NULL);
 }
 
 // Returns the index of the first occurrence of the given value in the list.
-int get_idx(struct DLList *l, int val) {
+int get_idx(struct SLList *l, int val) {
     struct Node* curr_node = l->head;
     int index = 0;
 
@@ -56,12 +56,12 @@ int get_idx(struct DLList *l, int val) {
 }
 
 // Returns the size of the list.
-int list_size(struct DLList *l) {
+int list_size(struct SLList *l) {
     return l->size;
 }
 
 // Inserts a value at the front of the list.
-void insert_at_front(struct DLList *l, int val) {
+void insert_at_front(struct SLList *l, int val) {
     struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
     if (new_node == NULL) {
         printf("Error: malloc failed\n");
@@ -69,22 +69,14 @@ void insert_at_front(struct DLList *l, int val) {
     }
 
     new_node->data = val;
-    new_node->prev = NULL;
     new_node->next = l->head;
-
-    if (l->head != NULL) {
-        l->head->prev = new_node;
-
-    } else {
-        l->tail = new_node;
-    }
 
     l->head = new_node;
     l->size++;
 }
 
 // Inserts a value at the back of the list.
-void insert_at_back(struct DLList *l, int val) {
+void insert_at_back(struct SLList *l, int val) {
     struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
     if (new_node == NULL) {
         printf("Error: malloc failed\n");
@@ -92,7 +84,6 @@ void insert_at_back(struct DLList *l, int val) {
     }
 
     new_node->data = val;
-    new_node->prev = l->tail;
     new_node->next = NULL;
 
     if (l->tail != NULL) {
@@ -107,7 +98,7 @@ void insert_at_back(struct DLList *l, int val) {
 }
 
 // Prints the list to the console.
-void print_list(struct DLList *l) {
+void print_list(struct SLList *l) {
     printf("[");
     struct Node* curr_node = l->head;
     while (curr_node != NULL) {
@@ -122,7 +113,7 @@ void print_list(struct DLList *l) {
 }
 
 // Inserts a value at the given index in the list.
-void insert(struct DLList *l, int val, int idx) {
+void insert(struct SLList *l, int val, int idx) {
     if ((idx + 1) > list_size(l)) {
         printf("List Index out of range!");
         return;
@@ -147,10 +138,7 @@ void insert(struct DLList *l, int val, int idx) {
 
     while (curr_node->next != NULL) {
         if (curr_idx == idx) {
-            new_node->prev = curr_node->prev;
             new_node->next = curr_node;
-            curr_node->prev->next = new_node;
-            curr_node->prev = new_node;
             l->size++;
             return;
         }
@@ -161,7 +149,7 @@ void insert(struct DLList *l, int val, int idx) {
 }
 
 // Removes the node at the given index from the list.
-void list_remove(struct DLList *l, int idx) {
+void list_remove(struct SLList *l, int idx) {
     if ((idx + 1) > list_size(l)) {
         printf("List Index out of range!");
         return;
@@ -173,14 +161,13 @@ void list_remove(struct DLList *l, int idx) {
     if (idx == 0) {
         struct Node* temp = l->head;
         l->head = l->head->next;
-        if (l->head != NULL) {l->head->prev = NULL;} else {l->tail = NULL;}
+        l->tail = NULL;
         free(temp);
         l->size--;
         return;
 
     } else if (idx == list_size(l) - 1) {
         struct Node* temp = l->tail;
-        l->tail = l->tail->prev;
         if (l->tail != NULL) {l->tail->next = NULL;} else {l->head = NULL;}
         free(temp);
         l->size--;
@@ -189,8 +176,6 @@ void list_remove(struct DLList *l, int idx) {
 
     while (curr_node != NULL) {
         if (curr_idx == idx) {
-            curr_node->next->prev = curr_node->prev;
-            curr_node->prev->next = curr_node->next;
             free(curr_node);
             l->size--;
             return;
@@ -202,7 +187,7 @@ void list_remove(struct DLList *l, int idx) {
 }
 
 // Frees the memory used by the list. Does not free the list itself.
-void free_list(struct DLList *l) {
+void free_list(struct SLList *l) {
     struct Node* curr_node = l->head;
 
     while (curr_node != NULL) {

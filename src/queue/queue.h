@@ -1,5 +1,5 @@
 /*
-* Doubly Linked List Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+* Queue Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
 * Copyright (C) 2026 Simon Stordal Amundgård
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,31 +16,20 @@
 * along with this program. If not, see http://www.gnu.org/licenses.
 */
 
+#ifndef QUEUE_H
+#define QUEUE_H
 
-#ifndef DLLIST_H
-#define DLLIST_H
+#define INITIAL_CAPACITY 16
 
-struct Node {
-    int data;
-    struct Node* next;
-    struct Node* prev;
+struct Queue {
+    struct Dllist *entries;
+    size_t size;
+    size_t capacity;
 };
 
-struct DLList {
-    int size;
-    struct Node* head;
-    struct Node* tail;
-};
+struct Queue* queue_init();
 
-struct DLList* init_list();
-int is_empty(struct DLList *l);
-int get_idx(struct DLList *l, int val);
-int list_size(struct DLList *l);
-void list_remove(struct DLList *l, int idx);
-void insert(struct DLList *l, int val, int idx);
-void insert_at_front(struct DLList *l, int val);
-void insert_at_back(struct DLList *l, int val);
-void print_list(struct DLList *l);
-void free_list(struct DLList *l);
+void queue_add(struct Queue *queue, void *data);
+void queue_get(struct Queue *queue, void **data);
 
-#endif
+#endif // queue.h
