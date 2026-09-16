@@ -34,9 +34,10 @@ struct HashMap {
 };
 
 unsigned int hash(const char *key);
-struct HashMap *create_map();
+struct HashMap *create_hashmap();
 void map_insert(struct HashMap *map, const char *key, int value);
 int map_get(struct HashMap *map, const char *key, int *found);
 void map_remove(struct HashMap *map, const char *key);
+void free_hashmap(struct HashMap *map);
 
 #endif // HASHMAP_H

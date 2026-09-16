@@ -19,7 +19,9 @@
 #ifndef STACK_H
 #define STACK_H
 
-#define INITIAL_CAPACITY 16
+#include <stddef.h>
+
+#include "../dllist/dllist.h"
 
 struct Stack {
 	struct DLList *entries;
@@ -27,9 +29,10 @@ struct Stack {
 	size_t capacity;
 };
 
-struct Stack *stack_init();
+struct Stack *create_stack();
 void stack_push(struct Stack *stack, void *data);
 void *stack_pop(struct Stack *stack);
 void *stack_peek(struct Stack *stack);
+void free_stack(struct Stack *stack);
 
 #endif // stack.h

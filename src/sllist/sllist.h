@@ -16,29 +16,31 @@
  * along with this program. If not, see http://www.gnu.org/licenses.
  */
 
-#ifndef DLLIST_H
-#define DLLIST_H
+#ifndef SLLIST_H
+#define SLLIST_H
 
-struct Node {
+#include <stdbool.h>
+
+struct SLLNode {
 	void *data;
-	struct Node *next;
+	struct SLLNode *next;
 };
 
 struct SLList {
 	int size;
-	struct Node *head;
-	struct Node *tail;
+	struct SLLNode *head;
+	struct SLLNode *tail;
 };
 
-struct SLList *init_list();
-int is_empty(struct SLList *l);
-int get_idx(struct SLList *l, void *val);
-int list_size(struct SLList *l);
-void list_remove(struct SLList *l, int idx);
-void insert(struct SLList *l, void *val, int idx);
-void insert_at_front(struct SLList *l, void *val);
-void insert_at_back(struct SLList *l, void *val);
-void print_list(struct SLList *l);
-void free_list(struct SLList *l);
+struct SLList *create_sllist();
+bool sll_is_empty(struct SLList *l);
+int sll_get_idx(struct SLList *l, void *val);
+int sll_list_size(struct SLList *l);
+void sll_remove(struct SLList *l, int idx);
+void sll_insert(struct SLList *l, void *val, int idx);
+void sll_insert_at_front(struct SLList *l, void *val);
+void sll_insert_at_back(struct SLList *l, void *val);
+void print_sllist(struct SLList *l);
+void free_sllist(struct SLList *l);
 
 #endif

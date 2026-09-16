@@ -19,26 +19,26 @@
 #ifndef DLLIST_H
 #define DLLIST_H
 
-struct Node {
+struct DLLNode {
 	void *data;
-	struct Node *next;
-	struct Node *prev;
+	struct DLLNode *next;
+	struct DLLNode *prev;
 };
 
 struct DLList {
 	int size;
-	struct Node *head;
-	struct Node *tail;
+	struct DLLNode *head;
+	struct DLLNode *tail;
 };
 
-struct DLList *init_list();
-int is_empty(struct DLList *l);
-int get_idx(struct DLList *l, void *val);
-int list_size(struct DLList *l);
-void list_remove(struct DLList *l, int idx);
-void insert(struct DLList *l, void *val, int idx);
-void insert_at_front(struct DLList *l, void *val);
-void insert_at_back(struct DLList *l, void *val);
+struct DLList *create_dllist();
+int dll_is_empty(struct DLList *l);
+int dll_get_idx(struct DLList *l, void *val);
+int dll_list_size(struct DLList *l);
+void dll_remove(struct DLList *l, int idx);
+void dll_insert(struct DLList *l, void *val, int idx);
+void dll_insert_at_front(struct DLList *l, void *val);
+void dll_insert_at_back(struct DLList *l, void *val);
 void print_list(struct DLList *l);
 void free_list(struct DLList *l);
 

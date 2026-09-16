@@ -21,11 +21,15 @@
 
 #include <stdlib.h>
 
-struct Stack *stack_init() {
+struct Stack *create_stack() {
 	struct Stack *stack = malloc(sizeof(struct Stack));
-	struct DLList *entries = init_list();
+	if (stack == NULL) {
+		return NULL;
+	}
 
-	if (stack == NULL || entries == NULL) {
+	struct DLList *entries = create_dllist();
+	if (entries == NULL) {
+		free(stack);
 		return NULL;
 	}
 
@@ -36,7 +40,7 @@ struct Stack *stack_init() {
 }
 
 void stack_push(struct Stack *stack, void *data) {
-	insert_at_back(stack->entries, data);
+	dll_insert_at_back(stack->entries, data);
 	stack->size++;
 }
 
@@ -45,7 +49,7 @@ void *stack_pop(struct Stack *stack) {
 		return NULL;
 	}
 	void *data = stack->entries->tail->data;
-	list_remove(stack->entries, stack->size - 1);
+	dll_remove(stack->entries, stack->size - 1);
 	stack->size--;
 	return data;
 }
@@ -55,4 +59,9 @@ void *stack_peek(struct Stack *stack) {
 		return NULL;
 	}
 	return stack->entries->tail->data;
+}
+
+void free_stack(struct Stack *stack) {
+	free_list(stack->entries);
+	free(stack);
 }

@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 // Initializes the list.
-struct SLList *init_list() {
+struct SLList *create_sllist() {
 	struct SLList *l = (struct SLList *)malloc(sizeof(struct SLList));
 	if (l == NULL) {
 		return NULL;
@@ -33,11 +33,11 @@ struct SLList *init_list() {
 }
 
 // Returns whether the list is empty.
-int is_empty(struct SLList *l) { return (l->head == NULL); }
+bool sll_is_empty(struct SLList *l) { return (l->size == 0); }
 
 // Returns the index of the first occurrence of the given value in the list.
-int get_idx(struct SLList *l, void *val) {
-	struct Node *curr_node = l->head;
+int sll_get_idx(struct SLList *l, void *val) {
+	struct SLLNode *curr_node = l->head;
 	int index = 0;
 
 	while (curr_node != NULL) {
@@ -53,11 +53,11 @@ int get_idx(struct SLList *l, void *val) {
 }
 
 // Returns the size of the list.
-int list_size(struct SLList *l) { return l->size; }
+int sll_list_size(struct SLList *l) { return l->size; }
 
 // Inserts a value at the front of the list.
-void insert_at_front(struct SLList *l, void *val) {
-	struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+void sll_insert_at_front(struct SLList *l, void *val) {
+	struct SLLNode *new_node = (struct SLLNode *)malloc(sizeof(struct SLLNode));
 	if (new_node == NULL) {
 		printf("Error: malloc failed\n");
 		return;
@@ -67,12 +67,17 @@ void insert_at_front(struct SLList *l, void *val) {
 	new_node->next = l->head;
 
 	l->head = new_node;
+
+	if (l->tail == NULL) {
+		l->tail = new_node;
+	}
+
 	l->size++;
 }
 
 // Inserts a value at the back of the list.
-void insert_at_back(struct SLList *l, void *val) {
-	struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+void sll_insert_at_back(struct SLList *l, void *val) {
+	struct SLLNode *new_node = (struct SLLNode *)malloc(sizeof(struct SLLNode));
 	if (new_node == NULL) {
 		printf("Error: malloc failed\n");
 		return;
@@ -92,9 +97,9 @@ void insert_at_back(struct SLList *l, void *val) {
 }
 
 // Prints the list to the console.
-void print_list(struct SLList *l) {
+void print_sllist(struct SLList *l) {
 	printf("[");
-	struct Node *curr_node = l->head;
+	struct SLLNode *curr_node = l->head;
 	while (curr_node != NULL) {
 		printf("%p", curr_node->data);
 		if (curr_node->next != NULL) {
@@ -106,16 +111,25 @@ void print_list(struct SLList *l) {
 	printf("]\n");
 }
 
-// Inserts a value at the given index in the list.
-void insert(struct SLList *l, void *val, int idx) {
-	if ((idx + 1) > list_size(l)) {
-		printf("List Index out of range!");
+// Inserts a value at the given index in the list. Valid indices are 0..size.
+void sll_insert(struct SLList *l, void *val, int idx) {
+	int size = sll_list_size(l);
+	if (idx < 0 || idx > size) {
+		printf("List Index out of range!\n");
 		return;
 	}
 
-	struct Node *curr_node = l->head;
-	struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+	if (idx == 0) {
+		sll_insert_at_front(l, val);
+		return;
+	}
 
+	if (idx == size) {
+		sll_insert_at_back(l, val);
+		return;
+	}
+
+	struct SLLNode *new_node = (struct SLLNode *)malloc(sizeof(struct SLLNode));
 	if (new_node == NULL) {
 		printf("Error: malloc failed\n");
 		return;
@@ -123,78 +137,64 @@ void insert(struct SLList *l, void *val, int idx) {
 
 	new_node->data = val;
 
-	int curr_idx = 0;
-
-	if (idx == 0) {
-		insert_at_front(l, val);
-		return;
-	} else if (idx == list_size(l) - 1) {
-		insert_at_back(l, val);
-		return;
-	}
-
-	while (curr_node->next != NULL) {
-		if (curr_idx == idx) {
-			new_node->next = curr_node;
-			l->size++;
-			return;
-		}
-
+	// Walk to the node just before the insertion point. It is guaranteed to
+	// exist because idx is in [1, size-1].
+	struct SLLNode *curr_node = l->head;
+	for (int i = 0; i < idx - 1; i++) {
 		curr_node = curr_node->next;
-		curr_idx++;
 	}
+
+	new_node->next = curr_node->next;
+	curr_node->next = new_node;
+	l->size++;
 }
 
 // Removes the node at the given index from the list.
-void list_remove(struct SLList *l, int idx) {
-	if ((idx + 1) > list_size(l)) {
-		printf("List Index out of range!");
+void sll_remove(struct SLList *l, int idx) {
+	int size = sll_list_size(l);
+	if (idx < 0 || idx >= size) {
+		printf("List Index out of range!\n");
 		return;
 	}
 
-	struct Node *curr_node = l->head;
-	int curr_idx = 0;
+	struct SLLNode *to_remove;
 
 	if (idx == 0) {
-		struct Node *temp = l->head;
+		to_remove = l->head;
 		l->head = l->head->next;
-		l->tail = NULL;
-		free(temp);
-		l->size--;
-		return;
-
-	} else if (idx == list_size(l) - 1) {
-		struct Node *temp = l->tail;
-		if (l->tail != NULL) {
-			l->tail->next = NULL;
-		} else {
-			l->head = NULL;
+		if (l->head == NULL) {
+			l->tail = NULL;
 		}
-		free(temp);
+		free(to_remove);
 		l->size--;
 		return;
 	}
 
-	while (curr_node != NULL) {
-		if (curr_idx == idx) {
-			free(curr_node);
-			l->size--;
-			return;
-		}
-
+	// Walk to the node just before the one to remove.
+	struct SLLNode *curr_node = l->head;
+	for (int i = 0; i < idx - 1; i++) {
 		curr_node = curr_node->next;
-		curr_idx++;
 	}
+
+	to_remove = curr_node->next;
+	curr_node->next = to_remove->next;
+
+	if (to_remove == l->tail) {
+		l->tail = curr_node;
+	}
+
+	free(to_remove);
+	l->size--;
 }
 
-// Frees the memory used by the list. Does not free the list itself.
-void free_list(struct SLList *l) {
-	struct Node *curr_node = l->head;
+// Frees the memory used by the list's nodes. Does not free the list itself.
+void free_sllist(struct SLList *l) {
+	struct SLLNode *curr_node = l->head;
 
 	while (curr_node != NULL) {
-		struct Node *to_rem = curr_node->next;
+		struct SLLNode *next = curr_node->next;
 		free(curr_node);
-		curr_node = to_rem;
+		curr_node = next;
 	}
 
 	l->head = NULL;

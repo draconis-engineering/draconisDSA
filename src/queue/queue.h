@@ -16,21 +16,23 @@
  * along with this program. If not, see http://www.gnu.org/licenses.
  */
 
-#include "../dllist/dllist.h"
-#include <stdlib.h>
-
 #ifndef QUEUE_H
 #define QUEUE_H
+
+#include <stddef.h>
+
+#include "../dllist/dllist.h"
 
 struct Queue {
 	struct DLList *entries;
 	size_t size;
 };
 
-struct Queue *queue_init();
+struct Queue *create_queue();
 
 void queue_add(struct Queue *queue, void *data);
 void *queue_get(struct Queue *queue);
 void *queue_peek(struct Queue *queue);
+void free_queue(struct Queue *queue);
 
 #endif // queue.h

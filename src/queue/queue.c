@@ -19,25 +19,39 @@
 #include "queue.h"
 #include <stdlib.h>
 
-struct Queue *init_queue() {
+struct Queue *create_queue() {
 	struct Queue *queue = malloc(sizeof(struct Queue));
 	if (queue == NULL) {
 		return NULL;
 	}
-	queue->entries = init_list();
+	queue->entries = create_dllist();
 	queue->size = 0;
 	return queue;
 }
 
 void queue_add(struct Queue *queue, void *data) {
-	insert_at_back(queue->entries, data);
+	dll_insert_at_back(queue->entries, data);
 	queue->size++;
 }
 
 void *queue_get(struct Queue *queue) {
+	if (queue->size == 0) {
+		return NULL;
+	}
 	void *data = queue->entries->head->data;
-	list_remove(queue->entries, queue->size - 1);
+	dll_remove(queue->entries, 0);
 	queue->size--;
 	return data;
 }
-void *queue_peek(struct Queue *queue) { return queue->entries->head->data; }
+
+void *queue_peek(struct Queue *queue) {
+	if (queue->size == 0) {
+		return NULL;
+	}
+	return queue->entries->head->data;
+}
+
+void free_queue(struct Queue *queue) {
+	free_list(queue->entries);
+	free(queue);
+}
