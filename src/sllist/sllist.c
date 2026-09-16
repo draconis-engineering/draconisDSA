@@ -124,7 +124,7 @@ void sll_insert(struct SLList *l, void *val, int idx) {
 		return;
 	}
 
-	if (idx == size) {
+	if (idx == size || idx == -1) {
 		sll_insert_at_back(l, val);
 		return;
 	}
@@ -200,4 +200,5 @@ void free_sllist(struct SLList *l) {
 	l->head = NULL;
 	l->tail = NULL;
 	l->size = 0;
+	free(l);
 }

@@ -4,14 +4,14 @@ Data Structures & Algorithms library written in C99. Educational, single-header,
 
 ## Structures
 
-| Module | Description |
-| ------ | ----------- |
-| `src/sllist` | Singly linked list (`sll_`-prefixed API) |
-| `src/dllist` | Doubly linked list (`dll_`-prefixed API) |
-| `src/stack` | LIFO stack built on `dllist` |
-| `src/queue` | FIFO queue built on `dllist` |
-| `src/hashmap` | String-keyed hash map, DJB2 hash + separate chaining |
-| `src/graph` | Directed weighted graph (BFS `path_exists`, connectivity) |
+| Module        | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `src/sllist`  | Singly linked list (`sll_`-prefixed API)                  |
+| `src/dllist`  | Doubly linked list (`dll_`-prefixed API)                  |
+| `src/stack`   | LIFO stack built on `dllist`                              |
+| `src/queue`   | FIFO queue built on `dllist`                              |
+| `src/hashmap` | String-keyed hash map, DJB2 hash + separate chaining      |
+| `src/graph`   | Directed weighted graph (BFS `path_exists`, connectivity) |
 
 ## Building
 
@@ -35,12 +35,7 @@ return `NULL`.
 
 ## Memory
 
-Everything created with `create_*` must be released:
-
-- `free_sllist` / `free_list` — free nodes only; you must `free()` the list struct itself.
-- `free_stack` / `free_queue` — free the whole container.
-- `free_hashmap` — frees keys, nodes, and the map.
-- `free_graph` — frees nodes, edges, and the graph.
+Everything created with `create_*` must be released with `free_*` (e.g. `free_sllist`).
 
 ## License
 

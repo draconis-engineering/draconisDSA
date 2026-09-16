@@ -128,7 +128,7 @@ void dll_insert(struct DLList *l, void *val, int idx) {
 		return;
 	}
 
-	if (idx == size) {
+	if (idx == size || idx == -1) {
 		dll_insert_at_back(l, val);
 		return;
 	}
@@ -217,4 +217,5 @@ void free_list(struct DLList *l) {
 	l->head = NULL;
 	l->tail = NULL;
 	l->size = 0;
+	free(l);
 }
