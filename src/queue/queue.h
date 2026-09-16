@@ -17,19 +17,20 @@
  */
 
 #include "../dllist/dllist.h"
+#include <stdlib.h>
 
 #ifndef QUEUE_H
 #define QUEUE_H
 
 struct Queue {
-  struct DLList *entries;
-  size_t size;
+	struct DLList *entries;
+	size_t size;
 };
 
 struct Queue *queue_init();
 
 void queue_add(struct Queue *queue, void *data);
 void *queue_get(struct Queue *queue);
-void *queue_peek(struct Queue *queue)
+void *queue_peek(struct Queue *queue);
 
 #endif // queue.h

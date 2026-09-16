@@ -20,24 +20,24 @@
 #include <stdlib.h>
 
 struct Queue *init_queue() {
-  struct Queue *queue = malloc(sizeof(struct Queue));
-  if (queue == NULL) {
-    return NULL;
-  }
-  queue->entries = init_list();
-  queue->size = 0;
-  return queue;
+	struct Queue *queue = malloc(sizeof(struct Queue));
+	if (queue == NULL) {
+		return NULL;
+	}
+	queue->entries = init_list();
+	queue->size = 0;
+	return queue;
 }
 
 void queue_add(struct Queue *queue, void *data) {
-  insert_at_back(queue->entries, data);
-  queue->size++;
+	insert_at_back(queue->entries, data);
+	queue->size++;
 }
 
 void *queue_get(struct Queue *queue) {
-  void *data = queue->entries->head->data;
-  list_remove(queue->entries, queue->size - 1);
-  queue->size--;
-  return data;
+	void *data = queue->entries->head->data;
+	list_remove(queue->entries, queue->size - 1);
+	queue->size--;
+	return data;
 }
 void *queue_peek(struct Queue *queue) { return queue->entries->head->data; }

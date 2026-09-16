@@ -22,37 +22,37 @@
 #include <stdlib.h>
 
 struct Stack *stack_init() {
-  struct Stack *stack = malloc(sizeof(struct Stack));
-  struct DLList *entries = init_list();
+	struct Stack *stack = malloc(sizeof(struct Stack));
+	struct DLList *entries = init_list();
 
-  if (stack == NULL || entries == NULL) {
-    return NULL;
-  }
+	if (stack == NULL || entries == NULL) {
+		return NULL;
+	}
 
-  stack->entries = entries;
-  stack->size = 0;
-  stack->capacity = 0;
-  return stack;
+	stack->entries = entries;
+	stack->size = 0;
+	stack->capacity = 0;
+	return stack;
 }
 
 void stack_push(struct Stack *stack, void *data) {
-  insert_at_back(stack->entries, data);
-  stack->size++;
+	insert_at_back(stack->entries, data);
+	stack->size++;
 }
 
 void *stack_pop(struct Stack *stack) {
-  if (stack->size == 0) {
-    return NULL;
-  }
-  void *data = stack->entries->tail->data;
-  list_remove(stack->entries, stack->size - 1);
-  stack->size--;
-  return data;
+	if (stack->size == 0) {
+		return NULL;
+	}
+	void *data = stack->entries->tail->data;
+	list_remove(stack->entries, stack->size - 1);
+	stack->size--;
+	return data;
 }
 
 void *stack_peek(struct Stack *stack) {
-  if (stack->size == 0) {
-    return NULL;
-  }
-  return stack->entries->tail->data;
+	if (stack->size == 0) {
+		return NULL;
+	}
+	return stack->entries->tail->data;
 }

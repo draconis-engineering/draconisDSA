@@ -20,14 +20,14 @@
 #define DLLIST_H
 
 struct Node {
-  void *data;
-  struct Node *next;
+	void *data;
+	struct Node *next;
 };
 
 struct SLList {
-  int size;
-  struct Node *head;
-  struct Node *tail;
+	int size;
+	struct Node *head;
+	struct Node *tail;
 };
 
 struct SLList *init_list();

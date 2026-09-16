@@ -22,9 +22,9 @@
 #define INITIAL_CAPACITY 16
 
 struct Stack {
-  struct DLList *entries;
-  size_t size;
-  size_t capacity;
+	struct DLList *entries;
+	size_t size;
+	size_t capacity;
 };
 
 struct Stack *stack_init();
