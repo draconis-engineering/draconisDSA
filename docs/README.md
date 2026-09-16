@@ -15,15 +15,10 @@ Data Structures & Algorithms library written in C99. Educational, single-header,
 
 ## Building
 
-There is no build system yet; compile manually. For example:
+Use `make` to compile the library and demo.
 
 ```sh
-gcc -std=c99 -Wall -Wextra -Isrc \
-    src/main.c \
-    src/sllist/sllist.c src/dllist/dllist.c \
-    src/stack/stack.c src/queue/queue.c \
-    src/hashmap/hashmap.c src/graph/graph.c \
-    -o draconis_dsa
+make
 ```
 
 `src/main.c` is a small demo that exercises every structure.
