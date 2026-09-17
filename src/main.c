@@ -18,7 +18,6 @@ int main() {
 	sll_remove(sllist, 1);
 	print_sllist(sllist);
 	free_sllist(sllist);
-	free(sllist);
 
 	// Doubly linked list
 	struct DLList *dllist = create_dllist();
@@ -28,7 +27,6 @@ int main() {
 	dll_remove(dllist, 0);
 	print_list(dllist);
 	free_list(dllist);
-	free(dllist);
 
 	// Stack (LIFO)
 	struct Stack *stack = create_stack();
