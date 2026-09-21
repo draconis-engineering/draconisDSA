@@ -1,19 +1,22 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Isrc
 
-# Automatically find all .c files in src/ and its subdirectories
-SRCS = $(shell find src -name "*.c")
-OBJS = $(SRCS:.c=.o)
 TARGET = main.exe
 
-# Build the target executable
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+SOURCES = $(wildcard src/*.c) \
+          $(wildcard src/*/*.c)
 
-# Compile .c files into .o files
-%.o: %.c
+OBJECTS = $(SOURCES:.c=.o)
+
+.PHONY: all clean
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(TARGET)
+
+src/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up build artifacts
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJECTS) $(TARGET)
