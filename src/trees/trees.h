@@ -21,11 +21,14 @@
 
 struct BinaryTree {
 	void *val;
+	struct BinaryTree *parent;
 	struct BinaryTree *l;
 	struct BinaryTree *r;
 };
 
 struct BinaryTree *create_btree(void *root_val);
+void add_values(struct BinaryTree *tree, void *lv, void *rv);
+void set_values(struct BinaryTree *tree, void *lv, void *rv);
 void free_btree(struct BinaryTree *tree);
 
 // Regular Tree
