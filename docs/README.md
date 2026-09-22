@@ -12,6 +12,7 @@ Data Structures & Algorithms library written in C99. Educational, single-header,
 | `src/queue`   | FIFO queue built on `dllist`                              |
 | `src/hashmap` | String-keyed hash map, DJB2 hash + separate chaining      |
 | `src/graph`   | Directed weighted graph (BFS `path_exists`, connectivity) |
+| `src/trees`   | Many types of trees (Binary, AVL, etc.)                   |
 
 ## Building
 
