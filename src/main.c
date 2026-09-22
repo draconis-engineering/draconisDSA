@@ -7,6 +7,9 @@
 #include "queue/queue.h"
 #include "sllist/sllist.h"
 #include "stack/stack.h"
+#include "trees/trees.h"
+
+static void print_val(void *val) { printf("%s ", (char *)val); }
 
 int main() {
 	// Singly linked list
@@ -70,6 +73,33 @@ int main() {
 	remove_node(graph, graph->nodes[1]);
 	print_graph(graph);
 	free_graph(graph);
+
+	// Binary tree
+	struct BinaryTree *broot = btree_create((void *)"root");
+	struct BinaryTree *left = btree_insert_left(broot, (void *)"left");
+	btree_insert_right(broot, (void *)"right");
+	btree_insert_left(left, (void *)"left-left");
+	btree_insert_right(left, (void *)"left-right");
+	printf("btree size: %d, height: %d, parent of left: %s\n", btree_size(broot),
+		   btree_height(broot), (char *)btree_get_val(btree_get_parent(left)));
+	printf("preorder: ");
+	btree_traverse_preorder(broot, print_val);
+	printf("\ninorder:  ");
+	btree_traverse_inorder(broot, print_val);
+	printf("\npostorder:");
+	btree_traverse_postorder(broot, print_val);
+	printf("\n");
+	btree_free(broot);
+
+	// N-ary tree
+	struct Tree *troot = tree_create((void *)"root");
+	tree_add_child(troot, (void *)"a");
+	struct Tree *b = tree_add_child(troot, (void *)"b");
+	tree_add_child(b, (void *)"b1");
+	tree_add_child(b, (void *)"b2");
+	printf("n-ary root children: %d, b children: %d\n",
+		   tree_num_children(troot), tree_num_children(b));
+	tree_free(troot);
 
 	return 0;
 }
