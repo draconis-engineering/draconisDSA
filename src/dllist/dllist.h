@@ -31,15 +31,15 @@ struct DLList {
 	struct DLLNode *tail;
 };
 
-struct DLList *create_dllist();
+struct DLList *create_dll();
 int dll_is_empty(struct DLList *l);
 int dll_get_idx(struct DLList *l, void *val);
-int dll_list_size(struct DLList *l);
+int dll_size(struct DLList *l);
 void dll_remove(struct DLList *l, int idx);
 void dll_insert(struct DLList *l, void *val, int idx);
 void dll_insert_at_front(struct DLList *l, void *val);
 void dll_insert_at_back(struct DLList *l, void *val);
-void print_list(struct DLList *l);
-void free_list(struct DLList *l);
+void print_dll(struct DLList *l);
+void free_dll(struct DLList *l);
 
 #endif

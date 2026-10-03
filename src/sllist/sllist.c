@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 // Initializes the list.
-struct SLList *create_sllist() {
+struct SLList *create_sll() {
 	struct SLList *l = (struct SLList *)malloc(sizeof(struct SLList));
 	if (l == NULL) {
 		return NULL;
@@ -33,7 +33,7 @@ struct SLList *create_sllist() {
 }
 
 // Returns whether the list is empty.
-bool sll_is_empty(struct SLList *l) { return (l->size == 0); }
+int sll_is_empty(struct SLList *l) { return (l->size == 0); }
 
 // Returns the index of the first occurrence of the given value in the list.
 int sll_get_idx(struct SLList *l, void *val) {
@@ -53,7 +53,7 @@ int sll_get_idx(struct SLList *l, void *val) {
 }
 
 // Returns the size of the list.
-int sll_list_size(struct SLList *l) { return l->size; }
+int sll_size(struct SLList *l) { return l->size; }
 
 // Inserts a value at the front of the list.
 void sll_insert_at_front(struct SLList *l, void *val) {
@@ -113,7 +113,7 @@ void print_sllist(struct SLList *l) {
 
 // Inserts a value at the given index in the list. Valid indices are 0..size.
 void sll_insert(struct SLList *l, void *val, int idx) {
-	int size = sll_list_size(l);
+	int size = sll_size(l);
 	if (idx < 0 || idx > size) {
 		printf("List Index out of range!\n");
 		return;
@@ -151,7 +151,7 @@ void sll_insert(struct SLList *l, void *val, int idx) {
 
 // Removes the node at the given index from the list.
 void sll_remove(struct SLList *l, int idx) {
-	int size = sll_list_size(l);
+	int size = sll_size(l);
 	if (idx < 0 || idx >= size) {
 		printf("List Index out of range!\n");
 		return;
@@ -187,8 +187,8 @@ void sll_remove(struct SLList *l, int idx) {
 	l->size--;
 }
 
-// Frees the memory used by the list's nodes. Does not free the list itself.
-void free_sllist(struct SLList *l) {
+// Frees the memory used by the list's nodes.
+void free_sll(struct SLList *l) {
 	struct SLLNode *curr_node = l->head;
 
 	while (curr_node != NULL) {

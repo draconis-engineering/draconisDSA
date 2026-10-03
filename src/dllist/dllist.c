@@ -20,8 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Initializes the list.
-struct DLList *create_dllist() {
+// Initializes the doubly linked list.
+struct DLList *create_dll() {
 	struct DLList *l = malloc(sizeof(struct DLList));
 	if (l == NULL) {
 		return NULL;
@@ -53,7 +53,7 @@ int dll_get_idx(struct DLList *l, void *val) {
 }
 
 // Returns the size of the list.
-int dll_list_size(struct DLList *l) { return l->size; }
+int dll_size(struct DLList *l) { return l->size; }
 
 // Inserts a value at the front of the list.
 void dll_insert_at_front(struct DLList *l, void *val) {
@@ -69,7 +69,6 @@ void dll_insert_at_front(struct DLList *l, void *val) {
 
 	if (l->head != NULL) {
 		l->head->prev = new_node;
-
 	} else {
 		l->tail = new_node;
 	}
@@ -101,7 +100,7 @@ void dll_insert_at_back(struct DLList *l, void *val) {
 }
 
 // Prints the list to the console.
-void print_list(struct DLList *l) {
+void print_dll(struct DLList *l) {
 	printf("[");
 	struct DLLNode *curr_node = l->head;
 	while (curr_node != NULL) {
@@ -117,7 +116,7 @@ void print_list(struct DLList *l) {
 
 // Inserts a value at the given index in the list. Valid indices are 0..size.
 void dll_insert(struct DLList *l, void *val, int idx) {
-	int size = dll_list_size(l);
+	int size = dll_size(l);
 	if (idx < 0 || idx > size) {
 		printf("List Index out of range!\n");
 		return;
@@ -155,9 +154,9 @@ void dll_insert(struct DLList *l, void *val, int idx) {
 	l->size++;
 }
 
-// Removes the node at the given index from the list.
+// Removes the node at the given index from the list and relinks the list.
 void dll_remove(struct DLList *l, int idx) {
-	if ((idx + 1) > dll_list_size(l)) {
+	if ((idx + 1) > dll_size(l)) {
 		printf("List Index out of range!");
 		return;
 	}
@@ -177,7 +176,7 @@ void dll_remove(struct DLList *l, int idx) {
 		l->size--;
 		return;
 
-	} else if (idx == dll_list_size(l) - 1) {
+	} else if (idx == dll_size(l) - 1) {
 		struct DLLNode *temp = l->tail;
 		l->tail = l->tail->prev;
 		if (l->tail != NULL) {
@@ -204,8 +203,8 @@ void dll_remove(struct DLList *l, int idx) {
 	}
 }
 
-// Frees the memory used by the list. Does not free the list itself.
-void free_list(struct DLList *l) {
+// Frees the memory used by the doubly linked list.
+void free_dll(struct DLList *l) {
 	struct DLLNode *curr_node = l->head;
 
 	while (curr_node != NULL) {

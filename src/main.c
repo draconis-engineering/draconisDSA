@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "dllist/dllist.h"
 #include "graph/graph.h"
@@ -8,28 +6,29 @@
 #include "sllist/sllist.h"
 #include "stack/stack.h"
 #include "trees/trees.h"
+#include <stdio.h>
 
 static void print_val(void *val) { printf("%s ", (char *)val); }
 
 int main() {
 	// Singly linked list
-	struct SLList *sllist = create_sllist();
+	struct SLList *sllist = create_sll();
 	sll_insert_at_back(sllist, (void *)1);
 	sll_insert_at_front(sllist, (void *)2);
 	sll_insert_at_back(sllist, (void *)3);
 	sll_insert(sllist, (void *)4, 2);
 	sll_remove(sllist, 1);
-	print_sllist(sllist);
-	free_sllist(sllist);
+	print_sll(sllist);
+	free_sll(sllist);
 
 	// Doubly linked list
-	struct DLList *dllist = create_dllist();
+	struct DLList *dllist = create_dll();
 	dll_insert_at_back(dllist, (void *)10);
 	dll_insert_at_front(dllist, (void *)20);
 	dll_insert(dllist, (void *)30, 1);
 	dll_remove(dllist, 0);
-	print_list(dllist);
-	free_list(dllist);
+	print_dll(dllist);
+	free_dll(dllist);
 
 	// Stack (LIFO)
 	struct Stack *stack = create_stack();
@@ -80,8 +79,9 @@ int main() {
 	btree_insert_right(broot, (void *)"right");
 	btree_insert_left(left, (void *)"left-left");
 	btree_insert_right(left, (void *)"left-right");
-	printf("btree size: %d, height: %d, parent of left: %s\n", btree_size(broot),
-		   btree_height(broot), (char *)btree_get_val(btree_get_parent(left)));
+	printf("btree size: %d, height: %d, parent of left: %s\n",
+		   btree_size(broot), btree_height(broot),
+		   (char *)btree_get_val(btree_get_parent(left)));
 	printf("preorder: ");
 	btree_traverse_preorder(broot, print_val);
 	printf("\ninorder:  ");

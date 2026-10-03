@@ -19,8 +19,6 @@
 #ifndef SLLIST_H
 #define SLLIST_H
 
-#include <stdbool.h>
-
 struct SLLNode {
 	void *data;
 	struct SLLNode *next;
@@ -32,15 +30,15 @@ struct SLList {
 	struct SLLNode *tail;
 };
 
-struct SLList *create_sllist();
-bool sll_is_empty(struct SLList *l);
+struct SLList *create_sll();
+int sll_is_empty(struct SLList *l);
 int sll_get_idx(struct SLList *l, void *val);
-int sll_list_size(struct SLList *l);
+int sll_size(struct SLList *l);
 void sll_remove(struct SLList *l, int idx);
 void sll_insert(struct SLList *l, void *val, int idx);
 void sll_insert_at_front(struct SLList *l, void *val);
 void sll_insert_at_back(struct SLList *l, void *val);
-void print_sllist(struct SLList *l);
-void free_sllist(struct SLList *l);
+void print_sll(struct SLList *l);
+void free_sll(struct SLList *l);
 
 #endif // sllist.h
