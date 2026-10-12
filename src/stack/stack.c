@@ -27,7 +27,7 @@ struct Stack *create_stack() {
 		return NULL;
 	}
 
-	struct DLList *entries = create_dllist();
+	struct DLList *entries = create_dll();
 	if (entries == NULL) {
 		free(stack);
 		return NULL;
@@ -62,6 +62,6 @@ void *stack_peek(struct Stack *stack) {
 }
 
 void free_stack(struct Stack *stack) {
-	free_list(stack->entries);
+	free_dll(stack->entries);
 	free(stack);
 }

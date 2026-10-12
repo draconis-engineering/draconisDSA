@@ -24,7 +24,7 @@ struct Queue *create_queue() {
 	if (queue == NULL) {
 		return NULL;
 	}
-	queue->entries = create_dllist();
+	queue->entries = create_dll();
 	queue->size = 0;
 	return queue;
 }
@@ -52,6 +52,6 @@ void *queue_peek(struct Queue *queue) {
 }
 
 void free_queue(struct Queue *queue) {
-	free_list(queue->entries);
+	free_dll(queue->entries);
 	free(queue);
 }
