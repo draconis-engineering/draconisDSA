@@ -97,7 +97,7 @@ void sll_insert_at_back(struct SLList *l, void *val) {
 }
 
 // Prints the list to the console.
-void print_sllist(struct SLList *l) {
+void print_sll(struct SLList *l) {
 	printf("[");
 	struct SLLNode *curr_node = l->head;
 	while (curr_node != NULL) {
