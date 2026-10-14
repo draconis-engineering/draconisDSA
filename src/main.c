@@ -17,6 +17,7 @@ int main() {
 	sll_insert_at_front(sllist, (void *)2);
 	sll_insert_at_back(sllist, (void *)3);
 	sll_insert(sllist, (void *)4, 2);
+	print_sll(sllist);
 	sll_remove(sllist, 1);
 	print_sll(sllist);
 	free_sll(sllist);
@@ -26,6 +27,7 @@ int main() {
 	dll_insert_at_back(dllist, (void *)10);
 	dll_insert_at_front(dllist, (void *)20);
 	dll_insert(dllist, (void *)30, 1);
+	print_dll(dllist);
 	dll_remove(dllist, 0);
 	print_dll(dllist);
 	free_dll(dllist);
