@@ -117,8 +117,8 @@ void print_dll(struct DLList *l) {
 // Inserts a value at the given index in the list. Valid indices are 0..size.
 void dll_insert(struct DLList *l, void *val, int idx) {
 	int size = dll_size(l);
-	if (idx < 0 || idx > size) {
-		printf("List Index out of range!\n");
+	if (idx < -1 || idx > size) {
+		printf("List index out of range!\n");
 		return;
 	}
 

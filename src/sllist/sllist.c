@@ -114,8 +114,8 @@ void print_sll(struct SLList *l) {
 // Inserts a value at the given index in the list. Valid indices are 0..size.
 void sll_insert(struct SLList *l, void *val, int idx) {
 	int size = sll_size(l);
-	if (idx < 0 || idx > size) {
-		printf("List Index out of range!\n");
+	if (idx < -1 || idx > size) {
+		printf("List index out of range!\n");
 		return;
 	}
 
