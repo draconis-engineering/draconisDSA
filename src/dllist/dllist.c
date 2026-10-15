@@ -133,6 +133,7 @@ void dll_insert(struct DLList *l, void *val, int idx) {
 	}
 
 	struct DLLNode *new_node = (struct DLLNode *)malloc(sizeof(struct DLLNode));
+
 	if (new_node == NULL) {
 		printf("Error: malloc failed\n");
 		return;
