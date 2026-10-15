@@ -76,7 +76,7 @@ int main() {
 	free_graph(graph);
 
 	// Binary tree
-	struct BinaryTree *broot = btree_create((void *)"root");
+	struct BinaryTree *broot = create_btree((void *)"root");
 	struct BinaryTree *left = btree_insert_left(broot, (void *)"left");
 	btree_insert_right(broot, (void *)"right");
 	btree_insert_left(left, (void *)"left-left");
@@ -94,7 +94,7 @@ int main() {
 	btree_free(broot);
 
 	// N-ary tree
-	struct Tree *troot = tree_create((void *)"root");
+	struct Tree *troot = create_tree((void *)"root");
 	tree_add_child(troot, (void *)"a");
 	struct Tree *b = tree_add_child(troot, (void *)"b");
 	tree_add_child(b, (void *)"b1");

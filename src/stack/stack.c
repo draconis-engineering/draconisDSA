@@ -22,7 +22,7 @@
 #include <stdlib.h>
 
 struct Stack *create_stack() {
-	struct Stack *stack = malloc(sizeof(struct Stack));
+	struct Stack *stack = (struct Stack *)malloc(sizeof(struct Stack));
 	if (stack == NULL) {
 		return NULL;
 	}

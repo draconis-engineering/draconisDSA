@@ -29,8 +29,9 @@
  * Creates a new binary tree node with the given value, no children and no
  * parent.
  */
-struct BinaryTree *btree_create(void *val) {
-	struct BinaryTree *tree = malloc(sizeof(struct BinaryTree));
+struct BinaryTree *create_btree(void *val) {
+	struct BinaryTree *tree =
+		(struct BinaryTree *)malloc(sizeof(struct BinaryTree));
 	if (tree == NULL) {
 		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
@@ -129,7 +130,7 @@ struct BinaryTree *btree_insert_left(struct BinaryTree *tree, void *val) {
 	if (tree == NULL) {
 		return NULL;
 	}
-	struct BinaryTree *child = btree_create(val);
+	struct BinaryTree *child = create_btree(val);
 	if (child == NULL) {
 		return NULL;
 	}
@@ -145,7 +146,7 @@ struct BinaryTree *btree_insert_right(struct BinaryTree *tree, void *val) {
 	if (tree == NULL) {
 		return NULL;
 	}
-	struct BinaryTree *child = btree_create(val);
+	struct BinaryTree *child = create_btree(val);
 	if (child == NULL) {
 		return NULL;
 	}
@@ -231,8 +232,8 @@ void btree_traverse_postorder(const struct BinaryTree *tree,
 /*
  * Creates a new n-ary tree node with the given value and no children.
  */
-struct Tree *tree_create(void *val) {
-	struct Tree *tree = malloc(sizeof(struct Tree));
+struct Tree *create_tree(void *val) {
+	struct Tree *tree = (struct Tree *)malloc(sizeof(struct Tree));
 	if (tree == NULL) {
 		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
@@ -279,7 +280,7 @@ struct Tree *tree_add_child(struct Tree *parent, void *child_val) {
 		parent->capacity = new_capacity;
 	}
 
-	struct Tree *child = tree_create(child_val);
+	struct Tree *child = create_tree(child_val);
 	if (child == NULL) {
 		return NULL;
 	}

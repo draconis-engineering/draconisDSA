@@ -34,7 +34,7 @@ struct BinaryTree {
 };
 
 // Creates a new node holding `val` with no children and no parent.
-struct BinaryTree *btree_create(void *val);
+struct BinaryTree *create_btree(void *val);
 
 // Recursively frees the node and all descendants. NULL-safe.
 void btree_free(struct BinaryTree *tree);
@@ -89,7 +89,7 @@ struct Tree {
 };
 
 // Creates a new n-ary tree node holding `val`.
-struct Tree *tree_create(void *val);
+struct Tree *create_tree(void *val);
 
 // Recursively frees the node and all descendants. NULL-safe.
 void tree_free(struct Tree *tree);

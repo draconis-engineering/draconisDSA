@@ -6,7 +6,7 @@
 
 // Create a new HashSet
 struct HashSet *hashset_create() {
-	struct HashSet *set = malloc(sizeof(struct HashSet));
+	struct HashSet *set = (struct HashSet *)malloc(sizeof(struct HashSet));
 	if (!set)
 		return NULL;
 

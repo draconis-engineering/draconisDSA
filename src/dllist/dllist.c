@@ -22,7 +22,7 @@
 
 // Initializes the doubly linked list.
 struct DLList *create_dll() {
-	struct DLList *l = malloc(sizeof(struct DLList));
+	struct DLList *l = (struct DLList *)malloc(sizeof(struct DLList));
 	if (l == NULL) {
 		return NULL;
 	}

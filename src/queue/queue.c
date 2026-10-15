@@ -20,7 +20,7 @@
 #include <stdlib.h>
 
 struct Queue *create_queue() {
-	struct Queue *queue = malloc(sizeof(struct Queue));
+	struct Queue *queue = (struct Queue *)malloc(sizeof(struct Queue));
 	if (queue == NULL) {
 		return NULL;
 	}

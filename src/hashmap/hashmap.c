@@ -33,10 +33,11 @@ static char *dup_string(const char *src) {
 
 // Initialize the map
 struct HashMap *create_hashmap() {
-	struct HashMap *map = malloc(sizeof(struct HashMap));
+	struct HashMap *map = (struct HashMap *)malloc(sizeof(struct HashMap));
 	if (map == NULL) {
 		return NULL;
 	}
+
 	for (int i = 0; i < BUCKETS; i++) {
 		map->buckets[i] = NULL;
 	}
