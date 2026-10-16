@@ -22,10 +22,18 @@
 
 // Initializes the doubly linked list.
 struct DLList *create_dll() {
+	/*
+	 * Allocate space for *l* and cast the void pointer
+	 * returned by malloc into a DLList pointer
+	 */
 	struct DLList *l = (struct DLList *)malloc(sizeof(struct DLList));
+
+	// Failed malloc
 	if (l == NULL) {
-		return NULL;
+		printf("Error: malloc failed\n");
+		return l;
 	}
+
 	l->head = NULL;
 	l->tail = NULL;
 	l->size = 0;
@@ -33,20 +41,21 @@ struct DLList *create_dll() {
 }
 
 // Returns whether the list is empty.
+// If head is NULL, the list is empty since it gets assigned first
 int dll_is_empty(struct DLList *l) { return (l->head == NULL); }
 
 // Returns the index of the first occurrence of the given value in the list.
 int dll_get_idx(struct DLList *l, void *val) {
 	struct DLLNode *curr_node = l->head;
-	int index = 0;
+	int idx = 0;
 
 	while (curr_node != NULL) {
 		if (curr_node->data == val) {
-			return index;
+			return idx;
 		}
 
 		curr_node = curr_node->next;
-		index++;
+		idx++;
 	}
 
 	return -1;
@@ -158,7 +167,7 @@ void dll_insert(struct DLList *l, void *val, int idx) {
 // Removes the node at the given index from the list and relinks the list.
 void dll_remove(struct DLList *l, int idx) {
 	if ((idx + 1) > dll_size(l)) {
-		printf("List Index out of range!");
+		printf("List index out of range!");
 		return;
 	}
 

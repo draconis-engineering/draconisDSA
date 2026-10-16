@@ -5,15 +5,16 @@
 #include "hashset.h"
 
 // Create a new HashSet
-struct HashSet *hashset_create() {
+struct HashSet *create_hashset() {
 	struct HashSet *set = (struct HashSet *)malloc(sizeof(struct HashSet));
 	if (!set)
 		return NULL;
 
 	set->capacity = INITIAL_CAPACITY;
 	set->size = 0;
-	set->buckets = calloc(
-		set->capacity, sizeof(struct Node *)); // Initialize all buckets to NULL
+	set->buckets =
+		calloc(set->capacity,
+			   sizeof(struct HashSetNode *)); // Initialize all buckets to NULL
 	if (!set->buckets) {
 		free(set);
 		return NULL;
@@ -38,7 +39,7 @@ bool hashset_contains(struct HashSet *set, const char *value) {
 	}
 
 	unsigned int index = hashset_hash(set, value);
-	struct Node *current = set->buckets[index];
+	struct HashSetNode *current = set->buckets[index];
 
 	while (current != NULL) {
 		if (strcmp(current->value, value) == 0) {
@@ -62,7 +63,7 @@ bool hashset_add(struct HashSet *set, const char *value) {
 	unsigned int index = hashset_hash(set, value);
 
 	// Allocate new node
-	struct Node *new_node = malloc(sizeof(struct Node));
+	struct HashSetNode *new_node = malloc(sizeof(struct HashSetNode));
 	if (!new_node) {
 		return false;
 	}
@@ -88,8 +89,8 @@ bool hashset_remove(struct HashSet *set, const char *value) {
 	}
 
 	unsigned int index = hashset_hash(set, value);
-	struct Node *current = set->buckets[index];
-	struct Node *prev = NULL;
+	struct HashSetNode *current = set->buckets[index];
+	struct HashSetNode *prev = NULL;
 
 	while (current != NULL) {
 		if (strcmp(current->value, value) == 0) {
@@ -116,9 +117,9 @@ void hashset_destroy(struct HashSet *set) {
 	}
 
 	for (size_t i = 0; i < set->capacity; i++) {
-		struct Node *current = set->buckets[i];
+		struct HashSetNode *current = set->buckets[i];
 		while (current != NULL) {
-			struct Node *temp = current;
+			struct HashSetNode *temp = current;
 			current = current->next;
 			free(temp->value);
 			free(temp);

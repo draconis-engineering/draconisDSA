@@ -23,16 +23,47 @@
 
 #include "../dllist/dllist.h"
 
+/**
+ * @brief A FIFO (First In, First Out) queue.
+ */
 struct Queue {
+	/** Underlying doubly linked list for storing entries. */
 	struct DLList *entries;
+	/** Number of elements in the queue. */
 	size_t size;
 };
 
+/**
+ * @brief Create and initialize an empty queue.
+ * @return A pointer to the new queue, or NULL on allocation failure.
+ */
 struct Queue *create_queue();
 
+/**
+ * @brief Add an element to the rear of the queue (enqueue).
+ * @param queue Pointer to the queue.
+ * @param data Pointer to the data to add.
+ */
 void queue_add(struct Queue *queue, void *data);
+
+/**
+ * @brief Remove an element from the front of the queue (dequeue).
+ * @param queue Pointer to the queue.
+ * @return Pointer to the dequeued data, or NULL if the queue is empty.
+ */
 void *queue_get(struct Queue *queue);
+
+/**
+ * @brief Peek at the front of the queue without removing it.
+ * @param queue Pointer to the queue.
+ * @return Pointer to the front data, or NULL if the queue is empty.
+ */
 void *queue_peek(struct Queue *queue);
+
+/**
+ * @brief Free the queue and all its entries.
+ * @param queue Pointer to the queue.
+ */
 void free_queue(struct Queue *queue);
 
 #endif // queue.h

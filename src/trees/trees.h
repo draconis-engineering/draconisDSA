@@ -26,53 +26,140 @@
 // -- BINARY TREES -- //
 // ================== //
 
+/**
+ * @brief A node in a binary tree.
+ */
 struct BinaryTree {
+	/** Payload stored in the node. */
 	void *val;
+	/** Pointer to the parent node, or NULL if root. */
 	struct BinaryTree *parent;
+	/** Pointer to the left child, or NULL. */
 	struct BinaryTree *left;
+	/** Pointer to the right child, or NULL. */
 	struct BinaryTree *right;
 };
 
-// Creates a new node holding `val` with no children and no parent.
+/**
+ * @brief Create a new binary tree node with no children and no parent.
+ * @param val Pointer to the payload to store.
+ * @return A pointer to the new node, or NULL on allocation failure.
+ */
 struct BinaryTree *create_btree(void *val);
 
-// Recursively frees the node and all descendants. NULL-safe.
+/**
+ * @brief Recursively free the node and all descendants. NULL-safe.
+ * @param tree Pointer to the root of the subtree to free.
+ */
 void btree_free(struct BinaryTree *tree);
 
-// Getters. All are NULL-safe and return NULL for a missing node/value.
+/**
+ * @brief Get the payload of a node. NULL-safe.
+ * @param tree Pointer to the node.
+ * @return The payload, or NULL if the node is NULL.
+ */
 void *btree_get_val(const struct BinaryTree *tree);
+
+/**
+ * @brief Get the left child of a node. NULL-safe.
+ * @param tree Pointer to the node.
+ * @return Pointer to the left child, or NULL.
+ */
 struct BinaryTree *btree_get_left(const struct BinaryTree *tree);
+
+/**
+ * @brief Get the right child of a node. NULL-safe.
+ * @param tree Pointer to the node.
+ * @return Pointer to the right child, or NULL.
+ */
 struct BinaryTree *btree_get_right(const struct BinaryTree *tree);
+
+/**
+ * @brief Get the parent of a node. NULL-safe.
+ * @param tree Pointer to the node.
+ * @return Pointer to the parent node, or NULL if root.
+ */
 struct BinaryTree *btree_get_parent(const struct BinaryTree *tree);
 
-// Replaces the node's payload.
+/**
+ * @brief Replace the node's payload.
+ * @param tree Pointer to the node.
+ * @param val New payload.
+ */
 void btree_set_val(struct BinaryTree *tree, void *val);
 
-// Replaces the given child, recursively freeing any previously attached
-// subtree, and wires the new child's parent pointer. NULL-safe.
+/**
+ * @brief Replace the left child, freeing any previously attached subtree and wiring the new child's parent.
+ * @param tree Pointer to the node.
+ * @param child New left child, or NULL to remove.
+ */
 void btree_set_left(struct BinaryTree *tree, struct BinaryTree *child);
+
+/**
+ * @brief Replace the right child, freeing any previously attached subtree and wiring the new child's parent.
+ * @param tree Pointer to the node.
+ * @param child New right child, or NULL to remove.
+ */
 void btree_set_right(struct BinaryTree *tree, struct BinaryTree *child);
 
-// Creates a new node with `val`, attaches it as the given child (replacing and
-// freeing any previous subtree), and returns the new node (NULL on failure).
+/**
+ * @brief Create a new node and attach it as left child, freeing any previous subtree.
+ * @param tree Pointer to the node.
+ * @param val Payload for the new node.
+ * @return Pointer to the new node, or NULL on failure.
+ */
 struct BinaryTree *btree_insert_left(struct BinaryTree *tree, void *val);
+
+/**
+ * @brief Create a new node and attach it as right child, freeing any previous subtree.
+ * @param tree Pointer to the node.
+ * @param val Payload for the new node.
+ * @return Pointer to the new node, or NULL on failure.
+ */
 struct BinaryTree *btree_insert_right(struct BinaryTree *tree, void *val);
 
-// A node with no children.
+/**
+ * @brief Check if the node is a leaf (no children).
+ * @param tree Pointer to the node.
+ * @return True if leaf, false otherwise.
+ */
 bool btree_is_leaf(const struct BinaryTree *tree);
 
-// Number of edges on the longest downward path to a leaf.
-// Leaf = 0, NULL = -1, empty-op is not an error.
+/**
+ * @brief Get the height of the subtree (number of edges on longest downward path to leaf).
+ * @param tree Pointer to the root of the subtree.
+ * @return Height; leaf returns 0, NULL returns -1.
+ */
 int btree_height(const struct BinaryTree *tree);
 
-// Total number of nodes in the subtree rooted at `tree`.
+/**
+ * @brief Get the total number of nodes in the subtree.
+ * @param tree Pointer to the root of the subtree.
+ * @return Number of nodes, or 0 if NULL.
+ */
 int btree_size(const struct BinaryTree *tree);
 
-// Depth-first traversals. `visit` is called with each node's payload.
+/**
+ * @brief Preorder traversal (root, left, right).
+ * @param tree Pointer to the root of the subtree.
+ * @param visit Callback function called for each node's payload.
+ */
 void btree_traverse_preorder(const struct BinaryTree *tree,
 							 void (*visit)(void *));
+
+/**
+ * @brief Inorder traversal (left, root, right).
+ * @param tree Pointer to the root of the subtree.
+ * @param visit Callback function called for each node's payload.
+ */
 void btree_traverse_inorder(const struct BinaryTree *tree,
 							void (*visit)(void *));
+
+/**
+ * @brief Postorder traversal (left, right, root).
+ * @param tree Pointer to the root of the subtree.
+ * @param visit Callback function called for each node's payload.
+ */
 void btree_traverse_postorder(const struct BinaryTree *tree,
 							  void (*visit)(void *));
 
@@ -80,24 +167,46 @@ void btree_traverse_postorder(const struct BinaryTree *tree,
 // -- REGULAR TREES -- //
 // =================== //
 
-// An n-ary tree. Children are stored in a growable array.
+/**
+ * @brief An n-ary tree node. Children are stored in a growable array.
+ */
 struct Tree {
+	/** Payload stored in the node. */
 	void *val;
+	/** Number of children currently attached. */
 	int num_children;
+	/** Current capacity of the children array. */
 	int capacity;
+	/** Array of pointers to child nodes. */
 	struct Tree **children;
 };
 
-// Creates a new n-ary tree node holding `val`.
+/**
+ * @brief Create a new n-ary tree node with no children.
+ * @param val Pointer to the payload to store.
+ * @return A pointer to the new node, or NULL on allocation failure.
+ */
 struct Tree *create_tree(void *val);
 
-// Recursively frees the node and all descendants. NULL-safe.
+/**
+ * @brief Recursively free the node and all descendants. NULL-safe.
+ * @param tree Pointer to the root of the subtree to free.
+ */
 void tree_free(struct Tree *tree);
 
-// Appends a new child holding `child_val` and returns it (NULL on failure).
+/**
+ * @brief Append a new child with the given value and return it.
+ * @param parent Pointer to the parent node.
+ * @param child_val Payload for the new child.
+ * @return Pointer to the new child node, or NULL on failure.
+ */
 struct Tree *tree_add_child(struct Tree *parent, void *child_val);
 
-// Number of children currently attached to the node.
+/**
+ * @brief Get the number of children of a node.
+ * @param tree Pointer to the node.
+ * @return Number of children, or 0 if NULL.
+ */
 int tree_num_children(const struct Tree *tree);
 
 #endif // TREES_H

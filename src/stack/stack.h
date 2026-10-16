@@ -23,16 +23,49 @@
 
 #include "../dllist/dllist.h"
 
+/**
+ * @brief A LIFO (Last In, First Out) stack.
+ */
 struct Stack {
+	/** Underlying doubly linked list for storing entries. */
 	struct DLList *entries;
+	/** Number of elements in the stack. */
 	size_t size;
+	/** Capacity (currently unused in this implementation). */
 	size_t capacity;
 };
 
+/**
+ * @brief Create and initialize an empty stack.
+ * @return A pointer to the new stack, or NULL on allocation failure.
+ */
 struct Stack *create_stack();
+
+/**
+ * @brief Push a value onto the top of the stack.
+ * @param stack Pointer to the stack.
+ * @param data Pointer to the data to push.
+ */
 void stack_push(struct Stack *stack, void *data);
+
+/**
+ * @brief Pop the top value from the stack.
+ * @param stack Pointer to the stack.
+ * @return Pointer to the popped data, or NULL if the stack is empty.
+ */
 void *stack_pop(struct Stack *stack);
+
+/**
+ * @brief Peek at the top value without removing it.
+ * @param stack Pointer to the stack.
+ * @return Pointer to the top data, or NULL if the stack is empty.
+ */
 void *stack_peek(struct Stack *stack);
+
+/**
+ * @brief Free the stack and all its entries.
+ * @param stack Pointer to the stack.
+ */
 void free_stack(struct Stack *stack);
 
 #endif // stack.h
