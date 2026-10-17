@@ -10,6 +10,7 @@ This directory contains beginner-friendly explanations of the data structures an
 
 ## Available Explanations
 
+- [Dynamic Array](Array.en.md)
 - [Singly Linked List (SLL)](SLL.en.md)
 - [Doubly Linked List (DLL)](DLL.en.md)
 - [Stack](Stack.en.md)

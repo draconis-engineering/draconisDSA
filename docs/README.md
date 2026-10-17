@@ -6,6 +6,7 @@ Data Structures & Algorithms library written in C99. Educational, single-header,
 
 | Module        | Description                                               |
 | ------------- | --------------------------------------------------------- |
+| `src/array`   | Dynamic array (`arr_`-prefixed API), doubling growth      |
 | `src/sllist`  | Singly linked list (`sll_`-prefixed API)                  |
 | `src/dllist`  | Doubly linked list (`dll_`-prefixed API)                  |
 | `src/stack`   | LIFO stack built on `dllist`                              |

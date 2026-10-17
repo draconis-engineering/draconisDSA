@@ -1,4 +1,5 @@
 
+#include "array/array.h"
 #include "dllist/dllist.h"
 #include "graph/graph.h"
 #include "hashmap/hashmap.h"
@@ -11,6 +12,19 @@
 static void print_val(void *val) { printf("%s ", (char *)val); }
 
 int main() {
+	// Dynamic array
+	struct Array *array = create_array();
+	arr_push(array, (void *)1);
+	arr_push(array, (void *)2);
+	arr_push(array, (void *)3);
+	arr_insert(array, (void *)4, 1);
+	print_array(array);
+	printf("array[2]: %p, size: %d\n", arr_get(array, 2), arr_size(array));
+	arr_pop(array);
+	arr_remove(array, 0);
+	print_array(array);
+	free_array(array);
+
 	// Singly linked list
 	struct SLList *sllist = create_sll();
 	sll_insert_at_back(sllist, (void *)1);
