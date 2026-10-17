@@ -58,7 +58,7 @@ unsigned int hash(const char *key) {
 // Insert or Update a key-value pair
 void map_insert(struct HashMap *map, const char *key, int val) {
 	unsigned int idx = hash(key);
-	struct Node *current = map->buckets[idx];
+	struct HashMapNode *current = map->buckets[idx];
 
 	// Check if key already exists, if so update it
 	while (current != NULL) {
@@ -70,7 +70,7 @@ void map_insert(struct HashMap *map, const char *key, int val) {
 	}
 
 	// Key doesn't exist, create a new node and prepend it (O(1) insertion)
-	struct Node *new_node = malloc(sizeof(struct Node));
+	struct HashMapNode *new_node = malloc(sizeof(struct HashMapNode));
 	if (new_node == NULL) {
 		printf("Error: malloc failed\n");
 		return;
@@ -89,7 +89,7 @@ void map_insert(struct HashMap *map, const char *key, int val) {
 // Retrieve a value
 int map_get(struct HashMap *map, const char *key, int *found) {
 	unsigned int idx = hash(key);
-	struct Node *current = map->buckets[idx];
+	struct HashMapNode *current = map->buckets[idx];
 
 	while (current != NULL) {
 		if (strcmp(current->key, key) == 0) {
@@ -105,8 +105,8 @@ int map_get(struct HashMap *map, const char *key, int *found) {
 // Removes the key-value pair matching key, if present.
 void map_remove(struct HashMap *map, const char *key) {
 	unsigned int idx = hash(key);
-	struct Node *current = map->buckets[idx];
-	struct Node *prev = NULL;
+	struct HashMapNode *current = map->buckets[idx];
+	struct HashMapNode *prev = NULL;
 
 	while (current != NULL) {
 		if (strcmp(current->key, key) == 0) {
@@ -127,9 +127,9 @@ void map_remove(struct HashMap *map, const char *key) {
 // Frees all nodes, keys, and the map itself.
 void free_hashmap(struct HashMap *map) {
 	for (int i = 0; i < BUCKETS; i++) {
-		struct Node *current = map->buckets[i];
+		struct HashMapNode *current = map->buckets[i];
 		while (current != NULL) {
-			struct Node *to_free = current;
+			struct HashMapNode *to_free = current;
 			current = current->next;
 			free(to_free->key);
 			free(to_free);
