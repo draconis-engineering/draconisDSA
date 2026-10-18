@@ -17,6 +17,7 @@
  */
 
 #include "array.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -180,4 +181,77 @@ void print_array(struct Array *a) {
 void free_array(struct Array *a) {
 	free(a->data);
 	free(a);
+}
+
+// ============================== \\
+// ----- SORTING ALGORITHMS ----- \\
+// ============================== \\
+
+// Helper to compare two generic elements (Assumes integer values cast to void*)
+static int default_compare(const void *a, const void *b) {
+	return ((intptr_t)a > (intptr_t)b) - ((intptr_t)a < (intptr_t)b);
+}
+
+// Internal recursive worker that sorts directly within the data buffer
+static void merge_sort_worker(void **arr, void **temp, unsigned int left,
+							  unsigned int right) {
+	if (left >= right) {
+		return;
+	}
+
+	unsigned int mid = left + (right - left) / 2;
+
+	// Conquer: Sort left and right halves
+	merge_sort_worker(arr, temp, left, mid);
+	merge_sort_worker(arr, temp, mid + 1, right);
+
+	// Combine: Merge the sorted halves into temp
+	unsigned int i = left;
+	unsigned int j = mid + 1;
+	unsigned int k = left;
+
+	while (i <= mid && j <= right) {
+		if (default_compare(arr[i], arr[j]) <= 0) {
+			temp[k++] = arr[i++];
+		} else {
+			temp[k++] = arr[j++];
+		}
+	}
+
+	// Copy remaining elements
+	while (i <= mid) {
+		temp[k++] = arr[i++];
+	}
+	while (j <= right) {
+		temp[k++] = arr[j++];
+	}
+
+	// Copy back the merged elements into the original array
+	for (i = left; i <= right; i++) {
+		arr[i] = temp[i];
+	}
+}
+
+// Merge sort: Divide, Conquer, Merge and Repeat
+struct Array *arr_merge_sort(struct Array *a) {
+	if (a == NULL || a->size <= 1 || a->data == NULL) {
+		return a;
+	}
+
+	// Cast the void* data buffer to an actual array of void* pointers
+	void **arr = (void **)a->data;
+
+	// Allocate exactly ONE temporary buffer for the entire lifetime of the sort
+	void **temp = (void **)malloc(a->size * sizeof(void *));
+	if (temp == NULL) {
+		return NULL; // Handle allocation failure safely
+	}
+
+	// Run the in-place merge sort
+	merge_sort_worker(arr, temp, 0, a->size - 1);
+
+	// Clean up temporary buffer
+	free(temp);
+
+	return a;
 }
