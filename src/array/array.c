@@ -25,17 +25,30 @@
 // Grows the backing buffer by doubling its capacity when it is full.
 // Returns 1 on success (or when there is nothing to do), 0 on failure.
 static int arr_grow(struct Array *a) {
+
+	// Do nothing if we still have capacity
 	if (a->size < a->capacity) {
 		return 1;
 	}
 
-	unsigned int new_capacity = a->capacity * 2;
-	void *new_data = realloc(a->data, new_capacity * sizeof(void *));
-	if (new_data == NULL) {
-		printf("Error: malloc failed\n");
+	// Handle an initial capacity of 0, otherwise double it
+	size_t new_capacity = (a->capacity == 0) ? 4 : a->capacity * 2;
+
+	// Overflow protection check
+	if (new_capacity < a->capacity ||
+		new_capacity > (size_t)-1 / sizeof(void *)) {
+		fprintf(stderr, "Error: Array capacity overflow\n");
 		return 0;
 	}
 
+	// Safely reallocate using the temporary pointer
+	void *new_data = realloc(a->data, new_capacity * sizeof(void *));
+	if (new_data == NULL) {
+		fprintf(stderr, "Error: realloc failed to expand buffer\n");
+		return 0;
+	}
+
+	// Commit the changes
 	a->data = new_data;
 	a->capacity = new_capacity;
 	return 1;
