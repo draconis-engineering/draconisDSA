@@ -1,18 +1,18 @@
 # DraconisDSA
 
-Data Structures & Algorithms library written in C99. Educational, single-header, and dependency-free.
+Data Structures & Algorithms library written in C23. Educational, single-header, and dependency-free.
 
 ## Structures
 
-| Module        | Description                                               |
-| ------------- | --------------------------------------------------------- |
-| `src/array`   | Dynamic array (`arr_`-prefixed API), doubling growth      |
-| `src/sllist`  | Singly linked list (`sll_`-prefixed API)                  |
-| `src/dllist`  | Doubly linked list (`dll_`-prefixed API)                  |
-| `src/stack`   | LIFO stack built on `dllist`                              |
-| `src/queue`   | FIFO queue built on `dllist`                              |
-| `src/hashmap` | String-keyed hash map, DJB2 hash + separate chaining      |
-| `src/graph`   | Directed weighted graph (BFS `path_exists`, connectivity) |
+| Module        | Description                                                      |
+| ------------- | ---------------------------------------------------------------- |
+| `src/array`   | Dynamic array (`arr_`-prefixed API), doubling growth             |
+| `src/sllist`  | Singly linked list (`sll_`-prefixed API)                         |
+| `src/dllist`  | Doubly linked list (`dll_`-prefixed API)                         |
+| `src/stack`   | LIFO stack built on `dllist`                                     |
+| `src/queue`   | FIFO queue built on `dllist`                                     |
+| `src/hashmap` | String-keyed hash map, DJB2 hash + separate chaining             |
+| `src/graph`   | Directed weighted graph (BFS `path_exists`, connectivity)        |
 | `src/trees`   | Binary tree (`btree_`) + n-ary tree (`tree_`), pre/in/post-order |
 
 ## Building
@@ -41,4 +41,4 @@ Everything created with `create_*` must be released with `free_*` (e.g. `free_sl
 
 ## License
 
-GPL-3.0. See [LICENSE](LICENSE).
+GPL-3.0. See [LICENSE](../LICENSE).

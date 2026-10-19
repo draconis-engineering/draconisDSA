@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Isrc
+CFLAGS = -Wall -Wextra -std=c23 -Isrc
 
 TARGET = main.exe
 
@@ -15,7 +15,7 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(TARGET)
 
-src/%.o: src/%.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
