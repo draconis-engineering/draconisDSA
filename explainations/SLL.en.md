@@ -16,20 +16,20 @@ Unlike arrays, nodes in a singly linked list are not stored in contiguous memory
 
 ## Operations (time complexity)
 
-| Operation | What it does | Time Complexity |
-|-----------|--------------|-----------------|
-| `create_sll()` | Creates an empty list | O(1) |
-| `sll_is_empty()` | Checks if empty | O(1) |
-| `sll_size()` | Returns size | O(1) |
-| `sll_get_idx()` | Finds first index of a value (by pointer equality) | O(n) |
-| `sll_insert_at_front()` | Insert at front | O(1) |
-| `sll_insert_at_back()` | Insert at back | O(1) |
-| `sll_insert()` | Insert at arbitrary index (0..size, -1 = back) | O(n) - needs traversal to reach position |
-| `sll_remove()` | Remove at index (0..size-1) | O(n) - traversal needed except index 0 |
-| `print_sll()` | Print pointer values | O(n) |
-| `free_sll()` | Free all nodes and list structure | O(n) |
+| Operation               | What it does                                       | Time Complexity                          |
+| ----------------------- | -------------------------------------------------- | ---------------------------------------- |
+| `create_sll()`          | Creates an empty list                              | O(1)                                     |
+| `sll_is_empty()`        | Checks if empty                                    | O(1)                                     |
+| `sll_size()`            | Returns size                                       | O(1)                                     |
+| `sll_get_idx()`         | Finds first index of a value (by pointer equality) | O(n)                                     |
+| `sll_insert_at_front()` | Insert at front                                    | O(1)                                     |
+| `sll_insert_at_back()`  | Insert at back                                     | O(1)                                     |
+| `sll_insert()`          | Insert at arbitrary index (0..size, -1 = back)     | O(n) - needs traversal to reach position |
+| `sll_remove()`          | Remove at index (0..size-1)                        | O(n) - traversal needed except index 0   |
+| `print_sll()`           | Print pointer values                               | O(n)                                     |
+| `free_sll()`            | Free all nodes and list structure                  | O(n)                                     |
 
-*Note:* `sll_get_idx()` compares pointers (`curr_node->data == val`), not the contents of the data.
+_Note:_ `sll_get_idx()` compares pointers (`curr_node->data == val`), not the contents of the data.
 
 ## Pros
 

@@ -17,14 +17,14 @@ A hash map (dictionary/associative array) maps string keys to integer values. Th
 
 ## Operations (time complexity)
 
-| Operation | What it does | Time Complexity |
-|-----------|--------------|-----------------|
-| `create_hashmap()` | Create empty map | O(B) where B=BUCKETS (16) - initializes buckets |
-| `hash()` | Compute hash index for key | O(k) where k = key length |
-| `map_insert()` | Insert or update key-value pair | O(k + m) average; O(n) worst case if all collide in one bucket (n entries total) |
-| `map_get()` | Retrieve value for key | O(k + m) average, O(n) worst case |
-| `map_remove()` | Remove key if present | O(k + m) average, O(n) worst case |
-| `free_hashmap()` | Free all allocated memory | O(n + B) |
+| Operation          | What it does                    | Time Complexity                                                                  |
+| ------------------ | ------------------------------- | -------------------------------------------------------------------------------- |
+| `create_hashmap()` | Create empty map                | O(B) where B=BUCKETS (16) - initializes buckets                                  |
+| `hash()`           | Compute hash index for key      | O(k) where k = key length                                                        |
+| `map_insert()`     | Insert or update key-value pair | O(k + m) average; O(n) worst case if all collide in one bucket (n entries total) |
+| `map_get()`        | Retrieve value for key          | O(k + m) average, O(n) worst case                                                |
+| `map_remove()`     | Remove key if present           | O(k + m) average, O(n) worst case                                                |
+| `free_hashmap()`   | Free all allocated memory       | O(n + B)                                                                         |
 
 ## Pros
 

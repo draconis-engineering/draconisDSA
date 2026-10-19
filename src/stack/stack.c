@@ -19,11 +19,13 @@
 #include "stack.h"
 #include "../dllist/dllist.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 struct Stack *create_stack() {
 	struct Stack *stack = (struct Stack *)malloc(sizeof(struct Stack));
 	if (stack == NULL) {
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
 	}
 

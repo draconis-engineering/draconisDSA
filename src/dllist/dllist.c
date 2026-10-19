@@ -30,7 +30,7 @@ struct DLList *create_dll() {
 
 	// Failed malloc
 	if (l == NULL) {
-		printf("Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
 	}
 

@@ -17,14 +17,14 @@ A hash set stores unique values (no duplicates). This implementation stores stri
 
 ## Operations (time complexity)
 
-| Operation | What it does | Time Complexity |
-|-----------|--------------|-----------------|
-| `create_hashset()` | Create empty set | O(C) where C=capacity (16) - zeroes buckets |
-| `hashset_hash()` | Compute index | O(k) where k = string length |
-| `hashset_contains()` | Check membership | O(k + m) average, O(n) worst case |
-| `hashset_add()` | Add unique value | O(k + m) average (includes contains check), O(n) worst case |
-| `hashset_remove()` | Remove value | O(k + m) average, O(n) worst case |
-| `hashset_destroy()` | Free all memory | O(n + C) |
+| Operation            | What it does     | Time Complexity                                             |
+| -------------------- | ---------------- | ----------------------------------------------------------- |
+| `create_hashset()`   | Create empty set | O(C) where C=capacity (16) - zeroes buckets                 |
+| `hashset_hash()`     | Compute index    | O(k) where k = string length                                |
+| `hashset_contains()` | Check membership | O(k + m) average, O(n) worst case                           |
+| `hashset_add()`      | Add unique value | O(k + m) average (includes contains check), O(n) worst case |
+| `hashset_remove()`   | Remove value     | O(k + m) average, O(n) worst case                           |
+| `hashset_destroy()`  | Free all memory  | O(n + C)                                                    |
 
 ## Pros
 

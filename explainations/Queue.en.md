@@ -15,13 +15,13 @@ A queue is a FIFO (First In, First Out) data structure. Elements are added to th
 
 ## Operations (time complexity)
 
-| Operation | What it does | Time Complexity |
-|-----------|--------------|-----------------|
-| `create_queue()` | Create empty queue | O(1) |
-| `queue_add()` (enqueue) | Add to rear | O(1) (DLL back) |
-| `queue_get()` (dequeue) | Remove from front | O(1) for DLL front removal |
-| `queue_peek()` | View front without removing | O(1) |
-| `free_queue()` | Free queue and entries | O(n) |
+| Operation               | What it does                | Time Complexity            |
+| ----------------------- | --------------------------- | -------------------------- |
+| `create_queue()`        | Create empty queue          | O(1)                       |
+| `queue_add()` (enqueue) | Add to rear                 | O(1) (DLL back)            |
+| `queue_get()` (dequeue) | Remove from front           | O(1) for DLL front removal |
+| `queue_peek()`          | View front without removing | O(1)                       |
+| `free_queue()`          | Free queue and entries      | O(n)                       |
 
 ## Pros
 

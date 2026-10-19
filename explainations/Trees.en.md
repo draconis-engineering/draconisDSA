@@ -39,26 +39,26 @@ An n-ary tree stores children in a growable array (`struct Tree **children`), wi
 
 ### Binary Tree
 
-| Operation | Time Complexity | Notes |
-|-----------|-----------------|-------|
-| `create_btree` | O(1) | |
-| `btree_free` | O(n) | visits every node once |
-| Getters/Setters (non-freeing) | O(1) | |
-| `btree_set_left/right` (with free) | O(size of old subtree) | recursive free of old subtree |
-| `btree_insert_left/right` | O(size of old subtree) | creates node O(1) + set_left/right |
-| `btree_is_leaf` | O(1) | |
-| `btree_height` | O(n) | visits every node (tree not necessarily balanced) |
-| `btree_size` | O(n) | visits every node |
-| Traversals (pre/in/postorder) | O(n) | visits each node once |
+| Operation                          | Time Complexity        | Notes                                             |
+| ---------------------------------- | ---------------------- | ------------------------------------------------- |
+| `create_btree`                     | O(1)                   |                                                   |
+| `btree_free`                       | O(n)                   | visits every node once                            |
+| Getters/Setters (non-freeing)      | O(1)                   |                                                   |
+| `btree_set_left/right` (with free) | O(size of old subtree) | recursive free of old subtree                     |
+| `btree_insert_left/right`          | O(size of old subtree) | creates node O(1) + set_left/right                |
+| `btree_is_leaf`                    | O(1)                   |                                                   |
+| `btree_height`                     | O(n)                   | visits every node (tree not necessarily balanced) |
+| `btree_size`                       | O(n)                   | visits every node                                 |
+| Traversals (pre/in/postorder)      | O(n)                   | visits each node once                             |
 
 ### N-ary Tree
 
-| Operation | Time Complexity | Notes |
-|-----------|-----------------|-------|
-| `create_tree` | O(1) | |
-| `tree_free` | O(n) | total nodes n |
-| `tree_add_child` | O(1) amortized | array append with doubling |
-| `tree_num_children` | O(1) | |
+| Operation           | Time Complexity | Notes                      |
+| ------------------- | --------------- | -------------------------- |
+| `create_tree`       | O(1)            |                            |
+| `tree_free`         | O(n)            | total nodes n              |
+| `tree_add_child`    | O(1) amortized  | array append with doubling |
+| `tree_num_children` | O(1)            |                            |
 
 ## Pros
 

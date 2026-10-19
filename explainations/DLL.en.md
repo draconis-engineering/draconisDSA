@@ -14,18 +14,18 @@ A doubly linked list (DLL) is an ordered data structure where each node (`DLLNod
 
 ## Operations (time complexity)
 
-| Operation | What it does | Time Complexity |
-|-----------|--------------|-----------------|
-| `create_dll()` | Create empty list | O(1) |
-| `dll_is_empty()` | Check if empty (checks `head == NULL`) | O(1) |
-| `dll_size()` | Return size | O(1) |
-| `dll_get_idx()` | Find first index of value (pointer equality) | O(n) |
-| `dll_insert_at_front()` | Insert at front | O(1) |
-| `dll_insert_at_back()` | Insert at back | O(1) |
-| `dll_insert()` | Insert at index (0..size, -1=back) | O(n) - traverses from head to index |
-| `dll_remove()` | Remove at index (0..size-1) | O(1) at ends, O(n) in middle |
-| `print_dll()` | Print pointer values | O(n) |
-| `free_dll()` | Free all nodes and list | O(n) |
+| Operation               | What it does                                 | Time Complexity                     |
+| ----------------------- | -------------------------------------------- | ----------------------------------- |
+| `create_dll()`          | Create empty list                            | O(1)                                |
+| `dll_is_empty()`        | Check if empty (checks `head == NULL`)       | O(1)                                |
+| `dll_size()`            | Return size                                  | O(1)                                |
+| `dll_get_idx()`         | Find first index of value (pointer equality) | O(n)                                |
+| `dll_insert_at_front()` | Insert at front                              | O(1)                                |
+| `dll_insert_at_back()`  | Insert at back                               | O(1)                                |
+| `dll_insert()`          | Insert at index (0..size, -1=back)           | O(n) - traverses from head to index |
+| `dll_remove()`          | Remove at index (0..size-1)                  | O(1) at ends, O(n) in middle        |
+| `print_dll()`           | Print pointer values                         | O(n)                                |
+| `free_dll()`            | Free all nodes and list                      | O(n)                                |
 
 ## Pros
 
@@ -36,7 +36,7 @@ A doubly linked list (DLL) is an ordered data structure where each node (`DLLNod
 
 ## Cons
 
-- More memory per node (extra `prev` pointer)
+- More memory per node (extra `prev` pointer) compared to an SLL
 - Slightly more complex insertion/deletion logic
 - Still no random access; traversal needed for arbitrary index
 - Non-contiguous memory

@@ -17,11 +17,14 @@
  */
 
 #include "queue.h"
+#include <stdio.h>
 #include <stdlib.h>
+
 
 struct Queue *create_queue() {
 	struct Queue *queue = (struct Queue *)malloc(sizeof(struct Queue));
 	if (queue == NULL) {
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
 	}
 	queue->entries = create_dll();

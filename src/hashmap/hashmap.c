@@ -35,6 +35,7 @@ static char *dup_string(const char *src) {
 struct HashMap *create_hashmap() {
 	struct HashMap *map = (struct HashMap *)malloc(sizeof(struct HashMap));
 	if (map == NULL) {
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
 	}
 

@@ -15,13 +15,13 @@ A stack is a LIFO (Last In, First Out) data structure. Elements are pushed onto 
 
 ## Operations (time complexity)
 
-| Operation | What it does | Time Complexity |
-|-----------|--------------|-----------------|
-| `create_stack()` | Create empty stack | O(1) |
-| `stack_push()` | Push element onto top | O(1) (DLL back insertion) |
-| `stack_pop()` | Pop element from top | O(1) (removes from DLL tail) |
-| `stack_peek()` | View top without removing | O(1) |
-| `free_stack()` | Free stack and underlying entries | O(n) (freed by `free_dll`) |
+| Operation        | What it does                      | Time Complexity              |
+| ---------------- | --------------------------------- | ---------------------------- |
+| `create_stack()` | Create empty stack                | O(1)                         |
+| `stack_push()`   | Push element onto top             | O(1) (DLL back insertion)    |
+| `stack_pop()`    | Pop element from top              | O(1) (removes from DLL tail) |
+| `stack_peek()`   | View top without removing         | O(1)                         |
+| `free_stack()`   | Free stack and underlying entries | O(n) (freed by `free_dll`)   |
 
 ## Pros
 

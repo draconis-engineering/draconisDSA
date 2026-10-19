@@ -1,3 +1,20 @@
+/*
+ * HashMap Library - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+ * Copyright (C) 2026 Simon Stordal Amundgård
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses.
+ */
 
 #include <stdlib.h>
 #include <string.h>
@@ -7,8 +24,10 @@
 // Create a new HashSet
 struct HashSet *create_hashset() {
 	struct HashSet *set = (struct HashSet *)malloc(sizeof(struct HashSet));
-	if (!set)
+	if (!set) {
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
+	}
 
 	set->capacity = INITIAL_CAPACITY;
 	set->size = 0;
@@ -24,7 +43,7 @@ struct HashSet *create_hashset() {
 
 // DJB2 Hash Function - distributes strings cleanly across buckets
 unsigned int hashset_hash(struct HashSet *set, const char *value) {
-	unsigned long hash = 5381;
+	unsigned long hash = 0x1505;
 	int c;
 	while ((c = *value++)) {
 		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */

@@ -29,6 +29,7 @@
 struct Graph *create_graph() {
 	struct Graph *graph = (struct Graph *)malloc(sizeof(struct Graph));
 	if (graph == NULL) {
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
 	}
 	graph->num_nodes = 0;

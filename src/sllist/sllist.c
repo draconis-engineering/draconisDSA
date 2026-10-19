@@ -24,6 +24,7 @@
 struct SLList *create_sll() {
 	struct SLList *l = (struct SLList *)malloc(sizeof(struct SLList));
 	if (l == NULL) {
+		fprintf(stderr, "Error: malloc failed\n");
 		return NULL;
 	}
 	l->head = NULL;
