@@ -17,7 +17,6 @@
  */
 
 #include "array.h"
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -179,22 +178,22 @@ void print_array(struct Array *a) {
 
 // Frees the backing buffer and the array structure itself.
 void free_array(struct Array *a) {
+	if (a == NULL) {
+		return;
+	}
 	free(a->data);
 	free(a);
 }
 
-// ============================== \\
-// ----- SORTING ALGORITHMS ----- \\
-// ============================== \\
+// ==============================
+// ----- SORTING ALGORITHMS -----
+// ==============================
 
-// Helper to compare two generic elements (Assumes integer values cast to void*)
-static int default_compare(const void *a, const void *b) {
-	return ((intptr_t)a > (intptr_t)b) - ((intptr_t)a < (intptr_t)b);
-}
-
-// Internal recursive worker that sorts directly within the data buffer
+// Internal recursive worker that sorts directly within the data buffer.
+// `cmp` compares two stored payloads and returns <0, 0 or >0.
 static void merge_sort_worker(void **arr, void **temp, unsigned int left,
-							  unsigned int right) {
+							  unsigned int right,
+							  int (*cmp)(const void *, const void *)) {
 	if (left >= right) {
 		return;
 	}
@@ -202,8 +201,8 @@ static void merge_sort_worker(void **arr, void **temp, unsigned int left,
 	unsigned int mid = left + (right - left) / 2;
 
 	// Conquer: Sort left and right halves
-	merge_sort_worker(arr, temp, left, mid);
-	merge_sort_worker(arr, temp, mid + 1, right);
+	merge_sort_worker(arr, temp, left, mid, cmp);
+	merge_sort_worker(arr, temp, mid + 1, right, cmp);
 
 	// Combine: Merge the sorted halves into temp
 	unsigned int i = left;
@@ -211,7 +210,7 @@ static void merge_sort_worker(void **arr, void **temp, unsigned int left,
 	unsigned int k = left;
 
 	while (i <= mid && j <= right) {
-		if (default_compare(arr[i], arr[j]) <= 0) {
+		if (cmp(arr[i], arr[j]) <= 0) {
 			temp[k++] = arr[i++];
 		} else {
 			temp[k++] = arr[j++];
@@ -232,9 +231,12 @@ static void merge_sort_worker(void **arr, void **temp, unsigned int left,
 	}
 }
 
-// Merge sort: Divide, Conquer, Merge and Repeat
-struct Array *arr_merge_sort(struct Array *a) {
-	if (a == NULL || a->size <= 1 || a->data == NULL) {
+// Merge sort: stable O(n log n) sort. `cmp` receives the stored void* payloads
+// and must return <0, 0 or >0. Sorts in place and returns the same array, or
+// NULL if the temporary buffer could not be allocated.
+struct Array *arr_merge_sort(struct Array *a,
+							 int (*cmp)(const void *, const void *)) {
+	if (a == NULL || a->size <= 1 || a->data == NULL || cmp == NULL) {
 		return a;
 	}
 
@@ -248,7 +250,7 @@ struct Array *arr_merge_sort(struct Array *a) {
 	}
 
 	// Run the in-place merge sort
-	merge_sort_worker(arr, temp, 0, a->size - 1);
+	merge_sort_worker(arr, temp, 0, a->size - 1, cmp);
 
 	// Clean up temporary buffer
 	free(temp);

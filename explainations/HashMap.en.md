@@ -2,12 +2,12 @@
 
 ## What is a hash map?
 
-A hash map (dictionary/associative array) maps string keys to integer values. This implementation uses separate chaining for collision resolution: each bucket is a linked list (`struct Node`) of entries with the same hash. It uses the DJB2 hash function.
+A hash map (dictionary/associative array) maps string keys to integer values. This implementation uses separate chaining for collision resolution: each bucket is a linked list (`struct HashMapNode`) of entries with the same hash. It uses the DJB2 hash function.
 
 ## Implementation details
 
-- **Entry node**: `struct Node { char *key; int value; struct Node *next; }`
-- **Map**: `struct HashMap { struct Node *buckets[BUCKETS]; }` where `BUCKETS` is `16` (defined in header)
+- **Entry node**: `struct HashMapNode { char *key; int value; struct HashMapNode *next; }`
+- **Map**: `struct HashMap { struct HashMapNode *buckets[BUCKETS]; }` where `BUCKETS` is `16` (defined in header)
 - Hash function: DJB2 (`hash = ((v<<5)+v) + key[i]`, then `v % BUCKETS`)
 - Keys are duplicated with a portable `dup_string()` (allocates and copies); owned by the map
 - `map_insert()` checks for existing key first - if found, updates value; otherwise prepends a new node to the bucket (O(1) insertion at head)
@@ -35,7 +35,7 @@ A hash map (dictionary/associative array) maps string keys to integer values. Th
 ## Cons
 
 - Fixed bucket count (16) - no dynamic resizing (can degrade to linked list if many entries)
-- Uses pointer equality not applicable; keys compared by string content (`strcmp`)
+- Keys are compared by string content (`strcmp`), not by pointer equality
 - Returns `-1` as sentinel for "not found" which conflicts if `-1` is a valid value (caller must use `found` flag)
 - Only supports `int` values (not generic `void*` like lists)
 

@@ -14,10 +14,11 @@ static void print_val(void *val) { printf("%s ", (char *)val); }
 int main() {
 	// Dynamic array
 	struct Array *array = create_array();
-	arr_push(array, (void *)1);
-	arr_push(array, (void *)2);
-	arr_push(array, (void *)3);
-	arr_insert(array, (void *)4, 1);
+	int arr_vals[] = {1, 2, 3, 4};
+	arr_push(array, &arr_vals[0]);
+	arr_push(array, &arr_vals[1]);
+	arr_push(array, &arr_vals[2]);
+	arr_insert(array, &arr_vals[3], 1);
 	print_array(array);
 	printf("array[2]: %p, size: %d\n", arr_get(array, 2), arr_size(array));
 	arr_pop(array);
@@ -27,10 +28,11 @@ int main() {
 
 	// Singly linked list
 	struct SLList *sllist = create_sll();
-	sll_insert_at_back(sllist, (void *)1);
-	sll_insert_at_front(sllist, (void *)2);
-	sll_insert_at_back(sllist, (void *)3);
-	sll_insert(sllist, (void *)4, 2);
+	int sll_vals[] = {1, 2, 3, 4};
+	sll_insert_at_back(sllist, &sll_vals[0]);
+	sll_insert_at_front(sllist, &sll_vals[1]);
+	sll_insert_at_back(sllist, &sll_vals[2]);
+	sll_insert(sllist, &sll_vals[3], 2);
 	print_sll(sllist);
 	sll_remove(sllist, 1);
 	print_sll(sllist);
@@ -38,9 +40,10 @@ int main() {
 
 	// Doubly linked list
 	struct DLList *dllist = create_dll();
-	dll_insert_at_back(dllist, (void *)10);
-	dll_insert_at_front(dllist, (void *)20);
-	dll_insert(dllist, (void *)30, 1);
+	int dll_vals[] = {10, 20, 30};
+	dll_insert_at_back(dllist, &dll_vals[0]);
+	dll_insert_at_front(dllist, &dll_vals[1]);
+	dll_insert(dllist, &dll_vals[2], 1);
 	print_dll(dllist);
 	dll_remove(dllist, 0);
 	print_dll(dllist);

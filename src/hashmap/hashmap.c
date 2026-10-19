@@ -46,7 +46,7 @@ struct HashMap *create_hashmap() {
 }
 
 // DJB2 Hashing Algorithm (Simple and highly effective for strings)
-unsigned int hash(const char *key) {
+unsigned int hashmap_hash(const char *key) {
 	unsigned long int v = 5381;
 	int i = 0;
 	while (key[i] != '\0') {
@@ -58,7 +58,7 @@ unsigned int hash(const char *key) {
 
 // Insert or Update a key-value pair
 void map_insert(struct HashMap *map, const char *key, int val) {
-	unsigned int idx = hash(key);
+	unsigned int idx = hashmap_hash(key);
 	struct HashMapNode *current = map->buckets[idx];
 
 	// Check if key already exists, if so update it
@@ -89,7 +89,7 @@ void map_insert(struct HashMap *map, const char *key, int val) {
 
 // Retrieve a value
 int map_get(struct HashMap *map, const char *key, int *found) {
-	unsigned int idx = hash(key);
+	unsigned int idx = hashmap_hash(key);
 	struct HashMapNode *current = map->buckets[idx];
 
 	while (current != NULL) {
@@ -105,7 +105,7 @@ int map_get(struct HashMap *map, const char *key, int *found) {
 
 // Removes the key-value pair matching key, if present.
 void map_remove(struct HashMap *map, const char *key) {
-	unsigned int idx = hash(key);
+	unsigned int idx = hashmap_hash(key);
 	struct HashMapNode *current = map->buckets[idx];
 	struct HashMapNode *prev = NULL;
 
@@ -127,6 +127,10 @@ void map_remove(struct HashMap *map, const char *key) {
 
 // Frees all nodes, keys, and the map itself.
 void free_hashmap(struct HashMap *map) {
+	if (map == NULL) {
+		return;
+	}
+
 	for (int i = 0; i < BUCKETS; i++) {
 		struct HashMapNode *current = map->buckets[i];
 		while (current != NULL) {

@@ -6,8 +6,8 @@ A hash set stores unique values (no duplicates). This implementation stores stri
 
 ## Implementation details
 
-- **Node**: `struct Node { char *value; struct Node *next; }` (note: same struct name as HashMap's node, but in different compilation unit context)
-- **Set**: `struct HashSet { struct Node **buckets; size_t capacity; size_t size; }`
+- **Node**: `struct HashSetNode { char *value; struct HashSetNode *next; }` (distinct from `struct HashMapNode`, which also lives in this library)
+- **Set**: `struct HashSet { struct HashSetNode **buckets; size_t capacity; size_t size; }`
 - `INITIAL_CAPACITY` is `16`
 - `hashset_hash()` computes DJB2 hash and modulates by `set->capacity`
 - `hashset_contains()` searches bucket for matching string (`strcmp`); returns `true` if found
@@ -36,8 +36,7 @@ A hash set stores unique values (no duplicates). This implementation stores stri
 
 - No dynamic resizing (fixed initial capacity)
 - Only supports string values
-- Same struct name `Node` as hashmap - could be confusing if used together; better to use distinct names in larger codebases
-- `strdup` is POSIX (used directly) - fine on most platforms, though codebase also uses custom `dup_string` in hashmap for portability
+- `strdup` is POSIX, not ISO C (used directly here) - fine on most platforms, but the codebase already defines a portable `dup_string` in `hashmap.c` that would be a safer shared helper
 
 ## When to use
 

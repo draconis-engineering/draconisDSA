@@ -100,6 +100,11 @@ void btree_set_left(struct BinaryTree *tree, struct BinaryTree *child) {
 	if (tree == NULL || tree->left == child) {
 		return;
 	}
+	// Detach the child from the opposite slot first, otherwise it would be
+	// referenced twice and later freed twice.
+	if (child != NULL && child == tree->right) {
+		tree->right = NULL;
+	}
 	btree_free(tree->left);
 	tree->left = child;
 	if (child != NULL) {
@@ -114,6 +119,11 @@ void btree_set_left(struct BinaryTree *tree, struct BinaryTree *child) {
 void btree_set_right(struct BinaryTree *tree, struct BinaryTree *child) {
 	if (tree == NULL || tree->right == child) {
 		return;
+	}
+	// Detach the child from the opposite slot first, otherwise it would be
+	// referenced twice and later freed twice.
+	if (child != NULL && child == tree->left) {
+		tree->left = NULL;
 	}
 	btree_free(tree->right);
 	tree->right = child;

@@ -34,7 +34,8 @@ _Note:_ `sll_get_idx()` compares pointers (`curr_node->data == val`), not the co
 ## Pros
 
 - Dynamic size (grows/shrinks as needed)
-- O(1) insertion/deletion at head and tail
+- O(1) insertion at both ends (a `tail` pointer is kept)
+- O(1) deletion at the head only; deleting the tail is O(n) because the predecessor must be found by traversal
 - No need to pre-allocate memory
 - Easy to implement and understand
 
@@ -47,7 +48,7 @@ _Note:_ `sll_get_idx()` compares pointers (`curr_node->data == val`), not the co
 
 ## When to use
 
-- When you need fast insertions/deletions at the front/back
+- When you need fast insertion at the front/back and fast removal at the front
 - When size is unknown and varies frequently
 - When you don't need random indexing
 - When memory allocation overhead is acceptable

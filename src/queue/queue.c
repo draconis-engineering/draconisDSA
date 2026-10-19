@@ -28,33 +28,38 @@ struct Queue *create_queue() {
 		return NULL;
 	}
 	queue->entries = create_dll();
-	queue->size = 0;
+	if (queue->entries == NULL) {
+		free(queue);
+		return NULL;
+	}
+
 	return queue;
 }
 
 void queue_add(struct Queue *queue, void *data) {
 	dll_insert_at_back(queue->entries, data);
-	queue->size++;
 }
 
 void *queue_get(struct Queue *queue) {
-	if (queue->size == 0) {
+	if (queue->entries->size == 0) {
 		return NULL;
 	}
 	void *data = queue->entries->head->data;
 	dll_remove(queue->entries, 0);
-	queue->size--;
 	return data;
 }
 
 void *queue_peek(struct Queue *queue) {
-	if (queue->size == 0) {
+	if (queue->entries->size == 0) {
 		return NULL;
 	}
 	return queue->entries->head->data;
 }
 
 void free_queue(struct Queue *queue) {
+	if (queue == NULL) {
+		return;
+	}
 	free_dll(queue->entries);
 	free(queue);
 }

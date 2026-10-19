@@ -46,7 +46,7 @@ struct HashMap {
  * @param key The input string key.
  * @return Index into the buckets array.
  */
-unsigned int hash(const char *key);
+unsigned int hashmap_hash(const char *key);
 
 /**
  * @brief Create and initialize an empty hash map.

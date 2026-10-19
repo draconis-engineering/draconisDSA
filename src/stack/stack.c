@@ -36,34 +36,33 @@ struct Stack *create_stack() {
 	}
 
 	stack->entries = entries;
-	stack->size = 0;
-	stack->capacity = 0;
 	return stack;
 }
 
 void stack_push(struct Stack *stack, void *data) {
 	dll_insert_at_back(stack->entries, data);
-	stack->size++;
 }
 
 void *stack_pop(struct Stack *stack) {
-	if (stack->size == 0) {
+	if (stack->entries->size == 0) {
 		return NULL;
 	}
 	void *data = stack->entries->tail->data;
-	dll_remove(stack->entries, stack->size - 1);
-	stack->size--;
+	dll_remove(stack->entries, stack->entries->size - 1);
 	return data;
 }
 
 void *stack_peek(struct Stack *stack) {
-	if (stack->size == 0) {
+	if (stack->entries->size == 0) {
 		return NULL;
 	}
 	return stack->entries->tail->data;
 }
 
 void free_stack(struct Stack *stack) {
+	if (stack == NULL) {
+		return;
+	}
 	free_dll(stack->entries);
 	free(stack);
 }

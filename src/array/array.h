@@ -109,9 +109,19 @@ void *arr_pop(struct Array *a);
 void print_array(struct Array *a);
 
 /**
- * @brief Free the array's buffer and the array structure itself.
+ * @brief Free the array's buffer and the array structure itself. NULL-safe.
  * @param a Pointer to the array.
  */
 void free_array(struct Array *a);
+
+/**
+ * @brief Sort the array in place with a stable merge sort (O(n log n)).
+ * @param a Pointer to the array.
+ * @param cmp Comparator receiving two stored payloads; returns <0, 0 or >0.
+ * @return The same array pointer, or NULL if the temporary buffer could not be
+ *         allocated (the array is left untouched in that case).
+ */
+struct Array *arr_merge_sort(struct Array *a,
+							 int (*cmp)(const void *, const void *));
 
 #endif // ARRAY_H

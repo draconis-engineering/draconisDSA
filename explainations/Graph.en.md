@@ -31,8 +31,8 @@ A graph is a collection of nodes (vertices) and edges connecting them. This impl
 | `print_graph()`  | Print nodes                     | O(n)                                                        |
 | `has_node()`     | Check if node exists            | O(n)                                                        |
 | `has_edge()`     | Check if edge exists            | O(m)                                                        |
-| `path_exists()`  | BFS for path src->dest          | O(V + E) for BFS on adjacency; V=num_nodes, E=num_edges     |
-| `connected()`    | All-pairs reachability          | O(V * (V + E))                                              |
+| `path_exists()`  | BFS for path src->dest          | O(V * E) with this edge-list representation (V=num_nodes, E=num_edges); a true adjacency list would give O(V + E) |
+| `connected()`    | All-pairs reachability          | O(V^2) calls to `path_exists()` -> O(V^3 * E) worst case    |
 | `free_graph()`   | Free all memory                 | O(n + m)                                                    |
 
 Note: the graph uses edge lists (array of edges) rather than adjacency lists - so traversing neighbors requires scanning all edges. That’s fine for small graphs but is less efficient than adjacency lists.

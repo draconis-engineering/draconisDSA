@@ -16,10 +16,21 @@
  * along with this program. If not, see http://www.gnu.org/licenses.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "hashset.h"
+
+// Portable replacement for POSIX strdup / MSVC _strdup.
+static char *dup_string(const char *src) {
+	size_t len = strlen(src) + 1;
+	char *copy = malloc(len);
+	if (copy != NULL) {
+		memcpy(copy, src, len);
+	}
+	return copy;
+}
 
 // Create a new HashSet
 struct HashSet *create_hashset() {
@@ -87,7 +98,7 @@ bool hashset_add(struct HashSet *set, const char *value) {
 		return false;
 	}
 
-	new_node->value = strdup(value); // Duplicate the string into memory
+	new_node->value = dup_string(value); // Duplicate the string into memory
 	if (!new_node->value) {
 		free(new_node);
 		return false;

@@ -16,13 +16,11 @@
  * along with this program. If not, see http://www.gnu.org/licenses.
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #ifndef HASHSET_H
 #define HASHSET_H
+
+#include <stdbool.h>
+#include <stddef.h>
 
 #define INITIAL_CAPACITY 16
 

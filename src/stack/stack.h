@@ -19,20 +19,16 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include <stddef.h>
-
 #include "../dllist/dllist.h"
 
 /**
  * @brief A LIFO (Last In, First Out) stack.
+ *
+ * The element count is tracked by the underlying list (`entries->size`).
  */
 struct Stack {
 	/** Underlying doubly linked list for storing entries. */
 	struct DLList *entries;
-	/** Number of elements in the stack. */
-	size_t size;
-	/** Capacity (currently unused in this implementation). */
-	size_t capacity;
 };
 
 /**

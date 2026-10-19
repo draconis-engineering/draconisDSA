@@ -14,7 +14,8 @@ It is the closest thing to a "C++ `std::vector`" or a "Python `list`" in this li
 - Payloads are `void*` and owned by the caller (only the buffer is freed on `free_array`).
 - When the buffer is full, `arr_push()`/`arr_insert()` call the internal `arr_grow()`, which `realloc`s the buffer to **double** its capacity.
 - `arr_insert()` at `idx` shifts elements `idx..size-1` one slot to the right; `arr_remove()` shifts `idx+1..size-1` one slot to the left. Both preserve order.
-- The implementation performs bounds checking and prints errors to stdout on invalid indices or allocation failures.
+- `arr_merge_sort(a, cmp)` sorts the buffer in place with a stable merge sort (`O(n log n)`) using a single temporary buffer. `cmp` receives two stored payloads and returns `<0`, `0` or `>0`.
+- The implementation performs bounds checking and reports errors: invalid indices go to stdout, while allocation failures in `arr_grow()` go to stderr.
 - Insertion indices: `0..size`. Access/removal indices: `0..size-1`.
 
 ## Operations (time complexity)
@@ -31,6 +32,7 @@ It is the closest thing to a "C++ `std::vector`" or a "Python `list`" in this li
 | `arr_remove()`   | Remove at index, shift left            | O(n)                           |
 | `arr_pop()`      | Remove and return last element         | O(1)                           |
 | `print_array()`  | Print pointer values                   | O(n)                           |
+| `arr_merge_sort()` | Stable in-place merge sort (comparator) | O(n log n) time, O(n) space  |
 | `free_array()`   | Free buffer and array                  | O(1)                           |
 
 ## Pros

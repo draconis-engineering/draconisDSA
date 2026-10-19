@@ -6,10 +6,10 @@ A stack is a LIFO (Last In, First Out) data structure. Elements are pushed onto 
 
 ## Implementation details
 
-- **Structure**: `struct Stack { struct DLList *entries; size_t size; size_t capacity; }`
+- **Structure**: `struct Stack { struct DLList *entries; }` (the element count lives in `entries->size`)
 - `create_stack()` allocates both the `Stack` and an internal `DLList` via `create_dll()`. On failure of `create_dll()`, the stack is freed.
-- `stack_push()` inserts at the back of the underlying list (`dll_insert_at_back`) and increments `size`.
-- `stack_pop()` returns `stack->entries->tail->data` if not empty, then removes the last element (`dll_remove` at `size-1`) and decrements `size`. Returns `NULL` if empty.
+- `stack_push()` inserts at the back of the underlying list (`dll_insert_at_back`).
+- `stack_pop()` returns `entries->tail->data` if not empty, then removes the last element (`dll_remove` at `entries->size - 1`). Returns `NULL` if empty.
 - `stack_peek()` returns the tail data without removing it, or `NULL` if empty.
 - `free_stack()` frees the underlying list and the stack itself.
 
@@ -34,7 +34,6 @@ A stack is a LIFO (Last In, First Out) data structure. Elements are pushed onto 
 
 - Limited access (only top)
 - No random access or iteration by index through stack API
-- `capacity` field exists but is not actively used for resizing logic in this implementation
 
 ## When to use
 

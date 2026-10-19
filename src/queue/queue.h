@@ -19,18 +19,16 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <stddef.h>
-
 #include "../dllist/dllist.h"
 
 /**
  * @brief A FIFO (First In, First Out) queue.
+ *
+ * The element count is tracked by the underlying list (`entries->size`).
  */
 struct Queue {
 	/** Underlying doubly linked list for storing entries. */
 	struct DLList *entries;
-	/** Number of elements in the queue. */
-	size_t size;
 };
 
 /**

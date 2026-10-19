@@ -41,6 +41,10 @@ struct Graph *create_graph() {
 
 // Frees all nodes, edges, and the graph itself.
 void free_graph(struct Graph *graph) {
+	if (graph == NULL) {
+		return;
+	}
+
 	for (int i = 0; i < graph->num_nodes; i++) {
 		free(graph->nodes[i]);
 	}
@@ -62,13 +66,14 @@ void add_node(struct Graph *graph, uint64_t data) {
 	node->data = data;
 	node->next = NULL;
 
-	graph->nodes = (struct GraphNode **)realloc(
+	struct GraphNode **new_nodes = (struct GraphNode **)realloc(
 		graph->nodes, (graph->num_nodes + 1) * sizeof(struct GraphNode *));
-	if (graph->nodes == NULL) {
+	if (new_nodes == NULL) {
 		free(node);
 		printf("Error: realloc failed\n");
 		return;
 	}
+	graph->nodes = new_nodes;
 	graph->nodes[graph->num_nodes] = node;
 	graph->num_nodes++;
 }
@@ -89,13 +94,14 @@ void add_edge(struct Graph *graph, struct GraphNode *src,
 	edge->dest = dest;
 	edge->weight = weight;
 
-	graph->edges = (struct GraphEdge **)realloc(
+	struct GraphEdge **new_edges = (struct GraphEdge **)realloc(
 		graph->edges, (graph->num_edges + 1) * sizeof(struct GraphEdge *));
-	if (graph->edges == NULL) {
+	if (new_edges == NULL) {
 		free(edge);
 		printf("Error: realloc failed\n");
 		return;
 	}
+	graph->edges = new_edges;
 	graph->edges[graph->num_edges] = edge;
 	graph->num_edges++;
 }

@@ -6,10 +6,10 @@ A queue is a FIFO (First In, First Out) data structure. Elements are added to th
 
 ## Implementation details
 
-- **Structure**: `struct Queue { struct DLList *entries; size_t size; }`
-- `create_queue()` allocates queue and internal `DLList`.
-- `queue_add()` inserts at the back of the underlying list (`dll_insert_at_back`) and increments `size`.
-- `queue_get()` returns `entries->head->data` if not empty, removes element at index 0 (`dll_remove(entries, 0)`), decrements `size`. Returns `NULL` if empty.
+- **Structure**: `struct Queue { struct DLList *entries; }` (the element count lives in `entries->size`)
+- `create_queue()` allocates the queue and an internal `DLList` (frees the queue and returns `NULL` if the list allocation fails).
+- `queue_add()` inserts at the back of the underlying list (`dll_insert_at_back`).
+- `queue_get()` returns `entries->head->data` if not empty, then removes the element at index 0 (`dll_remove(entries, 0)`). Returns `NULL` if empty.
 - `queue_peek()` returns head data without removing, or `NULL` if empty.
 - `free_queue()` frees underlying list and queue.
 

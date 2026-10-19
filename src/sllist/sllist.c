@@ -190,6 +190,10 @@ void sll_remove(struct SLList *l, int idx) {
 
 // Frees the memory used by the list's nodes.
 void free_sll(struct SLList *l) {
+	if (l == NULL) {
+		return;
+	}
+
 	struct SLLNode *curr_node = l->head;
 
 	while (curr_node != NULL) {
