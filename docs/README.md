@@ -24,7 +24,7 @@ Use `make` to compile the library and demo.
 make
 ```
 
-`src/main.c` is a small demo that exercises most structures (the hash set is not shown there; see `examples` in `explainations/HashSet.en.md`).
+`src/main.c` is a small demo that exercises most structures
 
 ## Usage
 

@@ -53,7 +53,7 @@ struct HashSet *create_hashset() {
 }
 
 // DJB2 Hash Function - distributes strings cleanly across buckets
-unsigned int hashset_hash(struct HashSet *set, const char *value) {
+unsigned int set_hash(struct HashSet *set, const char *value) {
 	unsigned long hash = 0x1505;
 	int c;
 	while ((c = *value++)) {
@@ -63,12 +63,12 @@ unsigned int hashset_hash(struct HashSet *set, const char *value) {
 }
 
 // Check if value exists in the set
-bool hashset_contains(struct HashSet *set, const char *value) {
+bool set_contains(struct HashSet *set, const char *value) {
 	if (!set || !value) {
 		return false;
 	}
 
-	unsigned int index = hashset_hash(set, value);
+	unsigned int index = set_hash(set, value);
 	struct HashSetNode *current = set->buckets[index];
 
 	while (current != NULL) {
@@ -81,16 +81,16 @@ bool hashset_contains(struct HashSet *set, const char *value) {
 }
 
 // Add a value to the set (Returns false if duplicate or error)
-bool hashset_add(struct HashSet *set, const char *value) {
+bool set_add(struct HashSet *set, const char *value) {
 	if (!set || !value) {
 		return false;
 	}
 
-	if (hashset_contains(set, value)) {
+	if (set_contains(set, value)) {
 		return false; // HashSets do not allow duplicates
 	}
 
-	unsigned int index = hashset_hash(set, value);
+	unsigned int index = set_hash(set, value);
 
 	// Allocate new node
 	struct HashSetNode *new_node = malloc(sizeof(struct HashSetNode));
@@ -113,12 +113,12 @@ bool hashset_add(struct HashSet *set, const char *value) {
 }
 
 // Remove a value from the set
-bool hashset_remove(struct HashSet *set, const char *value) {
+bool set_remove(struct HashSet *set, const char *value) {
 	if (!set || !value) {
 		return false;
 	}
 
-	unsigned int index = hashset_hash(set, value);
+	unsigned int index = set_hash(set, value);
 	struct HashSetNode *current = set->buckets[index];
 	struct HashSetNode *prev = NULL;
 
@@ -141,7 +141,7 @@ bool hashset_remove(struct HashSet *set, const char *value) {
 }
 
 // Free all memory used by the HashSet
-void hashset_destroy(struct HashSet *set) {
+void free_hashset(struct HashSet *set) {
 	if (!set) {
 		return;
 	}

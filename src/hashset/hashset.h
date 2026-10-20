@@ -58,7 +58,7 @@ struct HashSet *create_hashset();
  * @param value The input string value.
  * @return Index into the buckets array.
  */
-unsigned int hashset_hash(struct HashSet *set, const char *value);
+unsigned int set_hash(struct HashSet *set, const char *value);
 
 /**
  * @brief Check if a value exists in the set.
@@ -66,7 +66,7 @@ unsigned int hashset_hash(struct HashSet *set, const char *value);
  * @param value The value to look up.
  * @return True if the value exists, false otherwise.
  */
-bool hashset_contains(struct HashSet *set, const char *value);
+bool set_contains(struct HashSet *set, const char *value);
 
 /**
  * @brief Add a value to the set.
@@ -74,7 +74,7 @@ bool hashset_contains(struct HashSet *set, const char *value);
  * @param value The value to add.
  * @return True if added, false if already exists or on allocation failure.
  */
-bool hashset_add(struct HashSet *set, const char *value);
+bool set_add(struct HashSet *set, const char *value);
 
 /**
  * @brief Remove a value from the set.
@@ -82,12 +82,12 @@ bool hashset_add(struct HashSet *set, const char *value);
  * @param value The value to remove.
  * @return True if removed, false if not found.
  */
-bool hashset_remove(struct HashSet *set, const char *value);
+bool set_remove(struct HashSet *set, const char *value);
 
 /**
  * @brief Free all memory used by the hash set.
  * @param set Pointer to the hash set.
  */
-void hashset_destroy(struct HashSet *set);
+void free_hashset(struct HashSet *set);
 
 #endif // hashset.h

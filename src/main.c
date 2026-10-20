@@ -3,6 +3,7 @@
 #include "dllist/dllist.h"
 #include "graph/graph.h"
 #include "hashmap/hashmap.h"
+#include "hashset/hashset.h"
 #include "queue/queue.h"
 #include "sllist/sllist.h"
 #include "stack/stack.h"
@@ -78,6 +79,15 @@ int main() {
 	map_get(map, "github", &found);
 	printf("map github after remove found: %d\n", found);
 	free_hashmap(map);
+
+	struct HashSet *set = create_hashset();
+	set_add(set, "a");
+	set_add(set, "b");
+	set_add(set, "c");
+	set_remove(set, "b");
+	printf(set_contains(set, "a") ? "contains a" : "does not contain a");
+	// set_print(set)
+	free_hashset(set);
 
 	// Graph
 	struct Graph *graph = create_graph();
