@@ -20,20 +20,20 @@ It is the closest thing to a "C++ `std::vector`" or a "Python `list`" in this li
 
 ## Operations (time complexity)
 
-| Operation        | What it does                           | Time Complexity                |
-| ---------------- | -------------------------------------- | ------------------------------ |
-| `create_array()` | Create empty array (buffer of 4)       | O(1)                           |
-| `arr_size()`     | Return number of elements              | O(1)                           |
-| `arr_is_empty()` | Check if empty                         | O(1)                           |
-| `arr_push()`     | Append at back (grows if full)         | O(1) amortized, O(n) on growth |
-| `arr_insert()`   | Insert at index `0..size`, shift right | O(n)                           |
-| `arr_get()`      | Read element by index                  | O(1)                           |
-| `arr_set()`      | Overwrite element by index             | O(1)                           |
-| `arr_remove()`   | Remove at index, shift left            | O(n)                           |
-| `arr_pop()`      | Remove and return last element         | O(1)                           |
-| `print_array()`  | Print pointer values                   | O(n)                           |
-| `arr_merge_sort()` | Stable in-place merge sort (comparator) | O(n log n) time, O(n) space  |
-| `free_array()`   | Free buffer and array                  | O(1)                           |
+| Operation          | What it does                            | Time Complexity                |
+| ------------------ | --------------------------------------- | ------------------------------ |
+| `create_array()`   | Create empty array (buffer of 4)        | O(1)                           |
+| `arr_size()`       | Return number of elements               | O(1)                           |
+| `arr_is_empty()`   | Check if empty                          | O(1)                           |
+| `arr_push()`       | Append at back (grows if full)          | O(1) amortized, O(n) on growth |
+| `arr_insert()`     | Insert at index `0..size`, shift right  | O(n)                           |
+| `arr_get()`        | Read element by index                   | O(1)                           |
+| `arr_set()`        | Overwrite element by index              | O(1)                           |
+| `arr_remove()`     | Remove at index, shift left             | O(n)                           |
+| `arr_pop()`        | Remove and return last element          | O(1)                           |
+| `print_array()`    | Print pointer values                    | O(n)                           |
+| `arr_merge_sort()` | Stable in-place merge sort (comparator) | O(n log n) time, O(n) space    |
+| `free_array()`     | Free buffer and array                   | O(1)                           |
 
 ## Pros
 

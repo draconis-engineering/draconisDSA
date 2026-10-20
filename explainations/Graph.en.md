@@ -21,19 +21,19 @@ A graph is a collection of nodes (vertices) and edges connecting them. This impl
 
 ## Operations (time complexity)
 
-| Operation        | What it does                    | Time Complexity                                             |
-| ---------------- | ------------------------------- | ----------------------------------------------------------- |
-| `create_graph()` | Create empty graph              | O(1)                                                        |
-| `add_node()`     | Add new node                    | O(n) due to `realloc`/copy of array                         |
-| `add_edge()`     | Add edge between existing nodes | O(n) due to `realloc` + O(n) for `has_node()` checks = O(n) |
-| `remove_node()`  | Remove node and incident edges  | O(n + m) where n=num_nodes, m=num_edges                     |
-| `remove_edge()`  | Remove specific edge            | O(m)                                                        |
-| `print_graph()`  | Print nodes                     | O(n)                                                        |
-| `has_node()`     | Check if node exists            | O(n)                                                        |
-| `has_edge()`     | Check if edge exists            | O(m)                                                        |
-| `path_exists()`  | BFS for path src->dest          | O(V * E) with this edge-list representation (V=num_nodes, E=num_edges); a true adjacency list would give O(V + E) |
-| `connected()`    | All-pairs reachability          | O(V^2) calls to `path_exists()` -> O(V^3 * E) worst case    |
-| `free_graph()`   | Free all memory                 | O(n + m)                                                    |
+| Operation        | What it does                    | Time Complexity                                                        |
+| ---------------- | ------------------------------- | ---------------------------------------------------------------------- |
+| `create_graph()` | Create empty graph              | O(1)                                                                   |
+| `add_node()`     | Add new node                    | O(n) due to `realloc`/copy of array                                    |
+| `add_edge()`     | Add edge between existing nodes | O(n) due to `realloc` + O(n) for `has_node()` checks = O(n)            |
+| `remove_node()`  | Remove node and incident edges  | O(n + m) where n=num_nodes, m=num_edges                                |
+| `remove_edge()`  | Remove specific edge            | O(m)                                                                   |
+| `print_graph()`  | Print nodes                     | O(n)                                                                   |
+| `has_node()`     | Check if node exists            | O(n)                                                                   |
+| `has_edge()`     | Check if edge exists            | O(m)                                                                   |
+| `path_exists()`  | BFS for path src->dest          | O(V * E) w/ edge-list repr.; a true adjacency list would give O(V + E) |
+| `connected()`    | All-pairs reachability          | O(V^2) calls to `path_exists()` -> O(V^3 * E) worst case               |
+| `free_graph()`   | Free all memory                 | O(n + m)                                                               |
 
 Note: the graph uses edge lists (array of edges) rather than adjacency lists - so traversing neighbors requires scanning all edges. That’s fine for small graphs but is less efficient than adjacency lists.
 
