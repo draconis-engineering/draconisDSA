@@ -60,7 +60,7 @@ int sll_size(struct SLList *l) { return l->size; }
 void sll_insert_at_front(struct SLList *l, void *val) {
 	struct SLLNode *new_node = (struct SLLNode *)malloc(sizeof(struct SLLNode));
 	if (new_node == NULL) {
-		printf("Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		return;
 	}
 

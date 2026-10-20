@@ -19,7 +19,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> // PS! Is this needed???
 
 #include <inttypes.h>
 
@@ -60,7 +60,7 @@ void free_graph(struct Graph *graph) {
 void add_node(struct Graph *graph, uint64_t data) {
 	struct GraphNode *node = malloc(sizeof(struct GraphNode));
 	if (node == NULL) {
-		printf("Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		return;
 	}
 	node->data = data;
@@ -70,7 +70,7 @@ void add_node(struct Graph *graph, uint64_t data) {
 		graph->nodes, (graph->num_nodes + 1) * sizeof(struct GraphNode *));
 	if (new_nodes == NULL) {
 		free(node);
-		printf("Error: realloc failed\n");
+		fprintf(stderr, "Error: realloc failed\n");
 		return;
 	}
 	graph->nodes = new_nodes;
@@ -87,7 +87,7 @@ void add_edge(struct Graph *graph, struct GraphNode *src,
 
 	struct GraphEdge *edge = malloc(sizeof(struct GraphEdge));
 	if (edge == NULL) {
-		printf("Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		return;
 	}
 	edge->src = src;
@@ -98,7 +98,7 @@ void add_edge(struct Graph *graph, struct GraphNode *src,
 		graph->edges, (graph->num_edges + 1) * sizeof(struct GraphEdge *));
 	if (new_edges == NULL) {
 		free(edge);
-		printf("Error: realloc failed\n");
+		fprintf(stderr, "Error: realloc failed\n");
 		return;
 	}
 	graph->edges = new_edges;
