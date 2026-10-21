@@ -22,7 +22,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "shared/shared.h"
+#include "../shared/shared.h"
 
 /**
  * @brief A binary heap of `void*` payloads.

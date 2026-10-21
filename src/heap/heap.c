@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-constexpr size_t HEAP_INITIAL_CAPACITY = 4;
+static const size_t HEAP_INITIAL_CAPACITY = 4;
 
 // Grows the backing buffer by doubling its capacity when it is full.
 static int heap_grow(struct Heap *heap) {
