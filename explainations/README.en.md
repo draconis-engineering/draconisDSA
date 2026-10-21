@@ -15,9 +15,14 @@ This directory contains beginner-friendly explanations of the data structures an
 - [Doubly Linked List (DLL)](DLL.en.md)
 - [Stack](Stack.en.md)
 - [Queue](Queue.en.md)
+- [Binary Heap](Heap.en.md)
 - [HashMap](HashMap.en.md)
 - [HashSet](HashSet.en.md)
 - [Graph](Graph.en.md)
 - [Trees (Binary + N-ary)](Trees.en.md)
+- [Algorithms (Sorting, Searching, Traversal)](Algorithms.en.md)
 
 These docs are designed to complement the source code - read the explanation first, then look at the headers and implementations.
+
+For a side-by-side overview of every operation in the library, see the
+[complexity cheat sheet](../docs/COMPLEXITY.md).

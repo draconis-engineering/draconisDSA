@@ -6,13 +6,13 @@ A graph is a collection of nodes (vertices) and edges connecting them. This impl
 
 ## Implementation details
 
-- **Node**: `struct GraphNode { uint64_t data; struct GraphNode *next; }` (note: `next` field exists but isn't used in the adjacency storage model here; nodes are stored in a flat array)
+- **Node**: `struct GraphNode { uint64_t data; int index; }` - the `index` field holds the node's position in the graph's node array. The graph keeps it up to date, which lets the traversal algorithms in `src/algorithms` look up a node's slot in O(1) instead of scanning the array.
 - **Edge**: `struct GraphEdge { struct GraphNode *src; struct GraphNode *dest; int weight; }`
 - **Graph**: `struct Graph { struct GraphNode **nodes; struct GraphEdge **edges; int num_nodes; int num_edges; }`
 - `create_graph()` initializes empty arrays (NULL pointers) with counts 0
 - `add_node()` allocates a node, stores data, appends to `nodes` array via `realloc`
 - `add_edge()` checks `has_node()` for both endpoints; if valid, allocates edge and appends to `edges` array
-- `remove_node()` finds and removes the node from `nodes` array (shifting), then removes all edges where `src == node` or `dest == node` (compacts edge array, skipping removed ones)
+- `remove_node()` removes all edges where `src == node` or `dest == node` **first** (compacting the edge array), and only then frees the node and shifts it out of the `nodes` array. The remaining nodes have their `index` field updated to match their new position.
 - `remove_edge()` finds and removes matching edge pointer
 - `print_graph()` prints node data values space-separated
 - `has_node()`/`has_edge()` do linear scans
@@ -42,12 +42,12 @@ Note: the graph uses edge lists (array of edges) rather than adjacency lists - s
 - Simple representation (arrays of nodes/edges)
 - Supports directed edges with weights
 - Includes BFS path existence and connectivity check
+- Nodes carry their own array index, so slot lookups are O(1)
 
 ## Cons
 
 - Inefficient neighbor lookups (O(E) per node traversal)
 - Linear scans for membership checks
-- No dynamic indexing optimization
 - Arrays grow by realloc (O(n) per add)
 - `connected()` does all-pairs path_exists which is expensive
 
@@ -56,6 +56,11 @@ Note: the graph uses edge lists (array of edges) rather than adjacency lists - s
 - For learning graph concepts (small educational graphs)
 - When you need explicit edge objects (with weights)
 - For simple connectivity/path queries on small datasets
+
+## See also
+
+- [Algorithms](Algorithms.en.md) - BFS, DFS, shortest path and Dijkstra on this graph
+- [Complexity cheat sheet](../docs/COMPLEXITY.md)
 
 ## Example
 
