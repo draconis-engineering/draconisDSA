@@ -28,8 +28,14 @@
 struct GraphNode {
 	/** Data stored in the node. */
 	uint64_t data;
-	/** Unused in the current array-based implementation; reserved for future use. */
-	struct GraphNode *next;
+	/**
+	 * Position of the node in the graph's node array.
+	 *
+	 * The index is kept up to date by the graph itself, which lets the
+	 * algorithms in `src/algorithms` look up a node's slot in O(1) instead
+	 * of searching the node array.
+	 */
+	int index;
 };
 
 /**

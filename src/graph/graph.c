@@ -64,7 +64,7 @@ void add_node(struct Graph *graph, uint64_t data) {
 		return;
 	}
 	node->data = data;
-	node->next = NULL;
+	node->index = graph->num_nodes;
 
 	struct GraphNode **new_nodes = (struct GraphNode **)realloc(
 		graph->nodes, (graph->num_nodes + 1) * sizeof(struct GraphNode *));
@@ -111,11 +111,6 @@ void remove_node(struct Graph *graph, struct GraphNode *node) {
 	bool found = false;
 	for (int i = 0; i < graph->num_nodes; i++) {
 		if (graph->nodes[i] == node) {
-			free(graph->nodes[i]);
-			for (int j = i; j < graph->num_nodes - 1; j++) {
-				graph->nodes[j] = graph->nodes[j + 1];
-			}
-			graph->num_nodes--;
 			found = true;
 			break;
 		}
@@ -125,7 +120,8 @@ void remove_node(struct Graph *graph, struct GraphNode *node) {
 		return;
 	}
 
-	// Drop all edges incident to the node.
+	// Drop all edges incident to the node. This happens before the node is
+	// freed so that the edge list never holds a pointer to freed memory.
 	int write = 0;
 	for (int i = 0; i < graph->num_edges; i++) {
 		if (graph->edges[i]->src == node || graph->edges[i]->dest == node) {
@@ -135,6 +131,23 @@ void remove_node(struct Graph *graph, struct GraphNode *node) {
 		graph->edges[write++] = graph->edges[i];
 	}
 	graph->num_edges = write;
+
+	// Remove the node from the node array and close the gap.
+	for (int i = 0; i < graph->num_nodes; i++) {
+		if (graph->nodes[i] == node) {
+			free(graph->nodes[i]);
+			for (int j = i; j < graph->num_nodes - 1; j++) {
+				graph->nodes[j] = graph->nodes[j + 1];
+			}
+			graph->num_nodes--;
+
+			// The nodes that moved up one slot need a new index.
+			for (int j = i; j < graph->num_nodes; j++) {
+				graph->nodes[j]->index = j;
+			}
+			break;
+		}
+	}
 }
 
 // Removes an edge from the graph.

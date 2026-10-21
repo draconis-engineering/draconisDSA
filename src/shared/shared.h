@@ -19,4 +19,25 @@
 #ifndef SHARED_H
 #define SHARED_H
 
-#endif
+#include <stddef.h>
+
+/**
+ * @brief Comparator used by the sorting, searching and heap modules.
+ *
+ * The comparator receives two elements and decides their relative order:
+ *
+ * - a negative value means `a` comes **before** `b`
+ * - zero means the two elements are equivalent
+ * - a positive value means `a` comes **after** `b`
+ *
+ * The signature matches the one used by the C standard library's `qsort()`,
+ * so an existing comparator can be handed to every algorithm in this library
+ * without any change.
+ *
+ * @param a The first element to compare.
+ * @param b The second element to compare.
+ * @return A negative value, zero, or a positive value as described above.
+ */
+typedef int (*cmp_fn)(const void *a, const void *b);
+
+#endif // SHARED_H
