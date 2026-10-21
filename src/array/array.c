@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-constexpr int ARRAY_INITIAL_CAPACITY = 4;
+static const int ARRAY_INITIAL_CAPACITY = 4;
 
 // Grows the backing buffer by doubling its capacity when it is full.
 // Returns 1 on success (or when there is nothing to do), 0 on failure.
