@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c23 -Isrc -MMD -MP
+CFLAGS = -Wall -Wextra -std=c2x -Isrc -MMD -MP
 
 # Directory that holds the compiled objects. Point it somewhere else to build
 # a second configuration without disturbing the first one, for example:
