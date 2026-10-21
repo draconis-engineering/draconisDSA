@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build, demo and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Show the compiler version
+        run: gcc --version
+
+      - name: Build the library and the demo
+        run: make
+
+      - name: Run the demo
+        run: ./main.exe
+
+      - name: Run the test suite
+        run: make test
+
+      - name: Build and run the sanitized test suite
+        run: make test-sanitize
+
+      - name: Upload the sanitized build
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanitized-build
+          path: build-sanitize/
+          retention-days: 7
+          if-no-files-found: ignore
+
+  build-clang:
+    name: Build with clang
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Show the compiler version
+        run: clang --version
+
+      - name: Build the library and the demo
+        run: make CC=clang
+
+      - name: Run the demo
+        run: ./main.exe
+
+      - name: Run the test suite
+        run: make CC=clang test
