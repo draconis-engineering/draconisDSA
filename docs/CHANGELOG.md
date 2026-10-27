@@ -21,21 +21,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Trees (`src/trees`): a binary tree (`create_btree`, `btree_insert_left`, `btree_insert_right`, `btree_get_*`, `btree_set_*`, `btree_is_leaf`, `btree_height`, `btree_size`, `btree_traverse_preorder/inorder/postorder`, `btree_free`) and an n-ary tree (`create_tree`, `tree_add_child`, `tree_num_children`, `tree_free`).
 - **Binary heap** (`src/heap`): `create_heap`, `heap_push`, `heap_pop`, `heap_peek`, `heap_size`, `heap_is_empty`, `free_heap`. The order is decided by a comparator, so the same code is a min-heap or a max-heap depending on the comparator that is passed in.
 - **Algorithms module** (`src/algorithms`):
-  - Sorting (`sort.h`): `algo_bubble_sort`, `algo_selection_sort`, `algo_insertion_sort`, `algo_quick_sort`, `algo_heap_sort`, `algo_merge_sort` and `algo_counting_sort_int`.
-  - Searching (`search.h`): `algo_linear_search`, `algo_binary_search`.
-  - Graph traversal (`traversal.h`): `algo_bfs`, `algo_dfs`, `algo_bfs_shortest_path`, `algo_dijkstra`.
-  - `algorithms.h` as an umbrella header for all three.
+    - Sorting (`sort.h`): `algo_bubble_sort`, `algo_selection_sort`, `algo_insertion_sort`, `algo_quick_sort`, `algo_heap_sort`, `algo_merge_sort` and `algo_counting_sort_int`.
+    - Searching (`search.h`): `algo_linear_search`, `algo_binary_search`.
+    - Graph traversal (`traversal.h`): `algo_bfs`, `algo_dfs`, `algo_bfs_shortest_path`, `algo_dijkstra`.
+    - `algorithms.h` as an umbrella header for all three.
 - **Shared comparator type** `cmp_fn` in `src/shared/shared.h`, matching the signature of `qsort()`.
 - **Test suite** (`tests/`): a dependency-free harness with `TEST`/`RUN_TEST` macros and the assertions `ASSERT`, `ASSERT_FALSE`, `ASSERT_EQ_INT`, `ASSERT_EQ_LONG`, `ASSERT_EQ_UINT`, `ASSERT_EQ_STR`, `ASSERT_NULL`, `ASSERT_NOT_NULL` and `ASSERT_PTR_EQ`. Covers every module, including the heap and the algorithms.
 - **Makefile** targets: `all`, `test`, `test-sanitize` and `clean`. The library and the demo are linked separately, so the test binary can link the library without a duplicate `main()`. `test-sanitize` builds into `build-sanitize/` with AddressSanitizer and UndefinedBehaviorSanitizer.
 - **Demo** (`src/main.c`) rewritten as a sectioned showcase that exercises every structure and algorithm.
 - **Documentation**:
-  - `explainations/Heap.en.md` - the binary heap explained.
-  - `explainations/Algorithms.en.md` - sorting, searching and graph traversal explained.
-  - `docs/COMPLEXITY.md` - a complexity cheat sheet covering every public operation.
-  - `docs/ROADMAP.md` - what is planned next.
-  - `tests/README.md` - how to write and run a test.
-  - Continuous integration in `.github/workflows/ci.yml`, running the build, the tests and the sanitized tests on every push and pull request.
+    - `explainations/Heap.en.md` - the binary heap explained.
+    - `explainations/Algorithms.en.md` - sorting, searching and graph traversal explained.
+    - `docs/COMPLEXITY.md` - a complexity cheat sheet covering every public operation.
+    - `docs/ROADMAP.md` - what is planned next.
+    - `tests/README.md` - how to write and run a test.
+    - Continuous integration in `.github/workflows/ci.yml`, running the build, the tests and the sanitized tests on every push and pull request.
 
 ### Fixed
 

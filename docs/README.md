@@ -4,26 +4,26 @@ Data Structures & Algorithms library written in C23. Educational, dependency-fre
 
 ## Structures
 
-| Module            | Description                                                          |
-| ----------------- | -------------------------------------------------------------------- |
-| `src/array`       | Dynamic array (`arr_`-prefixed API), doubling growth                 |
-| `src/sllist`      | Singly linked list (`sll_`-prefixed API)                             |
-| `src/dllist`      | Doubly linked list (`dll_`-prefixed API)                             |
-| `src/stack`       | LIFO stack built on `dllist`                                         |
-| `src/queue`       | FIFO queue built on `dllist`                                         |
-| `src/heap`        | Binary min-heap (`heap_`-prefixed API), comparator driven            |
-| `src/hashmap`     | String-keyed hash map, DJB2 hash + separate chaining                 |
-| `src/hashset`     | Hash set of unique strings, DJB2 hash + separate chaining            |
-| `src/graph`       | Directed weighted graph (BFS `path_exists`, connectivity)            |
-| `src/trees`       | Binary tree (`btree_`) + n-ary tree (`tree_`), pre/in/post-order     |
+| Module        | Description                                                      |
+| ------------- | ---------------------------------------------------------------- |
+| `src/array`   | Dynamic array (`arr_`-prefixed API), doubling growth             |
+| `src/sllist`  | Singly linked list (`sll_`-prefixed API)                         |
+| `src/dllist`  | Doubly linked list (`dll_`-prefixed API)                         |
+| `src/stack`   | LIFO stack built on `dllist`                                     |
+| `src/queue`   | FIFO queue built on `dllist`                                     |
+| `src/heap`    | Binary min-heap (`heap_`-prefixed API), comparator driven        |
+| `src/hashmap` | String-keyed hash map, DJB2 hash + separate chaining             |
+| `src/hashset` | Hash set of unique strings, DJB2 hash + separate chaining        |
+| `src/graph`   | Directed weighted graph (BFS `path_exists`, connectivity)        |
+| `src/trees`   | Binary tree (`btree_`) + n-ary tree (`tree_`), pre/in/post-order |
 
 ## Algorithms
 
-| Module                 | Description                                                          |
-| ---------------------- | -------------------------------------------------------------------- |
-| `src/algorithms/sort`  | Bubble, selection, insertion, quick, heap, merge and counting sort    |
-| `src/algorithms/search`| Linear search and binary search                                      |
-| `src/algorithms/traversal` | BFS, DFS, BFS shortest path and Dijkstra's algorithm             |
+| Module                     | Description                                                        |
+| -------------------------- | ------------------------------------------------------------------ |
+| `src/algorithms/sort`      | Bubble, selection, insertion, quick, heap, merge and counting sort |
+| `src/algorithms/search`    | Linear search and binary search                                    |
+| `src/algorithms/traversal` | BFS, DFS, BFS shortest path and Dijkstra's algorithm               |
 
 `src/algorithms/algorithms.h` is an umbrella header that includes all three.
 
