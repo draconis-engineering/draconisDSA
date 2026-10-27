@@ -36,9 +36,7 @@ static int cmp_int_desc(const void *a, const void *b) {
 }
 
 // A heap without a comparator cannot decide on an order.
-TEST(test_heap_requires_a_comparator) {
-	ASSERT_NULL(create_heap(NULL));
-}
+TEST(test_heap_requires_a_comparator) { ASSERT_NULL(create_heap(NULL)); }
 
 // A new heap is empty.
 TEST(test_heap_create_is_empty) {
@@ -150,9 +148,7 @@ TEST(test_heap_keeps_duplicates) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_heap_free_is_null_safe) {
-	free_heap(NULL);
-}
+TEST(test_heap_free_is_null_safe) { free_heap(NULL); }
 
 // Runs every heap test case.
 void run_heap_tests(void) {

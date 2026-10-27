@@ -200,9 +200,7 @@ TEST(test_array_pop_on_empty_returns_null) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_array_free_is_null_safe) {
-	free_array(NULL);
-}
+TEST(test_array_free_is_null_safe) { free_array(NULL); }
 
 // The merge sort orders the array ascending.
 TEST(test_array_merge_sort_sorts) {

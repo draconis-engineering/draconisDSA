@@ -110,9 +110,7 @@ void test_begin(const char *suite_name) {
 /**
  * Prints a section heading.
  */
-void test_section(const char *name) {
-	fprintf(report, "%s\n", name);
-}
+void test_section(const char *name) { fprintf(report, "%s\n", name); }
 
 /**
  * Runs a test case and reports whether it passed.

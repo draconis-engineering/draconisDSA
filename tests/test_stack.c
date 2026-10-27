@@ -76,9 +76,7 @@ TEST(test_stack_pop_on_empty_returns_null) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_stack_free_is_null_safe) {
-	free_stack(NULL);
-}
+TEST(test_stack_free_is_null_safe) { free_stack(NULL); }
 
 // Runs every stack test case.
 void run_stack_tests(void) {

@@ -135,9 +135,7 @@ TEST(test_hashmap_hash_stays_in_range) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_hashmap_free_is_null_safe) {
-	free_hashmap(NULL);
-}
+TEST(test_hashmap_free_is_null_safe) { free_hashmap(NULL); }
 
 // Runs every hash map test case.
 void run_hashmap_tests(void) {

@@ -76,9 +76,7 @@ TEST(test_queue_get_on_empty_returns_null) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_queue_free_is_null_safe) {
-	free_queue(NULL);
-}
+TEST(test_queue_free_is_null_safe) { free_queue(NULL); }
 
 // Runs every queue test case.
 void run_queue_tests(void) {

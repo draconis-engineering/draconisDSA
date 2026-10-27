@@ -196,9 +196,7 @@ TEST(test_dll_remove_out_of_range_is_ignored) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_dll_free_is_null_safe) {
-	free_dll(NULL);
-}
+TEST(test_dll_free_is_null_safe) { free_dll(NULL); }
 
 // Runs every doubly linked list test case.
 void run_dllist_tests(void) {

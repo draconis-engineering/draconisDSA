@@ -186,9 +186,7 @@ TEST(test_sll_remove_out_of_range_is_ignored) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_sll_free_is_null_safe) {
-	free_sll(NULL);
-}
+TEST(test_sll_free_is_null_safe) { free_sll(NULL); }
 
 // Runs every singly linked list test case.
 void run_sllist_tests(void) {

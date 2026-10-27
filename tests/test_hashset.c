@@ -116,9 +116,7 @@ TEST(test_hashset_handles_null_arguments) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_hashset_free_is_null_safe) {
-	free_hashset(NULL);
-}
+TEST(test_hashset_free_is_null_safe) { free_hashset(NULL); }
 
 // Runs every hash set test case.
 void run_hashset_tests(void) {

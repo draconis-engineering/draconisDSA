@@ -98,24 +98,24 @@ void test_fail(const char *file, int line, const char *fmt, ...);
  * @brief Assert that a condition holds.
  * @param cond The condition that must be true.
  */
-#define ASSERT(cond)                                                       \
-	do {                                                                   \
-		test_assertions++;                                                 \
-		if (!(cond)) {                                                     \
-			test_fail(__FILE__, __LINE__, "expected %s", #cond);           \
-		}                                                                  \
+#define ASSERT(cond)                                                           \
+	do {                                                                       \
+		test_assertions++;                                                     \
+		if (!(cond)) {                                                         \
+			test_fail(__FILE__, __LINE__, "expected %s", #cond);               \
+		}                                                                      \
 	} while (0)
 
 /**
  * @brief Assert that a condition does not hold.
  * @param cond The condition that must be false.
  */
-#define ASSERT_FALSE(cond)                                                 \
-	do {                                                                   \
-		test_assertions++;                                                 \
-		if ((cond)) {                                                      \
-			test_fail(__FILE__, __LINE__, "expected NOT %s", #cond);       \
-		}                                                                  \
+#define ASSERT_FALSE(cond)                                                     \
+	do {                                                                       \
+		test_assertions++;                                                     \
+		if ((cond)) {                                                          \
+			test_fail(__FILE__, __LINE__, "expected NOT %s", #cond);           \
+		}                                                                      \
 	} while (0)
 
 /**
@@ -123,16 +123,15 @@ void test_fail(const char *file, int line, const char *fmt, ...);
  * @param actual The value produced by the code under test.
  * @param expected The value it should have produced.
  */
-#define ASSERT_EQ_INT(actual, expected)                                    \
-	do {                                                                   \
-		long long assert_actual = (long long)(actual);                     \
-		long long assert_expected = (long long)(expected);                 \
-		test_assertions++;                                                 \
-		if (assert_actual != assert_expected) {                            \
-			test_fail(__FILE__, __LINE__,                                  \
-					  "%s: expected %lld, got %lld", #actual,              \
-					  assert_expected, assert_actual);                      \
-		}                                                                  \
+#define ASSERT_EQ_INT(actual, expected)                                        \
+	do {                                                                       \
+		long long assert_actual = (long long)(actual);                         \
+		long long assert_expected = (long long)(expected);                     \
+		test_assertions++;                                                     \
+		if (assert_actual != assert_expected) {                                \
+			test_fail(__FILE__, __LINE__, "%s: expected %lld, got %lld",       \
+					  #actual, assert_expected, assert_actual);                \
+		}                                                                      \
 	} while (0)
 
 /**
@@ -140,16 +139,15 @@ void test_fail(const char *file, int line, const char *fmt, ...);
  * @param actual The value produced by the code under test.
  * @param expected The value it should have produced.
  */
-#define ASSERT_EQ_LONG(actual, expected)                                    \
-	do {                                                                   \
-		long assert_actual = (long)(actual);                               \
-		long assert_expected = (long)(expected);                           \
-		test_assertions++;                                                 \
-		if (assert_actual != assert_expected) {                            \
-			test_fail(__FILE__, __LINE__,                                  \
-					  "%s: expected %ld, got %ld", #actual,                \
-					  assert_expected, assert_actual);                      \
-		}                                                                  \
+#define ASSERT_EQ_LONG(actual, expected)                                       \
+	do {                                                                       \
+		long assert_actual = (long)(actual);                                   \
+		long assert_expected = (long)(expected);                               \
+		test_assertions++;                                                     \
+		if (assert_actual != assert_expected) {                                \
+			test_fail(__FILE__, __LINE__, "%s: expected %ld, got %ld",         \
+					  #actual, assert_expected, assert_actual);                \
+		}                                                                      \
 	} while (0)
 
 /**
@@ -157,16 +155,15 @@ void test_fail(const char *file, int line, const char *fmt, ...);
  * @param actual The value produced by the code under test.
  * @param expected The value it should have produced.
  */
-#define ASSERT_EQ_UINT(actual, expected)                                   \
-	do {                                                                   \
-		unsigned long long assert_actual = (unsigned long long)(actual);   \
-		unsigned long long assert_expected = (unsigned long long)(expected);\
-		test_assertions++;                                                 \
-		if (assert_actual != assert_expected) {                            \
-			test_fail(__FILE__, __LINE__,                                  \
-					  "%s: expected %llu, got %llu", #actual,              \
-					  assert_expected, assert_actual);                      \
-		}                                                                  \
+#define ASSERT_EQ_UINT(actual, expected)                                       \
+	do {                                                                       \
+		unsigned long long assert_actual = (unsigned long long)(actual);       \
+		unsigned long long assert_expected = (unsigned long long)(expected);   \
+		test_assertions++;                                                     \
+		if (assert_actual != assert_expected) {                                \
+			test_fail(__FILE__, __LINE__, "%s: expected %llu, got %llu",       \
+					  #actual, assert_expected, assert_actual);                \
+		}                                                                      \
 	} while (0)
 
 /**
@@ -174,48 +171,48 @@ void test_fail(const char *file, int line, const char *fmt, ...);
  * @param actual The string produced by the code under test.
  * @param expected The string it should have produced.
  */
-#define ASSERT_EQ_STR(actual, expected)                                    \
-	do {                                                                   \
-		const char *assert_actual = (actual);                              \
-		const char *assert_expected = (expected);                          \
-		int assert_differs = (assert_actual == NULL || assert_expected == NULL) \
-								 ? (assert_actual != assert_expected)     \
-								 : (strcmp(assert_actual, assert_expected) != 0); \
-		test_assertions++;                                                 \
-		if (assert_differs) {                                              \
-			test_fail(__FILE__, __LINE__,                                  \
-					  "%s: expected \"%s\", got \"%s\"", #actual,           \
-					  assert_expected ? assert_expected : "(null)",         \
-					  assert_actual ? assert_actual : "(null)");             \
-		}                                                                  \
+#define ASSERT_EQ_STR(actual, expected)                                        \
+	do {                                                                       \
+		const char *assert_actual = (actual);                                  \
+		const char *assert_expected = (expected);                              \
+		int assert_differs =                                                   \
+			(assert_actual == NULL || assert_expected == NULL)                 \
+				? (assert_actual != assert_expected)                           \
+				: (strcmp(assert_actual, assert_expected) != 0);               \
+		test_assertions++;                                                     \
+		if (assert_differs) {                                                  \
+			test_fail(__FILE__, __LINE__, "%s: expected \"%s\", got \"%s\"",   \
+					  #actual, assert_expected ? assert_expected : "(null)",   \
+					  assert_actual ? assert_actual : "(null)");               \
+		}                                                                      \
 	} while (0)
 
 /**
  * @brief Assert that a pointer is NULL.
  * @param ptr The pointer that should be NULL.
  */
-#define ASSERT_NULL(ptr)                                                   \
-	do {                                                                   \
-		const void *assert_ptr = (const void *)(ptr);                      \
-		test_assertions++;                                                 \
-		if (assert_ptr != NULL) {                                          \
-			test_fail(__FILE__, __LINE__, "%s: expected NULL, got %p",     \
-					  #ptr, (void *)assert_ptr);                           \
-		}                                                                  \
+#define ASSERT_NULL(ptr)                                                       \
+	do {                                                                       \
+		const void *assert_ptr = (const void *)(ptr);                          \
+		test_assertions++;                                                     \
+		if (assert_ptr != NULL) {                                              \
+			test_fail(__FILE__, __LINE__, "%s: expected NULL, got %p", #ptr,   \
+					  (void *)assert_ptr);                                     \
+		}                                                                      \
 	} while (0)
 
 /**
  * @brief Assert that a pointer is not NULL.
  * @param ptr The pointer that should not be NULL.
  */
-#define ASSERT_NOT_NULL(ptr)                                               \
-	do {                                                                   \
-		const void *assert_ptr = (const void *)(ptr);                      \
-		test_assertions++;                                                 \
-		if (assert_ptr == NULL) {                                          \
-			test_fail(__FILE__, __LINE__, "%s: expected a non-NULL pointer",\
-					  #ptr);                                               \
-		}                                                                  \
+#define ASSERT_NOT_NULL(ptr)                                                   \
+	do {                                                                       \
+		const void *assert_ptr = (const void *)(ptr);                          \
+		test_assertions++;                                                     \
+		if (assert_ptr == NULL) {                                              \
+			test_fail(__FILE__, __LINE__, "%s: expected a non-NULL pointer",   \
+					  #ptr);                                                   \
+		}                                                                      \
 	} while (0)
 
 /**
@@ -223,16 +220,16 @@ void test_fail(const char *file, int line, const char *fmt, ...);
  * @param actual The pointer produced by the code under test.
  * @param expected The pointer it should be identical to.
  */
-#define ASSERT_PTR_EQ(actual, expected)                                    \
-	do {                                                                   \
-		const void *assert_actual = (const void *)(actual);                \
-		const void *assert_expected = (const void *)(expected);            \
-		test_assertions++;                                                 \
-		if (assert_actual != assert_expected) {                            \
-			test_fail(__FILE__, __LINE__,                                  \
-					  "%s: expected pointer %p, got %p", #actual,           \
-					  (void *)assert_expected, (void *)assert_actual);       \
-		}                                                                  \
+#define ASSERT_PTR_EQ(actual, expected)                                        \
+	do {                                                                       \
+		const void *assert_actual = (const void *)(actual);                    \
+		const void *assert_expected = (const void *)(expected);                \
+		test_assertions++;                                                     \
+		if (assert_actual != assert_expected) {                                \
+			test_fail(__FILE__, __LINE__, "%s: expected pointer %p, got %p",   \
+					  #actual, (void *)assert_expected,                        \
+					  (void *)assert_actual);                                  \
+		}                                                                      \
 	} while (0)
 
 #endif // TEST_H

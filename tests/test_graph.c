@@ -185,9 +185,7 @@ TEST(test_graph_not_connected) {
 }
 
 // Freeing is safe with a NULL pointer.
-TEST(test_graph_free_is_null_safe) {
-	free_graph(NULL);
-}
+TEST(test_graph_free_is_null_safe) { free_graph(NULL); }
 
 // Runs every graph test case.
 void run_graph_tests(void) {

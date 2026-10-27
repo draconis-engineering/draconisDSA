@@ -32,13 +32,13 @@ DRACONIS_TEST_VERBOSE=1 ./tests/run_tests.exe
 
 ## Layout
 
-| File             | Purpose                                              |
-| ---------------- | ---------------------------------------------------- |
-| `tests/test.h`   | The harness API: `TEST`, `RUN_TEST` and the assertions |
-| `tests/test.c`   | The harness implementation and the report            |
-| `tests/tests.h`  | One `run_<module>_tests()` declaration per module    |
-| `tests/test_main.c` | The runner that calls every module entry point    |
-| `tests/test_<module>.c` | The test cases for one module                 |
+| File                    | Purpose                                                |
+| ----------------------- | ------------------------------------------------------ |
+| `tests/test.h`          | The harness API: `TEST`, `RUN_TEST` and the assertions |
+| `tests/test.c`          | The harness implementation and the report              |
+| `tests/tests.h`         | One `run_<module>_tests()` declaration per module      |
+| `tests/test_main.c`     | The runner that calls every module entry point         |
+| `tests/test_<module>.c` | The test cases for one module                          |
 
 ## Writing a test case
 
@@ -77,17 +77,17 @@ descriptive: `test_heap_pops_in_ascending_order` reads much better than
 
 ## The assertions
 
-| Macro                        | Checks                                     |
-| ---------------------------- | ------------------------------------------ |
-| `ASSERT(cond)`               | The condition is true                      |
-| `ASSERT_FALSE(cond)`         | The condition is false                     |
-| `ASSERT_EQ_INT(a, b)`        | Two integers are equal                     |
-| `ASSERT_EQ_LONG(a, b)`       | Two longs are equal                        |
-| `ASSERT_EQ_UINT(a, b)`       | Two unsigned integers are equal            |
-| `ASSERT_EQ_STR(a, b)`        | Two strings are equal (NULL-safe)          |
-| `ASSERT_NULL(ptr)`           | The pointer is NULL                        |
-| `ASSERT_NOT_NULL(ptr)`       | The pointer is not NULL                    |
-| `ASSERT_PTR_EQ(a, b)`        | Two pointers point at the same address     |
+| Macro                  | Checks                                 |
+| ---------------------- | -------------------------------------- |
+| `ASSERT(cond)`         | The condition is true                  |
+| `ASSERT_FALSE(cond)`   | The condition is false                 |
+| `ASSERT_EQ_INT(a, b)`  | Two integers are equal                 |
+| `ASSERT_EQ_LONG(a, b)` | Two longs are equal                    |
+| `ASSERT_EQ_UINT(a, b)` | Two unsigned integers are equal        |
+| `ASSERT_EQ_STR(a, b)`  | Two strings are equal (NULL-safe)      |
+| `ASSERT_NULL(ptr)`     | The pointer is NULL                    |
+| `ASSERT_NOT_NULL(ptr)` | The pointer is not NULL                |
+| `ASSERT_PTR_EQ(a, b)`  | Two pointers point at the same address |
 
 A failing assertion does not stop the test. The remaining assertions in the
 same test still run, which usually turns one run into several useful bug

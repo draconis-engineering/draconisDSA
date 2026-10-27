@@ -141,8 +141,8 @@ TEST(test_algo_bfs_shortest_path) {
 	struct GraphNode *path[8];
 	size_t length = 0;
 
-	ASSERT(algo_bfs_shortest_path(graph, graph->nodes[0], graph->nodes[4],
-								   path, &length));
+	ASSERT(algo_bfs_shortest_path(graph, graph->nodes[0], graph->nodes[4], path,
+								  &length));
 
 	ASSERT_EQ_UINT(length, 3);
 	ASSERT_PTR_EQ(path[0], graph->nodes[0]);
@@ -159,8 +159,8 @@ TEST(test_algo_bfs_shortest_path_to_the_start_node) {
 	struct GraphNode *path[8];
 	size_t length = 0;
 
-	ASSERT(algo_bfs_shortest_path(graph, graph->nodes[0], graph->nodes[0],
-								   path, &length));
+	ASSERT(algo_bfs_shortest_path(graph, graph->nodes[0], graph->nodes[0], path,
+								  &length));
 	ASSERT_EQ_UINT(length, 1);
 	ASSERT_PTR_EQ(path[0], graph->nodes[0]);
 
