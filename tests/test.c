@@ -40,6 +40,9 @@ int test_assertions = 0;
 /** Where the report is written. */
 static FILE *report = NULL;
 
+/** Whether `report` is a stream this file opened and has to close. */
+static bool report_is_owned = false;
+
 /** Number of test cases executed. */
 static int tests_run = 0;
 
@@ -93,6 +96,7 @@ static void open_report_stream(void) {
 
 	fclose(null_stream);
 	report = saved;
+	report_is_owned = true;
 #endif
 }
 
@@ -146,7 +150,8 @@ void test_fail(const char *file, int line, const char *fmt, ...) {
 }
 
 /**
- * Prints the summary of the run and returns the exit code.
+ * Prints the summary of the run, releases the report stream and returns the
+ * exit code.
  */
 int test_end(void) {
 	fprintf(report, "\n");
@@ -155,11 +160,22 @@ int test_end(void) {
 			tests_run, tests_run - tests_failed, tests_failed, test_assertions);
 	fprintf(report, "------------------------------------------------\n");
 
+	int result;
+
 	if (tests_failed > 0) {
 		fprintf(report, "RESULT: FAILURE\n\n");
-		return 1;
+		result = 1;
+	} else {
+		fprintf(report, "RESULT: SUCCESS\n\n");
+		result = 0;
 	}
 
-	fprintf(report, "RESULT: SUCCESS\n\n");
-	return 0;
+	// Close the private stream so leak checkers such as Valgrind see a
+	// clean heap. Only the fdopen()'ed copy is ours; stdout belongs to the
+	// process.
+	if (report_is_owned) {
+		fclose(report);
+	}
+
+	return result;
 }

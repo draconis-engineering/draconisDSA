@@ -8,9 +8,67 @@ This library provides two tree types: a binary tree (`BinaryTree`) and an n-ary 
 
 A binary tree node has left, right, and parent pointers. The API supports getters/setters, insertion of children (which replaces and frees any existing subtree), traversal (pre/in/post-order), and basic properties (leaf, height, size).
 
+```
+                 1            <- root (no parent)
+               /   \
+              2     3         <- children of 1
+             / \     \
+            4   5     6       <- leaves: 4, 5, 6
+```
+
+Drawn as memory, each node is one allocation with three pointers besides the
+payload; the tree is only connected through them:
+
+```
++--------------------+
+| val: 1             |
+| parent: NULL       |
+| left:  •-----------+----> node 2
+| right: •-----------+----> node 3
++--------------------+
+
+node 2.parent ----> node 1        node 3.parent ----> node 1
+```
+
+`btree_height()` of the tree above is 2 (edges on the longest downward path),
+and `btree_size()` is 6.
+
 ### N-ary Tree
 
 An n-ary tree stores children in a growable array (`struct Tree **children`), with `num_children` and `capacity`. Children are appended dynamically.
+
+```
+                 "root"
+                /   |   \
+             "a"  "b"  "c"
+                   |
+              +---+---+
+              |       |
+             "d"     "e"
+```
+
+Drawn as memory, the children of one node sit side by side in one array, and
+each slot points at a whole subtree:
+
+```
+node "root"
++----------------------+
+| val: "root"          |
+| num_children: 3      |
+| capacity: 4           |
+| children: •----------+--+
++----------------------+  |
+                           v
+        [0]       [1]       [2]      [3]
+      +-----+   +-----+   +-----+   +-----+
+      |  •  |   |  •  |   |  •  |   | empty
+      +--|--+   +--|--+   +--|--+   +-----+
+         v         v         v
+      node "a"  node "b"  node "c"
+```
+
+`tree_add_child()` appends to that array, doubling it when
+`num_children == capacity`, which is why adding a child is O(1) amortized.
 
 ## Implementation details
 

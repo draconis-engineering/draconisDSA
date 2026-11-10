@@ -40,7 +40,7 @@ between the smallest and the largest value being sorted.
 | ----------------------- | ------------------------- | ------------------------- |
 | `create_sll()`          | Create empty list         | O(1)                      |
 | `sll_insert_at_front()` | Insert at the head        | O(1)                      |
-| `sll_insert_at_back()`  | Insert at the tail        | O(n) - walks to the end   |
+| `sll_insert_at_back()`  | Insert at the tail        | O(1) - follows the tail pointer |
 | `sll_insert()`          | Insert at an index        | O(n) - walks to the index |
 | `sll_remove()`          | Remove at an index        | O(n) - walks to the index |
 | `sll_get_idx()`         | Find an element by value  | O(n)                      |
@@ -206,11 +206,12 @@ lookups into O(log n). This library implements the plain unbalanced tree.
 | `algo_bfs()`               | Every reachable node           | O(V * E)         |
 | `algo_dfs()`               | Every reachable node           | O(V * E)         |
 | `algo_bfs_shortest_path()` | The path with the fewest edges | O(V * E)         |
-| `algo_dijkstra()`          | The cheapest path              | O((V + E) log V) |
+| `algo_dijkstra()`          | The cheapest path              | O(V * E + E log E) |
 
 The traversals are O(V * E) rather than O(V + E) because the graph stores its
-edges in one flat list. `algo_dijkstra()` uses a binary heap as a priority
-queue, which is where the `log V` comes from.
+edges in one flat list. `algo_dijkstra()` scans that list once per node it
+processes (O(V * E)) and pushes at most one heap entry per edge
+(O(E log E)).
 
 ---
 

@@ -6,6 +6,55 @@ A singly linked list (SLL) is an ordered data structure consisting of nodes (`SL
 
 Unlike arrays, nodes in a singly linked list are not stored in contiguous memory. Each node is allocated separately on the heap.
 
+## The shape of the list
+
+A list holding the payloads `10`, `20`, `30` in order looks like this. The
+nodes themselves live wherever `malloc` put them; only the `next` arrows keep
+the order alive:
+
+```
+ head                                          tail
+  |                                            |
+  v                                            v
++--------+-------+        +--------+-------+        +--------+-------+
+| data:  | next: |        | data:  | next: |        | data:  | next: |
+|  10    |   •---+------->|  20    |   •---+------->|  30    | NULL  |
++--------+-------+        +--------+-------+        +--------+-------+
+   node 1                   node 2                   node 3
+
+   size: 3
+```
+
+`sll_insert_at_front()` never walks the list. The new node simply copies the
+old `head` into its `next`, and then `head` is repointed at the new node:
+
+```
+before:   head --> [10] --> [20] --> NULL
+                              tail
+
+insert 5: [5|next: head]
+
+after:    head --> [5] --> [10] --> [20] --> NULL
+                                        tail
+```
+
+Removing the **last** node is the expensive direction. The node that becomes
+the new `tail` (`[20]` above) has to be found first, and the only way to it
+is a walk from the head - that is why `sll_remove(l, size - 1)` is O(n) even
+though the list keeps a `tail` pointer:
+
+```
+remove [30]:
+
+   [10] --> [20] --> [30] --> NULL
+             ^          ^
+             |          |
+   walk from head       freed
+
+   ends up:   head --> [10] --> [20] --> NULL
+                                    tail
+```
+
 ## Implementation details
 
 - **Node**: `struct SLLNode { void *data; struct SLLNode *next; }`

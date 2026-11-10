@@ -31,6 +31,9 @@ jobs:
       - name: Run the test suite
         run: make test
 
+      - name: Build and run the benchmarks
+        run: make bench
+
       - name: Build and run the sanitized test suite
         run: make test-sanitize
 
@@ -42,6 +45,25 @@ jobs:
           path: build-sanitize/
           retention-days: 7
           if-no-files-found: ignore
+
+  valgrind:
+    name: Test under Valgrind
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Install Valgrind
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind
+
+      - name: Show the Valgrind version
+        run: valgrind --version
+
+      - name: Run the test suite under Valgrind
+        run: make test-valgrind
 
   build-clang:
     name: Build with clang

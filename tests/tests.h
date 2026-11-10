@@ -39,5 +39,7 @@ void run_heap_tests(void);
 void run_sort_tests(void);
 void run_search_tests(void);
 void run_traversal_tests(void);
+void run_fuzz_tests(void);
+void run_sort_property_tests(void);
 
 #endif // TESTS_H

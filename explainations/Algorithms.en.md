@@ -78,6 +78,106 @@ safety at the call site.
   overwriting a value that has not been read yet. It refuses to run if the
   range is too large to fit in a bucket array.
 
+### The sorts, step by step
+
+Every trace below was produced by instrumented copies of the real code and
+cross-checked against the library's own results for the same input.
+
+**Insertion sort** on `[5, 2, 4, 1, 3]`. The sorted prefix at the front grows
+by one element per round; each new element is lifted out and shifted left
+until it sits in the right place:
+
+```
+start:   [5, 2, 4, 1, 3]
+place 2: [2, 5]
+place 4: [2, 4, 5]
+place 1: [1, 2, 4, 5]
+place 3: [1, 2, 3, 4, 5]
+```
+
+**Quick sort** on `[3, 8, 2, 5, 1, 4, 7, 6]`. This is Hoare partitioning with
+the middle element as pivot: a left pointer stops at the first element that
+does not belong before the pivot, a right pointer stops at the first that does
+not belong after it, the two are swapped, and when the pointers meet, the
+meeting point splits the range for the recursion:
+
+```
+sort [0..7]: [3, 8, 2, 5, 1, 4, 7, 6]
+  pivot = items[3] = 5
+  swap items[1] <-> items[5]: [3, 4, 2, 5, 1, 8, 7, 6]
+  swap items[3] <-> items[4]: [3, 4, 2, 1, 5, 8, 7, 6]
+  pointers meet -> split at 3
+sort [0..3]: [3, 4, 2, 1, ...]
+  pivot = items[1] = 4
+  swap items[1] <-> items[3]: [3, 1, 2, 4, 5, 8, 7, 6]
+  pointers meet -> split at 2
+sort [0..2]: [3, 1, 2, ...]
+  pivot = items[1] = 1
+  swap items[0] <-> items[1]: [1, 3, 2, 4, 5, 8, 7, 6]
+  pointers meet -> split at 0
+sort [1..2]: [1, 3, 2, ...]
+  pivot = items[1] = 3
+  swap items[1] <-> items[2]: [1, 2, 3, 4, 5, 8, 7, 6]
+  pointers meet -> split at 1
+sort [4..7]: [..., 5, 8, 7, 6]
+  pivot = items[5] = 8
+  swap items[5] <-> items[7]: [1, 2, 3, 4, 5, 6, 7, 8]
+  pointers meet -> split at 6
+sort [4..6] and [4..5]: pivots 6 and 5, nothing left to move
+sorted: [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+**Heap sort** on `[5, 3, 8, 1, 9, 2]`. First the array is turned into a
+max-heap by sifting down from the middle, then the maximum is repeatedly
+swapped to the back and the heap is repaired. The `|` marks where the sorted
+tail begins:
+
+```
+start:          [5, 3, 8, 1, 9, 2]
+build the heap:
+  sift down 2:  [5, 3, 8, 1, 9, 2]   (8 has no larger child, stays)
+  sift down 1:  [5, 9, 8, 1, 3, 2]   (3 swaps with 9)
+  sift down 0:  [9, 5, 8, 1, 3, 2]   (5 swaps with 9)
+extract the maximum:
+  move 9 back:  [8, 5, 2, 1, 3 | 9]  (2 lands at the root, sifts past 8)
+  move 8 back:  [5, 3, 2, 1 | 8, 9]
+  move 5 back:  [3, 1, 2 | 5, 8, 9]
+  move 3 back:  [2, 1 | 3, 5, 8, 9]  ([2, 1] is already in heap order)
+  move 2 back:  [1 | 2, 3, 5, 8, 9]
+sorted:         [1, 2, 3, 5, 8, 9]
+```
+
+**Merge sort** on `[5, 2, 4, 1, 3]`. The array is split down to single
+elements, then the sorted runs are merged on the way back up. Taking the left
+element on a tie is what makes each merge stable:
+
+```
+sort [5, 2, 4, 1, 3]
+  sort [5, 2, 4]
+    sort [5, 2]
+      merge [5] with [2]        -> [2, 5]
+    merge [2, 5] with [4]       -> [2, 4, 5]
+  sort [1, 3]
+    merge [1] with [3]          -> [1, 3]
+  merge [2, 4, 5] with [1, 3]   -> [1, 2, 3, 4, 5]
+```
+
+**Counting sort** on `[3, 1, 4, 1, 5]`. The counts become ending positions,
+and the array is then walked **backwards**, so equal values keep their
+original order - watch the two 1s:
+
+```
+start:       [3, 1, 4, 1, 5]        values 1..5
+counts:      1:2  2:0  3:1  4:1  5:1
+positions:   1 ends at 2, 3 ends at 3, 4 ends at 4, 5 ends at 5
+place 5 (from index 4) at output[4]
+place 1 (from index 3) at output[1]
+place 4 (from index 2) at output[3]
+place 1 (from index 1) at output[0]
+place 3 (from index 0) at output[2]
+sorted:      [1, 1, 3, 4, 5]
+```
+
 ### Searching
 
 | Algorithm        | Requirement      | Time Complexity | Returns                     |
@@ -95,12 +195,12 @@ safety at the call site.
 
 ### Graph traversal
 
-| Algorithm                   | Finds                                            | Time Complexity |
-| --------------------------- | ------------------------------------------------ | --------------- |
-| `algo_bfs()`                | Every reachable node                             | O(V + E)        |
-| `algo_dfs()`                | Every reachable node                             | O(V + E)        |
-| `algo_bfs_shortest_path()`  | The path with the fewest edges                   | O(V + E)        |
-| `algo_dijkstra()`           | The cheapest path, using edge weights            | O((V + E) log V)|
+| Algorithm                   | Finds                                            | Time Complexity  |
+| --------------------------- | ------------------------------------------------ | ---------------- |
+| `algo_bfs()`                | Every reachable node                             | O(V * E)         |
+| `algo_dfs()`                | Every reachable node                             | O(V * E)         |
+| `algo_bfs_shortest_path()`  | The path with the fewest edges                   | O(V * E)         |
+| `algo_dijkstra()`           | The cheapest path, using edge weights            | O(V * E + E log E)|
 
 - **BFS** keeps a queue of the nodes it still has to look at and always takes
   the oldest one from the front. That is what makes it visit level by level.
@@ -124,6 +224,12 @@ its own position in the graph's node array through its `index` field, which
 lets the algorithms look up a node's slot in O(1) instead of searching the
 array.
 
+The times above are what this implementation really costs: because the graph
+keeps all of its edges in one flat array, every node a traversal processes
+rescans the whole edge list to find its outgoing edges, which turns the
+textbook O(V + E) into O(V * E). `algo_dijkstra()` pays the same edge scans
+plus O(E log E) of work on its binary heap.
+
 ### Traversal callbacks
 
 The traversals do not return lists of nodes. Instead they call a callback for
@@ -135,6 +241,89 @@ typedef void (*algo_visit_fn)(struct GraphNode *node, void *context);
 
 The `context` pointer is handed straight through to the callback, which is
 how you pass state into a traversal without using a global variable.
+
+### The traversals, step by step
+
+Both examples below were produced by the real implementations.
+
+Take this graph (nodes in insertion order A to E, edges in insertion order
+as listed):
+
+```
+      A ------> B ------> D
+      |         |
+      |         |
+      v         v
+      C ------> E
+
+  edges: A->B  A->C  B->D  B->E  C->E
+```
+
+**BFS from A** uses a queue, so the visit order is level by level - A, then
+everything one edge away, then everything two edges away:
+
+```
+visit A    queue after: B, C
+visit B    queue after: C, D, E   (D and E discovered from B)
+visit C    queue after: D, E      (E already seen, not queued twice)
+visit D    queue after: E
+visit E    queue after: (empty)
+
+order: A B C D E
+```
+
+**DFS from A** uses a stack, so it dives down one branch before backing up.
+The neighbours are pushed in reverse order, so the first edge found is the
+first one followed:
+
+```
+visit A    stack after: B, C      (C pushed first, B on top)
+visit B    stack after: C, E, D   (E pushed before D)
+visit D    stack after: C, E      (D has no outgoing edges)
+visit E    stack after: C
+visit C    stack after: (empty)
+
+order: A B D E C
+```
+
+**Shortest path A -> E** (`algo_bfs_shortest_path`) is the same BFS, but it
+also remembers how every node was first reached: B and C from A, D and E
+from B. Walking those parents backwards from E and reversing gives
+`A B E` - two edges, and there is no shorter route: the only other way to
+reach E is through C, which is also two edges away from A.
+
+**Dijkstra** on a weighted graph. The edges are A->B (4), A->C (1), C->B (2),
+B->D (1), C->D (5), D->E (1) and C->E (15). Every step takes the closest
+unprocessed node from the heap and relaxes its outgoing edges:
+
+```
+step  take    relax outgoing edges
+ 1    A (0)   B: 0 + 4 = 4      C: 0 + 1 = 1
+ 2    C (1)   B: 1 + 2 = 3 < 4  D: 1 + 5 = 6   E: 1 + 15 = 16
+ 3    B (3)   D: 3 + 1 = 4 < 6
+ 4    D (4)   E: 4 + 1 = 5 < 16
+ 5    E (5)   (no outgoing edges)
+```
+
+(The heap still holds the outdated entries B = 4, D = 6 and E = 16 by the
+end - those are skipped, because their recorded distance no longer matches
+the best known distance.)
+
+The final distances are `A: 0, B: 3, C: 1, D: 4, E: 5`. Drawn as routes, the
+cheapest path to every node runs through C first - the direct A->B (4) loses
+to the detour A->C->B (3):
+
+```
+      A --1--> C --2--> B
+                        |
+                      1 |
+                        v
+                        D
+                        |
+                      1 |
+                        v
+                        E
+```
 
 ## Pros
 

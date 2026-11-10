@@ -1,0 +1,31 @@
+# Doxygen configuration - DRACONIS ENGINEERING DATA STRUCTURES & ALGORITHMS
+#
+# Only the settings that differ from the defaults are listed here. Run
+#
+#     make docs
+#
+# to generate the API reference into docs/api/html with this file.
+
+# The project.
+PROJECT_NAME           = DraconisDSA
+PROJECT_BRIEF          = "Educational C23 data structures and algorithms library"
+
+# The sources are the documented headers and implementation files, plus
+# every piece of written documentation: the repository landing page (which
+# becomes the main page), the docs/ tables and roadmaps, the explainations/
+# walkthroughs and the test suite guide. Markdown files become pages of the
+# reference, so every link in the README keeps working in the HTML output.
+INPUT                  = src README.md docs explainations tests/README.md benchmarks/README.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+
+# Plain C, documented entities only.
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = NO
+
+# Only HTML, straight into docs/api/html.
+OUTPUT_DIRECTORY       = docs/api
+GENERATE_LATEX         = NO
+
+# No Graphviz available in CI, so skip the call graphs.
+HAVE_DOT                = NO

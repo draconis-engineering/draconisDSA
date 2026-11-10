@@ -83,12 +83,33 @@ make clean    # remove the build artefacts
 ```sh
 make test           # build and run the test suite
 make test-sanitize  # the same tests under ASan and UBSan
+make test-valgrind  # the same tests under Valgrind's leak checker
 ```
 
-The suite has no external dependencies and lives in `tests/`. See
-[tests/README.md](tests/README.md) for how to write a test case.
+The suite has no external dependencies and lives in `tests/`. Besides the
+per-operation tests it contains randomized **fuzz tests** for every container
+and **property-based tests** that check the sorts against `qsort()`. See
+[tests/README.md](tests/README.md) for how to write a test case and how to
+replay a random seed. CI runs the tests, the sanitized build, Valgrind and
+the benchmarks on every push.
+
+## Benchmarks
+
+```sh
+make bench    # measure every operation at n and 2n
+```
+
+Every operation is timed with a best-of-repeats rule, and the growth from n
+to 2n shows whether the real cost matches the complexity table. See
+[benchmarks/README.md](benchmarks/README.md).
 
 ## Documentation
+
+```sh
+make docs    # generate the Doxygen API reference into docs/api/
+```
+
+The reference is also deployed to GitHub Pages by CI.
 
 | Where                                        | What it holds                                  |
 | -------------------------------------------- | ---------------------------------------------- |

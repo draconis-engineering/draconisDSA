@@ -35,6 +35,8 @@ int main(void) {
 	run_sort_tests();
 	run_search_tests();
 	run_traversal_tests();
+	run_fuzz_tests();
+	run_sort_property_tests();
 
 	return test_end();
 }

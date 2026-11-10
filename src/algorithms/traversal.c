@@ -284,7 +284,9 @@ bool algo_bfs_shortest_path(struct Graph *graph, struct GraphNode *start,
 	return true;
 }
 
-// One entry of Dijkstra's priority queue.
+/**
+ * @brief One entry of Dijkstra's priority queue.
+ */
 struct DijkstraEntry {
 	/** Position of the node in the graph's node array. */
 	int index;

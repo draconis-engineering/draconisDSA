@@ -4,6 +4,42 @@
 
 A doubly linked list (DLL) is an ordered data structure where each node (`DLLNode`) stores a payload (`void *data`), a pointer to the `next` node, and a pointer to the `prev` node. The container (`DLList`) tracks `head`, `tail`, and `size`. This bidirectional linking makes it easier to traverse both ways and to remove from either end efficiently.
 
+## The shape of the list
+
+A list holding the payloads `10`, `20`, `30` in order. Every node carries two
+arrows, so any node that is in hand knows both of its neighbours:
+
+```
+ head                                        tail
+  |                                          |
+  v                                          v
++-------+          +-------+          +-------+
+|  10   |  next    |  20   |  next    |  30   |
+|       |--------->|       |--------->|       |
+|       |<---------|       |<---------|       |
++-------+  prev    +-------+  prev    +-------+
+
+   size: 3        (the ends are NULL: 10.prev and 30.next)
+```
+
+The payoff of the second arrow is removing a middle node without any walking:
+two pointer updates splice the node out.
+
+```
+remove [20]:
+
+before:   [10] <--> [20] <--> [30]
+
+          [10].next ---------> [30]     (1)
+          [30].prev ---------> [10]     (2)
+          free [20]
+
+after:    [10] <--> [30]
+```
+
+Both ends are symmetric: `dll_remove(l, 0)` and `dll_remove(l, size - 1)`
+are O(1) because the list holds `head` and `tail` node pointers directly.
+
 ## Implementation details
 
 - **Node**: `struct DLLNode { void *data; struct DLLNode *next; struct DLLNode *prev; }`

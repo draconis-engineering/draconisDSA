@@ -30,6 +30,47 @@ own copy for the report. To see the library output as well, set:
 DRACONIS_TEST_VERBOSE=1 ./tests/run_tests.exe
 ```
 
+To run the same tests under Valgrind, which catches invalid memory access,
+uninitialized reads and definite leaks:
+
+```sh
+make test-valgrind
+```
+
+This builds into `build-valgrind/` and runs the suite through
+`valgrind --leak-check=full`, failing the run when Valgrind reports an error
+or a definite leak. Valgrind only runs on Linux and macOS, so this target is
+mainly used by CI.
+
+## Randomized and property-based tests
+
+Two files feed the library random operation sequences instead of fixed
+scenarios:
+
+| File                        | What it checks                                    |
+| --------------------------- | ------------------------------------------------- |
+| `tests/test_fuzz.c`         | Every container against a plain-array shadow model |
+| `tests/test_sort_property.c` | Every sort against the `qsort()` oracle         |
+
+The fuzz tests run random operation sequences (300 operations per container
+per seed) and check the container's state against a simple C array after
+every single operation, plus structural invariants such as list links, the
+heap property and graph reachability. The sort property tests sort random
+inputs of every shape - sorted, reversed, all-equal, heavy duplicates - and
+compare the result with the C standard library's `qsort()`.
+
+The random generator is deterministic: every run tests the same inputs, so a
+failure can be reproduced exactly. To explore a different sequence, pass a
+seed through the environment:
+
+```sh
+DRACONIS_FUZZ_SEED=12345 make test
+```
+
+Any number works; the run then uses that single seed for every randomized
+test. When a seed finds a bug, add it to the default seed lists so it stays
+covered.
+
 ## Layout
 
 | File                    | Purpose                                                |

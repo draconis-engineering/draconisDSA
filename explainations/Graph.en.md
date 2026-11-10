@@ -4,6 +4,44 @@
 
 A graph is a collection of nodes (vertices) and edges connecting them. This implementation represents a directed (or general) graph where edges go from `src` to `dest` and have an associated `weight` (integer). Nodes store `uint64_t data`. The graph stores arrays of node pointers and edge pointers.
 
+## The shape of the graph
+
+Drawn as a picture, a small directed graph with weighted edges looks like
+this (arrows point from `src` to `dest`):
+
+```
+        (A) ---- 4 ----> (B)
+         ^                |
+         |                |
+         1                2
+         |                |
+         |                v
+        (C) <---- 7 ---- (D)
+```
+
+This library stores that same graph as two flat arrays, not as a picture and
+not as adjacency lists. Every node knows its own slot, and every edge stores
+the two node pointers it connects plus its weight:
+
+```
+ struct Graph
+
+ nodes array                     edges array
++--------+--------+             +-------+-------+-------+-------+
+| [0]  A | index 0|             | [0] A | ->  B | wt 4 |       |
+| [1]  B | index 1|             | [1] B | ->  D | wt 2 |       |
+| [2]  C | index 2|             | [2] D | ->  C | wt 7 |       |
+| [3]  D | index 3|             | [3] C | ->  A | wt 1 |       |
++--------+--------+             +-------+-------+-------+-------+
+
+ num_nodes: 4                    num_edges: 4
+```
+
+Finding "all edges leaving node X" means scanning the whole edge array - that
+is why `has_edge()` is O(m) and why the traversals in `src/algorithms` are
+O(V * E) rather than O(V + E). An adjacency list would keep a per-node list
+of outgoing edges; this representation trades that speed for simplicity.
+
 ## Implementation details
 
 - **Node**: `struct GraphNode { uint64_t data; int index; }` - the `index` field holds the node's position in the graph's node array. The graph keeps it up to date, which lets the traversal algorithms in `src/algorithms` look up a node's slot in O(1) instead of scanning the array.

@@ -36,6 +36,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     - `docs/ROADMAP.md` - what is planned next.
     - `tests/README.md` - how to write and run a test.
     - Continuous integration in `.github/workflows/ci.yml`, running the build, the tests and the sanitized tests on every push and pull request.
+- **Fuzz and property tests** (`tests/test_fuzz.c`, `tests/test_sort_property.c`): randomized inputs against every container with invariant checks after each operation, and the six sorts plus counting sort checked against a `qsort()` oracle, including a stability check. A failing random seed can be replayed with the `DRACONIS_FUZZ_SEED` environment variable.
+- **Benchmark suite** (`benchmarks/`): `make bench` measures every operation with best-of-repeats timing and a growth check at n and 2n, so the complexity table can be checked against reality. CI runs it on every push.
+- **Valgrind in CI**: a dedicated `valgrind` job runs `make test-valgrind` (leak check with `--error-exitcode`) on Ubuntu.
+- **API reference**: `make docs` generates the Doxygen HTML reference into `docs/api/`, and `.github/workflows/docs.yml` deploys it to GitHub Pages.
+- **ASCII diagrams** in the explanations: the shape of the singly and doubly linked list, the trees, the graph's flat node/edge arrays, and the heap's array-as-tree index mapping.
+- **Worked examples** in `explainations/Algorithms.en.md`: insertion, quick, heap, merge and counting sort traced step by step, plus BFS, DFS and Dijkstra on concrete graphs. Every trace was produced by the real implementation.
 
 ### Fixed
 
@@ -47,6 +53,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   array while walking it forwards, which could overwrite a value that had not
   been read yet. It now uses a temporary output array and walks backwards,
   which also makes it stable.
+- `docs/COMPLEXITY.md` listed `sll_insert_at_back()` as O(n). The list keeps a
+  tail pointer, so inserting at the back is O(1).
+- The traversal complexities in `docs/COMPLEXITY.md` and
+  `explainations/Algorithms.en.md` claimed the textbook O(V + E). Because the
+  graph stores its edges in one flat array, BFS, DFS and BFS shortest path
+  are O(V * E), and Dijkstra is O(V * E + E log E).
 
 ### Changed
 

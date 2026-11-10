@@ -29,8 +29,8 @@ static int heap_grow(struct Heap *heap) {
 		return 1;
 	}
 
-	size_t new_capacity = (heap->capacity == 0) ? HEAP_INITIAL_CAPACITY
-												 : heap->capacity * 2;
+	size_t new_capacity =
+		(heap->capacity == 0) ? HEAP_INITIAL_CAPACITY : heap->capacity * 2;
 
 	if (new_capacity < heap->capacity ||
 		new_capacity > (size_t)-1 / sizeof(void *)) {
@@ -166,9 +166,7 @@ size_t heap_size(const struct Heap *heap) {
 }
 
 // Returns whether the heap holds no elements.
-bool heap_is_empty(const struct Heap *heap) {
-	return heap_size(heap) == 0;
-}
+bool heap_is_empty(const struct Heap *heap) { return heap_size(heap) == 0; }
 
 // Frees the buffer and the heap itself.
 void free_heap(struct Heap *heap) {

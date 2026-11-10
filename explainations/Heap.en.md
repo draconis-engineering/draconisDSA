@@ -20,6 +20,38 @@ A heap is **not** sorted. It only guarantees that the root is extreme. You get
 the elements out in sorted order by repeatedly removing the root and restoring
 the heap property - that is exactly what heap sort does.
 
+## The shape of the heap
+
+One heap, two views. On the left the flat array as it sits in memory; on the
+right the complete binary tree that the same array secretly encodes:
+
+```
+ items:   index  0     1     2     3     4     5
+        +-----+-----+-----+-----+-----+-----+
+        |  1  |  4  |  5  |  9  |  6  |  8  |          (min-heap)
+        +-----+-----+-----+-----+-----+-----+
+
+                       1                <- items[0], the root
+                     /   \
+                    4     5             <- children of 0: 1, 2
+                   / \   /
+                  9   6 8               <- children of 1: 3, 4
+                                          children of 2: 5
+```
+
+Every arrow in the tree is really just arithmetic on the index:
+
+```
+ parent of i:      (i - 1) / 2          e.g. parent of 4 is (4-1)/2 = 1
+
+ left child of i:  2 * i + 1           e.g. left child of 1 is 3
+ right child of i: 2 * i + 2           e.g. right child of 1 is 4
+```
+
+The heap order shows in both views: every parent is `<=` both of its children
+according to the comparator, so the smallest element (here `1`) is at the
+root, but the array is otherwise unsorted - `9` sits before `6` and `8`.
+
 ## Implementation details
 
 - **Structure**: `struct Heap { void **items; size_t size; size_t capacity; cmp_fn cmp; }`

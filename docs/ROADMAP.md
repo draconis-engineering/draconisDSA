@@ -16,6 +16,19 @@ tests.
 - [x] Dependency-free test suite with a sanitized build
 - [x] Explanations for every structure, plus a complexity cheat sheet
 - [x] Continuous integration
+- [x] Fuzz tests that feed random inputs to every container and check the
+      invariants after each operation
+- [x] Benchmark suite that measures the real cost of each operation, so the
+      complexity table can be checked against reality
+- [x] Memory-leak checks in CI with Valgrind on top of the sanitizers
+- [x] Property-based testing for the sorts, checking the result against
+      `qsort()` from the standard library
+- [x] Diagrams for the list, tree, heap and graph structures, drawn as ASCII
+      art so they stay readable in a terminal
+- [x] Worked examples for each algorithm, showing the array or the graph
+      after every step
+- [x] API reference generated from the Doxygen comments, deployed to GitHub
+      Pages by CI
 
 ## Next
 
@@ -41,24 +54,9 @@ tests.
 - [ ] **Disjoint set (union-find)** - with path compression and union by rank
 - [ ] **Skip list** - a probabilistic alternative to a balanced tree
 
-### Quality
-
-- [ ] **Fuzz tests** that feed random inputs to every container and check the
-      invariants after each operation
-- [ ] **Benchmark suite** that measures the real cost of each operation, so the
-      complexity table can be checked against reality
-- [ ] **Memory-leak checks in CI** with Valgrind on top of the sanitizers
-- [ ] **Property-based testing** for the sorts, checking the result against
-      `qsort()` from the standard library
-
 ### Documentation
 
-- [ ] **Diagrams** for the list, tree and graph structures, drawn as ASCII art
-      so they stay readable in a terminal
-- [ ] **Worked examples** for each algorithm, showing the array or the graph
-      after every step
 - [ ] **Translations** of the explanations, starting with Norwegian
-- [ ] **API reference** generated from the Doxygen comments
 
 ## Deliberately not planned
 
