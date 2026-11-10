@@ -36,18 +36,18 @@ between the smallest and the largest value being sorted.
 
 ## Singly linked list - `src/sllist`
 
-| Operation               | What it does              | Complexity                |
-| ----------------------- | ------------------------- | ------------------------- |
-| `create_sll()`          | Create empty list         | O(1)                      |
-| `sll_insert_at_front()` | Insert at the head        | O(1)                      |
+| Operation               | What it does              | Complexity                      |
+| ----------------------- | ------------------------- | ------------------------------- |
+| `create_sll()`          | Create empty list         | O(1)                            |
+| `sll_insert_at_front()` | Insert at the head        | O(1)                            |
 | `sll_insert_at_back()`  | Insert at the tail        | O(1) - follows the tail pointer |
-| `sll_insert()`          | Insert at an index        | O(n) - walks to the index |
-| `sll_remove()`          | Remove at an index        | O(n) - walks to the index |
-| `sll_get_idx()`         | Find an element by value  | O(n)                      |
-| `sll_size()`            | Number of elements        | O(1) - the size is cached |
-| `sll_is_empty()`        | Check whether it is empty | O(1)                      |
-| `print_sll()`           | Print the elements        | O(n)                      |
-| `free_sll()`            | Free the nodes            | O(n)                      |
+| `sll_insert()`          | Insert at an index        | O(n) - walks to the index       |
+| `sll_remove()`          | Remove at an index        | O(n) - walks to the index       |
+| `sll_get_idx()`         | Find an element by value  | O(n)                            |
+| `sll_size()`            | Number of elements        | O(1) - the size is cached       |
+| `sll_is_empty()`        | Check whether it is empty | O(1)                            |
+| `print_sll()`           | Print the elements        | O(n)                            |
+| `free_sll()`            | Free the nodes            | O(n)                            |
 
 ## Doubly linked list - `src/dllist`
 
@@ -201,11 +201,11 @@ lookups into O(log n). This library implements the plain unbalanced tree.
 
 ## Graph traversal - `src/algorithms`
 
-| Algorithm                  | Finds                          | Complexity       |
-| -------------------------- | ------------------------------ | ---------------- |
-| `algo_bfs()`               | Every reachable node           | O(V * E)         |
-| `algo_dfs()`               | Every reachable node           | O(V * E)         |
-| `algo_bfs_shortest_path()` | The path with the fewest edges | O(V * E)         |
+| Algorithm                  | Finds                          | Complexity         |
+| -------------------------- | ------------------------------ | ------------------ |
+| `algo_bfs()`               | Every reachable node           | O(V * E)           |
+| `algo_dfs()`               | Every reachable node           | O(V * E)           |
+| `algo_bfs_shortest_path()` | The path with the fewest edges | O(V * E)           |
 | `algo_dijkstra()`          | The cheapest path              | O(V * E + E log E) |
 
 The traversals are O(V * E) rather than O(V + E) because the graph stores its
